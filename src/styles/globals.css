@@ -1,8 +1,8 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
-@layer base {
+/* @layer base {
   :root {
     --header-height: 4.5rem;
     --sidebar-width: 20rem;
@@ -24,7 +24,7 @@
     --accent-darker: #007948;
     --accent-contrast: #ffffff;
 
-    --sciphi-primary: #454eb5;
+    --sciphi-primary: #e4c601;
     --sciphi-secondary: #686fc5;
     --sciphi-accent: #7b4dc6;
 
@@ -73,6 +73,8 @@
   }
 
   .dark {
+    --sciphi-primary: #18181b;
+
     --background: #171717;
     --foreground: #fafafa;
 
@@ -104,15 +106,91 @@
   [inert] ::-webkit-scrollbar {
     display: none;
   }
-}
+} */
 
-@layer base {
+
+/* @layer base {
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
+  }
+} */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --header-height: 4.5rem;
+    --sidebar-width: 20rem;
+
+    /* ✅ Light Theme (Default) */
+    --bg-primary: #ffffff; /* Navbar background */
+    --bg-secondary: #ffffff;
+    --text-primary: #000000; /* Black text */
+    --text-secondary: #3d3935;
+    --border-color: #d6d5d5;
+    --accent-color: #16A085;
+    --link-color: #2563eb;
+    --link-hover: #2b6cb0;
+
+    /* ✅ Sidebar */
+    --sidebar-background: #E4C601;
+    --sidebar-foreground: #000000;
+    --sidebar-accent: #16A085;
+
+    /* ✅ Cards & Buttons */
+    --card-bg: #ffffff;
+    --card-text: #3d3935;
+    --button-bg: #16A085;
+    --button-text: #ffffff;
+
+    --accent-lighter: #b3edd7;
+    --accent-light: #5fe1b2;
+    --accent-base: #03d78c;
+    --accent-dark: #019f69;
+    --accent-darker: #007948;
+    --accent-contrast: #ffffff;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* ✅ Dark Theme */
+    --bg-primary: #18181b;
+    --bg-secondary: #2c2a2a;
+    --text-primary: #ffffff; /* White text */
+    --text-secondary: #a5a3a3;
+    --border-color: #282626;
+    --accent-color: #16A085;
+    --link-color: #818cf8;
+    --link-hover: #5fe1b2;
+
+    /* ✅ Sidebar */
+    --sidebar-background: #1a1a1a;
+    --sidebar-foreground: #ffffff;
+    --sidebar-accent: #7b4dc6;
+
+    /* ✅ Cards & Buttons */
+    --card-bg: #2c2a2a;
+    --card-text: #fafafa;
+    --button-bg: #7b4dc6;
+    --button-text: #ffffff;
+
+    --accent-lighter: #b3edd7;
+    --accent-light: #5fe1b2;
+    --accent-base: #03d78c;
+    --accent-dark: #019f69;
+    --accent-darker: #007948;
+    --accent-contrast: #ffffff;
+  }
+
+  body {
+    @apply bg-primary text-primary;
   }
 }
 

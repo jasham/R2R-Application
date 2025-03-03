@@ -150,7 +150,7 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
         <PopoverTrigger asChild>
           <Button
             className="pl-2 pr-2 py-2 px-4"
-            color="filled"
+            color="primary"
             shape="rounded"
             disabled={isUploading}
             style={{ zIndex: 20, minWidth: '100px' }}

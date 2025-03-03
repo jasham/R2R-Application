@@ -10,6 +10,14 @@ module.exports = {
     }
     return config;
   },
+  async rewrites() {
+    return [
+      {
+        source: "/v3/:path*",
+        destination: "https://api.cloud.sciphi.ai/v3/:path*",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

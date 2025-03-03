@@ -11,7 +11,7 @@ import {
 
 const colorStyles = {
   primary:
-    'bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-accent-darker dark:text-accent-contrast dark:ring-1 dark:ring-inset dark:ring-accent-dark dark:hover:bg-accent-dark dark:hover:text-accent-contrast dark:hover:ring-accent-base',
+    'bg-[var(--accent-dark)] text-white hover:bg-zinc-700',
   secondary:
     'text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800/40 dark:text-zinc-400 dark:ring-1 dark:ring-inset dark:ring-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-300',
   filled:
@@ -27,7 +27,7 @@ const colorStyles = {
   text_gray:
     'text-gray-200 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-500',
   disabled: 'bg-zinc-600 text-white cursor-not-allowed hover:bg-zinc-500',
-  light: 'bg-zinc-700 text-white hover:bg-zinc-600',
+  light: 'bg-secondary text-primary hover:bg-zinc-600',
   transparent:
     'bg-transparent text-zinc-900 hover:bg-zinc-200 dark:text-zinc-400 dark:hover:bg-zinc-800',
 };

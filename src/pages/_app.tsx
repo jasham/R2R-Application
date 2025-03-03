@@ -3,11 +3,12 @@ import { useRouter } from 'next/router';
 import { useTheme } from 'next-themes';
 import { useEffect, useCallback } from 'react';
 
-import { ThemeProvider } from '@/components/ThemeProvider';
+
 import { brandingConfig } from '@/config/brandingConfig';
 import { UserProvider, useUserContext } from '@/context/UserContext';
 import '@/styles/globals.css';
 import { initializePostHog } from '@/lib/posthog-client';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 function MyAppContent({ Component, pageProps }: AppProps) {
   const { setTheme } = useTheme();
@@ -74,12 +75,7 @@ function MyApp(props: AppProps) {
   }, []);
 
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      enableSystem={false}
-      disableTransitionOnChange
-    >
+    <ThemeProvider>
       <UserProvider>
         <MyAppContent {...props} />
       </UserProvider>

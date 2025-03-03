@@ -424,12 +424,12 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
           </div>
         </DialogContent>
       </Dialog>
-      <PdfPreviewDialog
+      {/* <PdfPreviewDialog
         id={id}
         open={pdfPreviewOpen}
         onClose={handleClosePdfPreview}
         initialPage={initialPage}
-      />
+      /> */}
     </>
   );
 };

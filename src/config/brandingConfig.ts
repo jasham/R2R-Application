@@ -31,7 +31,7 @@ const defaultConfig = {
     alt: 'sciphi.svg',
   },
   auth: {
-    loginUrl: 'http://localhost:7272',
+    loginUrl: 'https://api.cloud.sciphi.ai/',
   },
   theme: 'dark',
   homePage: {

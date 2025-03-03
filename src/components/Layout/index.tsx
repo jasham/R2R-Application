@@ -5,6 +5,8 @@ import { Footer } from '@/components/shared/Footer';
 import { Navbar } from '@/components/shared/NavBar';
 import { Toaster } from '@/components/ui/toaster';
 import { brandingConfig } from '@/config/brandingConfig';
+import { useThemeContext } from '@/context/ThemeContext';
+import { LeftSidebar } from '../shared/Sidebar';
 
 type Props = {
   children: ReactNode;
@@ -17,8 +19,9 @@ const Layout: React.FC<Props> = ({
   pageTitle,
   includeFooter = true,
 }) => {
+  const { theme } = useThemeContext();
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-900">
+    <div className={`flex ${theme === 'dark' ? "flex-col" : "flex-row"} min-h-screen bg-primary`}>
       <Head>
         <title>
           {pageTitle
@@ -26,7 +29,11 @@ const Layout: React.FC<Props> = ({
             : brandingConfig.deploymentName}
         </title>
       </Head>
-      <Navbar />
+      {theme === 'dark' ? (
+        <Navbar />
+      ) : (
+        <LeftSidebar href="/" children={null} isActive={false} />
+      )}
       <main className="flex-1 flex flex-col overflow-hidden">{children}</main>
       <Toaster />
       {includeFooter && <Footer />}
