@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { Switch } from '@/components/ui/switch';
+import { Switch } from "@/components/ui/switch";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { SingleSwitchProps } from '@/types';
+} from "@/components/ui/tooltip";
+import { SingleSwitchProps } from "@/types";
 
 const SingleSwitch: React.FC<SingleSwitchProps> = ({
   id,
@@ -30,7 +30,7 @@ const SingleSwitch: React.FC<SingleSwitchProps> = ({
   return (
     <div className="flex justify-between items-center mt-4">
       {label && (
-        <label htmlFor={id} className="mr-2 text-sm font-medium text-zinc-300">
+        <label htmlFor={id} className="mr-2 text-sm font-medium text-secondary">
           {label}
         </label>
       )}

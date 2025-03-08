@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import { AxisLeft, AxisBottom } from '@visx/axis';
-import { curveMonotoneX } from '@visx/curve';
-import { localPoint } from '@visx/event';
-import { Group } from '@visx/group';
-import { scaleTime, scaleLinear } from '@visx/scale';
-import { LinePath } from '@visx/shape';
+import { AxisLeft, AxisBottom } from "@visx/axis";
+import { curveMonotoneX } from "@visx/curve";
+import { localPoint } from "@visx/event";
+import { Group } from "@visx/group";
+import { scaleTime, scaleLinear } from "@visx/scale";
+import { LinePath } from "@visx/shape";
 import {
   withTooltip,
   Tooltip,
   defaultStyles as defaultTooltipStyles,
-} from '@visx/tooltip';
-import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip';
-import { bisector } from 'd3-array';
-import React, { useState, useEffect, useRef } from 'react';
+} from "@visx/tooltip";
+import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
+import { bisector } from "d3-array";
+import React, { useState, useEffect, useRef } from "react";
 
-import OverlayWrapper from '@/components/OverlayWrapper';
+import OverlayWrapper from "@/components/OverlayWrapper";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from '@/components/ui/card';
-import { useUserContext } from '@/context/UserContext';
+} from "@/components/ui/card";
+import { useUserContext } from "@/context/UserContext";
 
 interface AverageScoreCardProps {
   scoreData?: Array<{ date: Date; score: number }>;
@@ -77,7 +77,9 @@ const AverageScoreChart = withTooltip<AverageScoreChartProps, TooltipData>(
 
     // Handler for tooltip
     const handleTooltip = (
-      event: React.TouchEvent<SVGRectElement> | React.MouseEvent<SVGRectElement>
+      event:
+        | React.TouchEvent<SVGRectElement>
+        | React.MouseEvent<SVGRectElement>,
     ) => {
       const { x } = localPoint(event) || { x: 0 };
       const x0 = xScale.invert(x - margin.left);
@@ -100,7 +102,7 @@ const AverageScoreChart = withTooltip<AverageScoreChartProps, TooltipData>(
     };
 
     return width < 10 ? null : (
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: "relative" }}>
         <svg width={width} height={height}>
           <Group left={margin.left} top={margin.top}>
             <AxisBottom
@@ -109,9 +111,9 @@ const AverageScoreChart = withTooltip<AverageScoreChartProps, TooltipData>(
               stroke="white"
               tickStroke="white"
               tickLabelProps={() => ({
-                fill: 'white',
+                fill: "white",
                 fontSize: 11,
-                textAnchor: 'middle',
+                textAnchor: "middle",
               })}
             />
             <AxisLeft
@@ -119,10 +121,10 @@ const AverageScoreChart = withTooltip<AverageScoreChartProps, TooltipData>(
               stroke="white"
               tickStroke="white"
               tickLabelProps={() => ({
-                fill: 'white',
+                fill: "white",
                 fontSize: 11,
-                textAnchor: 'end',
-                dy: '0.33em',
+                textAnchor: "end",
+                dy: "0.33em",
               })}
             />
             <LinePath
@@ -150,8 +152,8 @@ const AverageScoreChart = withTooltip<AverageScoreChartProps, TooltipData>(
             left={tooltipLeft}
             style={{
               ...defaultTooltipStyles,
-              backgroundColor: '#283238',
-              color: 'white',
+              backgroundColor: "#283238",
+              color: "white",
             }}
           >
             <div>
@@ -159,14 +161,14 @@ const AverageScoreChart = withTooltip<AverageScoreChartProps, TooltipData>(
                 {(tooltipData as TooltipData).date.toLocaleDateString()}
               </strong>
             </div>
-            <div style={{ marginTop: '5px', fontSize: '12px' }}>
+            <div style={{ marginTop: "5px", fontSize: "12px" }}>
               {`Score: ${(tooltipData as TooltipData).score.toFixed(2)}`}
             </div>
           </Tooltip>
         )}
       </div>
     );
-  }
+  },
 );
 
 const AverageScoreCard: React.FC<AverageScoreCardProps> = ({
@@ -212,13 +214,13 @@ const AverageScoreCard: React.FC<AverageScoreCardProps> = ({
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error('Failed to get authenticated client');
+          throw new Error("Failed to get authenticated client");
         }
         const logs = {};
         // Use the prop data directly instead of processing it again
       } catch (error) {
-        console.error('Error fetching score data:', error);
-        setError('Failed to fetch score data. Please try again later.');
+        console.error("Error fetching score data:", error);
+        setError("Failed to fetch score data. Please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -257,15 +259,15 @@ const AverageScoreCard: React.FC<AverageScoreCardProps> = ({
       </CardHeader>
       <CardContent
         className="pt-0 flex-grow flex flex-col"
-        style={{ minHeight: '300px', maxHeight: '400px' }}
+        style={{ minHeight: "300px", maxHeight: "400px" }}
       >
         <div
           ref={chartRef}
           className="mt-4 flex-grow"
           style={{
-            minHeight: '250px',
-            maxHeight: '350px',
-            aspectRatio: '16 / 9',
+            minHeight: "250px",
+            maxHeight: "350px",
+            aspectRatio: "16 / 9",
           }}
         >
           {isLoading && <p>Loading...</p>}

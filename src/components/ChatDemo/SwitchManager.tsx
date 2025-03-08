@@ -1,6 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
-import { Switch } from '@/types';
+import { Switch } from "@/types";
 
 const useSwitchManager = () => {
   const [switches, setSwitches] = useState<Record<string, Switch>>({});
@@ -10,14 +10,14 @@ const useSwitchManager = () => {
       id: string,
       initialChecked: boolean,
       label: string,
-      tooltipText: string
+      tooltipText: string,
     ) => {
       setSwitches((prevSwitches) => ({
         ...prevSwitches,
         [id]: { checked: initialChecked, label, tooltipText },
       }));
     },
-    []
+    [],
   );
 
   const updateSwitch = useCallback((id: string, checked: boolean) => {

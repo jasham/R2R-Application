@@ -1,9 +1,9 @@
-import { animated, useTransition, interpolate } from '@react-spring/web';
-import { Group } from '@visx/group';
-import { scaleOrdinal } from '@visx/scale';
-import Pie, { ProvidedProps, PieArcDatum } from '@visx/shape/lib/shapes/Pie';
-import { EntityResponse } from 'r2r-js/dist/types';
-import React from 'react';
+import { animated, useTransition, interpolate } from "@react-spring/web";
+import { Group } from "@visx/group";
+import { scaleOrdinal } from "@visx/scale";
+import Pie, { ProvidedProps, PieArcDatum } from "@visx/shape/lib/shapes/Pie";
+import { EntityResponse } from "r2r-js/dist/types";
+import React from "react";
 
 const MIN_PERCENTAGE_THRESHOLD = 0.02;
 
@@ -39,13 +39,13 @@ export default function KnowledgeGraph({
   // Process entities to get category counts
   const categoryMap = new Map<string, number>();
   entities.forEach((entity) => {
-    const category = entity.category || 'Uncategorized';
+    const category = entity.category || "Uncategorized";
     categoryMap.set(category, (categoryMap.get(category) || 0) + 1);
   });
 
   const total = Array.from(categoryMap.values()).reduce(
     (sum, count) => sum + count,
-    0
+    0,
   );
   const categoryData: CategoryCount[] = [];
   let otherCount = 0;
@@ -60,21 +60,21 @@ export default function KnowledgeGraph({
   });
 
   if (otherCount > 0) {
-    categoryData.push({ category: 'Other', count: otherCount });
+    categoryData.push({ category: "Other", count: otherCount });
   }
 
   // Create color scale
   const getColor = scaleOrdinal({
     domain: categoryData.map((d) => d.category),
     range: [
-      '#FF6B6B',
-      '#4ECDC4',
-      '#45B7D1',
-      '#96CEB4',
-      '#FFEEAD',
-      '#D4A5A5',
-      '#9B786F',
-      '#A8E6CF',
+      "#FF6B6B",
+      "#4ECDC4",
+      "#45B7D1",
+      "#96CEB4",
+      "#FFEEAD",
+      "#D4A5A5",
+      "#9B786F",
+      "#A8E6CF",
     ],
   });
 
@@ -85,10 +85,10 @@ export default function KnowledgeGraph({
   const centerX = innerWidth / 2;
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
       {/* Text overlay - positioned absolutely in top left */}
       <div className="absolute top-8 left-8 z-10">
-        <h3 className="text-lg font-medium text-left text-white">
+        <h3 className="text-lg font-medium text-left text-primary">
           Distribution of Entity Categories
         </h3>
         <div className="text-sm text-muted-foreground text-left">
@@ -159,7 +159,7 @@ function AnimatedPie({
         tension: 120,
         friction: 14,
       },
-    }
+    },
   );
 
   return transitions((props, arc, { key }) => {
@@ -177,7 +177,7 @@ function AnimatedPie({
                 ...arc,
                 startAngle,
                 endAngle,
-              })
+              }),
           )}
           fill={getColor(arc)}
         />

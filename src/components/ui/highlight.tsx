@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { HighlightProps } from '@/types';
+import { HighlightProps } from "@/types";
 
 const Highlight: React.FC<HighlightProps> = ({
   color,

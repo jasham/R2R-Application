@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import { GradientPinkRed } from '@visx/gradient';
-import { Group } from '@visx/group';
-import { scaleBand, scaleLinear } from '@visx/scale';
-import { Bar } from '@visx/shape';
+import { GradientPinkRed } from "@visx/gradient";
+import { Group } from "@visx/group";
+import { scaleBand, scaleLinear } from "@visx/scale";
+import { Bar } from "@visx/shape";
 import {
   withTooltip,
   Tooltip,
   defaultStyles as defaultTooltipStyles,
-} from '@visx/tooltip';
-import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip';
-import React, { useState, useEffect, useRef } from 'react';
+} from "@visx/tooltip";
+import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
+import React, { useState, useEffect, useRef } from "react";
 
-import OverlayWrapper from '@/components/OverlayWrapper';
+import OverlayWrapper from "@/components/OverlayWrapper";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from '@/components/ui/card';
-import { brandingConfig } from '@/config/brandingConfig';
-import { useUserContext } from '@/context/UserContext';
+} from "@/components/ui/card";
+import { brandingConfig } from "@/config/brandingConfig";
+import { useUserContext } from "@/context/UserContext";
 
 interface LogEntry {
   run_id: string;
@@ -127,7 +127,7 @@ const ErrorsBarChart = withTooltip<
 
     const maxCount = Math.max(...data.map((d) => d.count), 1);
     if (isNaN(maxCount)) {
-      console.error('Invalid maxCount value:', maxCount);
+      console.error("Invalid maxCount value:", maxCount);
     }
     const yScale = scaleLinear({
       range: [innerHeight, 0],
@@ -139,7 +139,7 @@ const ErrorsBarChart = withTooltip<
     const minBarHeight = 2;
 
     return (
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: "relative" }}>
         <svg
           width="100%"
           height="100%"
@@ -154,7 +154,7 @@ const ErrorsBarChart = withTooltip<
                   ? 0
                   : Math.max(
                       innerHeight - (yScale(d.count) ?? 0),
-                      minBarHeight
+                      minBarHeight,
                     );
               const barX = xScale(d.hour);
               return (
@@ -217,8 +217,8 @@ const ErrorsBarChart = withTooltip<
             left={tooltipLeft}
             style={{
               ...defaultTooltipStyles,
-              backgroundColor: '#283238',
-              color: 'white',
+              backgroundColor: "#283238",
+              color: "white",
             }}
           >
             <div>
@@ -230,7 +230,7 @@ const ErrorsBarChart = withTooltip<
         )}
       </div>
     );
-  }
+  },
 );
 
 const ErrorsCard: React.FC = () => {
@@ -260,14 +260,14 @@ const ErrorsCard: React.FC = () => {
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error('Failed to get authenticated client');
+          throw new Error("Failed to get authenticated client");
         }
         const logs = {};
         const processedData = null;
         setLogData(processedData);
       } catch (error) {
-        console.error('Error fetching log data:', error);
-        setError('Failed to fetch log data. Please try again later.');
+        console.error("Error fetching log data:", error);
+        setError("Failed to fetch log data. Please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -309,15 +309,15 @@ const ErrorsCard: React.FC = () => {
       </CardHeader>
       <CardContent
         className="pt-0 flex-grow flex flex-col"
-        style={{ minHeight: '300px', maxHeight: '400px' }}
+        style={{ minHeight: "300px", maxHeight: "400px" }}
       >
         <div
           ref={chartRef}
           className="mt-4 flex-grow relative"
           style={{
-            minHeight: '250px',
-            maxHeight: '350px',
-            aspectRatio: '16 / 9',
+            minHeight: "250px",
+            maxHeight: "350px",
+            aspectRatio: "16 / 9",
           }}
         >
           {isLoading && <p>Loading...</p>}

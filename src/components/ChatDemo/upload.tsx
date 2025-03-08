@@ -1,18 +1,18 @@
-import { FileUp, PencilLine, Plus } from 'lucide-react';
-import { UnprocessedChunk } from 'r2r-js/dist/types';
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import { FileUp, PencilLine, Plus } from "lucide-react";
+import { UnprocessedChunk } from "r2r-js/dist/types";
+import React, { useState, Dispatch, SetStateAction } from "react";
 
-import { Button } from '@/components/ui/Button';
+import { Button } from "@/components/ui/Button";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from '@/components/ui/popover';
-import { useUserContext } from '@/context/UserContext';
-import { generateIdFromLabel } from '@/lib/utils';
+} from "@/components/ui/popover";
+import { useUserContext } from "@/context/UserContext";
+import { generateIdFromLabel } from "@/lib/utils";
 
-import { CreateDialog } from './CreateDialog';
-import { UploadDialog } from './UploadDialog';
+import { CreateDialog } from "./CreateDialog";
+import { UploadDialog } from "./UploadDialog";
 
 export interface UploadButtonProps {
   setUploadedDocuments: Dispatch<SetStateAction<any[]>>;
@@ -20,7 +20,7 @@ export interface UploadButtonProps {
   showToast?: (message: {
     title: string;
     description: string;
-    variant: 'default' | 'destructive' | 'success';
+    variant: "default" | "destructive" | "success";
   }) => void;
   setPendingDocuments?: Dispatch<SetStateAction<string[]>>;
   setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
@@ -45,7 +45,7 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
     setIsUploading(true);
     const client = await getClient();
     if (!client) {
-      throw new Error('Failed to get authenticated client');
+      throw new Error("Failed to get authenticated client");
     }
 
     const uploadedFiles: any[] = [];
@@ -60,12 +60,12 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
         })
         .catch((err) => {
           showToast({
-            variant: 'destructive',
-            title: 'Upload Failed',
+            variant: "destructive",
+            title: "Upload Failed",
             description:
               err instanceof Error
                 ? err.message
-                : 'An unexpected error occurred',
+                : "An unexpected error occurred",
           });
         });
     }
@@ -81,16 +81,16 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
     }
 
     showToast({
-      variant: 'success',
-      title: 'Upload Started',
-      description: 'Files are being uploaded in the background.',
+      variant: "success",
+      title: "Upload Started",
+      description: "Files are being uploaded in the background.",
     });
 
     if (onUploadSuccess) {
       onUploadSuccess().then((updatedDocuments) => {
         if (updatedDocuments.length > 0 && setCurrentPage && documentsPerPage) {
           const totalPages = Math.ceil(
-            updatedDocuments.length / documentsPerPage
+            updatedDocuments.length / documentsPerPage,
           );
           setCurrentPage(1);
         } else if (setCurrentPage) {
@@ -105,11 +105,11 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
   const handleCreateChunks = async (
     chunks: UnprocessedChunk[],
     documentId?: string,
-    metadata?: Record<string, any>
+    metadata?: Record<string, any>,
   ) => {
     const client = await getClient();
     if (!client) {
-      throw new Error('Failed to get authenticated client');
+      throw new Error("Failed to get authenticated client");
     }
 
     const processedChunks = chunks.map((chunk) => ({
@@ -124,19 +124,19 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
       })
       .catch((error) => {
         showToast({
-          variant: 'destructive',
-          title: 'Creation Failed',
+          variant: "destructive",
+          title: "Creation Failed",
           description:
             error instanceof Error
               ? error.message
-              : 'An unexpected error occurred',
+              : "An unexpected error occurred",
         });
       });
 
     showToast({
-      variant: 'success',
-      title: 'Chunk Creation Started',
-      description: 'Chunks are being created in the background.',
+      variant: "success",
+      title: "Chunk Creation Started",
+      description: "Chunks are being created in the background.",
     });
 
     if (onUploadSuccess) {
@@ -153,13 +153,13 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
             color="primary"
             shape="rounded"
             disabled={isUploading}
-            style={{ zIndex: 20, minWidth: '100px' }}
+            style={{ zIndex: 20, minWidth: "100px" }}
           >
             <Plus className="mr-2 h-4 w-4 mt-1" />
-            {isUploading ? 'Uploading...' : 'New'}
+            {isUploading ? "Uploading..." : "New"}
           </Button>
         </PopoverTrigger>
-        <PopoverContent align="start" className="w-[150px] p-1">
+        <PopoverContent align="start" className="w-[150px] bg-primary p-1">
           <div className="flex flex-col gap-1">
             <Button
               onClick={() => setIsUploadDialogOpen(true)}

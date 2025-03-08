@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from "react";
 
-import Highlight from '@/components/ui/highlight';
-import Pagination from '@/components/ui/pagination';
+import Highlight from "@/components/ui/highlight";
+import Pagination from "@/components/ui/pagination";
 import {
   Table,
   TableBody,
@@ -9,8 +9,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { setColor, setTextColor } from '@/lib/utils';
+} from "@/components/ui/table";
+import { setColor, setTextColor } from "@/lib/utils";
 
 type Log = {
   timestamp: string;
@@ -19,8 +19,8 @@ type Log = {
 };
 
 const LogTable = ({ logs, loading }: { logs: Log[]; loading: boolean }) => {
-  const [sortField, setSortField] = useState<keyof Log>('timestamp');
-  const [sortDirection, setSortDirection] = useState('desc');
+  const [sortField, setSortField] = useState<keyof Log>("timestamp");
+  const [sortDirection, setSortDirection] = useState("desc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -33,10 +33,10 @@ const LogTable = ({ logs, loading }: { logs: Log[]; loading: boolean }) => {
   const sortedLogs = useMemo(() => {
     return [...currentItems].sort((a, b) => {
       if (a[sortField as keyof Log] < b[sortField as keyof Log]) {
-        return sortDirection === 'asc' ? -1 : 1;
+        return sortDirection === "asc" ? -1 : 1;
       }
       if (a[sortField as keyof Log] > b[sortField as keyof Log]) {
-        return sortDirection === 'asc' ? 1 : -1;
+        return sortDirection === "asc" ? 1 : -1;
       }
       return 0;
     });
@@ -71,9 +71,9 @@ const LogTable = ({ logs, loading }: { logs: Log[]; loading: boolean }) => {
                       <TableHead
                         className="w-[200px]"
                         onClick={() => {
-                          setSortField('timestamp');
+                          setSortField("timestamp");
                           setSortDirection(
-                            sortDirection === 'asc' ? 'desc' : 'asc'
+                            sortDirection === "asc" ? "desc" : "asc",
                           );
                         }}
                       >
@@ -82,9 +82,9 @@ const LogTable = ({ logs, loading }: { logs: Log[]; loading: boolean }) => {
                       <TableHead
                         className="w-[100px]"
                         onClick={() => {
-                          setSortField('severity');
+                          setSortField("severity");
                           setSortDirection(
-                            sortDirection === 'asc' ? 'desc' : 'asc'
+                            sortDirection === "asc" ? "desc" : "asc",
                           );
                         }}
                       >
@@ -104,23 +104,23 @@ const LogTable = ({ logs, loading }: { logs: Log[]; loading: boolean }) => {
                         </TableCell>
                       </TableRow>
                     ) : (
-                      ''
+                      ""
                     )}
                     {sortedLogs.map((log, index) => (
                       <TableRow key={index}>
                         <TableCell className="font-mono">
                           {new Date(log.timestamp)
-                            .toLocaleString('en-US', {
-                              month: 'short',
-                              day: '2-digit',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                              second: '2-digit',
+                            .toLocaleString("en-US", {
+                              month: "short",
+                              day: "2-digit",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              second: "2-digit",
                               fractionalSecondDigits: 2,
                               hour12: false,
                             })
                             .toUpperCase()
-                            .replace(',', '')}
+                            .replace(",", "")}
                         </TableCell>
                         <TableCell>
                           <Highlight
@@ -131,7 +131,7 @@ const LogTable = ({ logs, loading }: { logs: Log[]; loading: boolean }) => {
                           </Highlight>
                         </TableCell>
                         <TableCell>
-                          {typeof log.payload === 'object'
+                          {typeof log.payload === "object"
                             ? JSON.stringify(log.payload)
                             : String(log.payload)}
                         </TableCell>

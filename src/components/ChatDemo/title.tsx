@@ -1,7 +1,7 @@
-'use client';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useRouter } from "next/navigation";
 
-import { getSearchUrl } from './utils/get-search-url';
+import { getSearchUrl } from "./utils/get-search-url";
 
 export const Title = ({
   query,

@@ -1,21 +1,21 @@
-import { format, parseISO } from 'date-fns';
-import { Loader } from 'lucide-react';
-import { useRouter } from 'next/router';
-import { CollectionResponse } from 'r2r-js';
-import { useEffect, useState, useCallback } from 'react';
+import { format, parseISO } from "date-fns";
+import { Loader } from "lucide-react";
+import { useRouter } from "next/router";
+import { CollectionResponse } from "r2r-js";
+import { useEffect, useState, useCallback } from "react";
 
-import { DeleteButton } from '@/components/ChatDemo/deleteButton';
-import AssignDocumentToCollectionDialog from '@/components/ChatDemo/utils/AssignDocumentToCollectionDialog';
-import AssignUserToCollectionDialog from '@/components/ChatDemo/utils/AssignUserToCollectionDialog';
-import { Button } from '@/components/ui/Button';
+import { DeleteButton } from "@/components/ChatDemo/deleteButton";
+import AssignDocumentToCollectionDialog from "@/components/ChatDemo/utils/AssignDocumentToCollectionDialog";
+import AssignUserToCollectionDialog from "@/components/ChatDemo/utils/AssignUserToCollectionDialog";
+import { Button } from "@/components/ui/Button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { useToast } from '@/components/ui/use-toast';
-import { useUserContext } from '@/context/UserContext';
+} from "@/components/ui/dialog";
+import { useToast } from "@/components/ui/use-toast";
+import { useUserContext } from "@/context/UserContext";
 
 export interface CollectionDialogProps {
   id: string;
@@ -29,23 +29,23 @@ const handleAssignSuccess = () => {
 
 const formatDate = (dateString: string | undefined) => {
   if (!dateString) {
-    return 'N/A';
+    return "N/A";
   }
   const date = parseISO(dateString);
-  return format(date, 'PPpp');
+  return format(date, "PPpp");
 };
 
 const formatValue = (value: any) => {
   if (value === undefined || value === null) {
-    return 'N/A';
+    return "N/A";
   }
-  if (typeof value === 'boolean') {
-    return value ? 'Yes' : 'No';
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
   }
   if (Array.isArray(value)) {
-    return value.length > 0 ? value.join(', ') : 'N/A';
+    return value.length > 0 ? value.join(", ") : "N/A";
   }
-  if (typeof value === 'object') {
+  if (typeof value === "object") {
     return JSON.stringify(value);
   }
   return value.toString();
@@ -71,7 +71,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error('Failed to get authenticated client');
+        throw new Error("Failed to get authenticated client");
       }
 
       const collection = await client.collections.retrieve({
@@ -82,7 +82,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 
       setCollection(collection.results);
     } catch (error) {
-      console.error('Error fetching document chunks:', error);
+      console.error("Error fetching document chunks:", error);
       return { results: [], totalEntries: 0 };
     }
   }, [getClient, id]);
@@ -95,7 +95,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error('Failed to get authenticated client');
+        throw new Error("Failed to get authenticated client");
       }
 
       client.graphs.pull({
@@ -103,16 +103,16 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
       });
 
       toast({
-        variant: 'success',
-        title: 'Pull Triggered',
-        description: 'Extracted documents are being pulled into the graph',
+        variant: "success",
+        title: "Pull Triggered",
+        description: "Extracted documents are being pulled into the graph",
       });
     } catch (err) {
       toast({
-        variant: 'destructive',
-        title: 'Pull Failed',
+        variant: "destructive",
+        title: "Pull Failed",
         description:
-          err instanceof Error ? err.message : 'An unexpected error occurred',
+          err instanceof Error ? err.message : "An unexpected error occurred",
       });
     }
   };
@@ -121,25 +121,25 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error('Failed to get authenticated client');
+        throw new Error("Failed to get authenticated client");
       }
 
       client.graphs.buildCommunities({
         collectionId: id,
-        runType: 'run',
+        runType: "run",
       });
 
       toast({
-        variant: 'success',
-        title: 'Extraction Started',
-        description: 'The extraction process has been started successfully.',
+        variant: "success",
+        title: "Extraction Started",
+        description: "The extraction process has been started successfully.",
       });
     } catch (err) {
       toast({
-        variant: 'destructive',
-        title: 'Extraction Failed',
+        variant: "destructive",
+        title: "Extraction Failed",
         description:
-          err instanceof Error ? err.message : 'An unexpected error occurred',
+          err instanceof Error ? err.message : "An unexpected error occurred",
       });
     }
   };
@@ -147,7 +147,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
   return (
     <>
       <Dialog open={open} onOpenChange={onClose}>
-        <DialogContent className="text-white max-w-4xl border border-gray-800">
+        <DialogContent className="text-primary max-w-4xl border border-gray-800">
           <div className="mt-4 space-y-4 h-[calc(90vh-120px)] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-300 -mr-4">
             <DialogHeader>
               <DialogTitle className="text-2xl font-bold mb-4 text-gray-100">
@@ -174,11 +174,11 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
                       label="Dates"
                       values={[
                         {
-                          label: 'Created',
+                          label: "Created",
                           value: formatDate(collection.createdAt),
                         },
                         {
-                          label: 'Updated',
+                          label: "Updated",
                           value: formatDate(collection.updatedAt),
                         },
                       ]}
@@ -188,11 +188,11 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
                       label="Access"
                       values={[
                         {
-                          label: 'User Count',
+                          label: "User Count",
                           value: collection.userCount,
                         },
                         {
-                          label: 'Document Count',
+                          label: "Document Count",
                           value: collection.documentCount,
                         },
                       ]}
@@ -201,11 +201,11 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
                       label="Graph"
                       values={[
                         {
-                          label: 'Graph Cluster Status',
+                          label: "Graph Cluster Status",
                           value: collection.graphClusterStatus,
                         },
                         {
-                          label: 'Graph Sync Status',
+                          label: "Graph Sync Status",
                           value: collection.graphSyncStatus,
                         },
                       ]}
@@ -253,7 +253,7 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
                     <DeleteButton
                       collectionId={id}
                       isCollection={true}
-                      onSuccess={() => router.push('/collections')}
+                      onSuccess={() => router.push("/collections")}
                       showToast={toast}
                       selectedDocumentIds={[]}
                       onDelete={() => {}}
@@ -297,18 +297,18 @@ const InfoRow: React.FC<{
     <div
       className={`py-3 border-b border-gray-700/50 ${
         isLongContent
-          ? 'flex flex-col space-y-2'
-          : 'flex items-center justify-between'
+          ? "flex flex-col space-y-2"
+          : "flex items-center justify-between"
       }`}
     >
       <span className="font-medium text-gray-200">{label}</span>
       <div
         className={`text-gray-300 ${
-          isLongContent ? 'mt-2' : 'flex items-center space-x-4'
+          isLongContent ? "mt-2" : "flex items-center space-x-4"
         }`}
       >
         {value !== undefined ? (
-          <span className={isDescription ? 'text-sm leading-relaxed' : ''}>
+          <span className={isDescription ? "text-sm leading-relaxed" : ""}>
             {formatValue(value)}
           </span>
         ) : values ? (
@@ -321,7 +321,7 @@ const InfoRow: React.FC<{
             </span>
           ))
         ) : (
-          'N/A'
+          "N/A"
         )}
       </div>
     </div>

@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Button } from '@/components/ui/Button';
+import { Button } from "@/components/ui/Button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/components/ui/use-toast';
-import { useUserContext } from '@/context/UserContext';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { useUserContext } from "@/context/UserContext";
 
 export enum ContainerType {
-  Collection = 'collection',
-  Graph = 'graph',
+  Collection = "collection",
+  Graph = "graph",
 }
 
 interface containerObjectCreationModalProps {
@@ -31,8 +31,8 @@ const ContainerObjectCreationModal: React.FC<
   const { getClient } = useUserContext();
   const { toast } = useToast();
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [isCreating, setIsCreating] = useState(false);
 
   const capitalizedType =
@@ -41,9 +41,9 @@ const ContainerObjectCreationModal: React.FC<
   const handleCreate = async () => {
     if (!name.trim()) {
       toast({
-        title: 'Validation Error',
+        title: "Validation Error",
         description: `${capitalizedType} name is required.`,
-        variant: 'destructive',
+        variant: "destructive",
       });
       return;
     }
@@ -52,7 +52,7 @@ const ContainerObjectCreationModal: React.FC<
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error('Failed to get authenticated client');
+        throw new Error("Failed to get authenticated client");
       }
 
       const createPayload = {
@@ -63,27 +63,27 @@ const ContainerObjectCreationModal: React.FC<
       if (containerType === ContainerType.Collection) {
         await client.collections.create(createPayload);
       } else {
-        console.log('Creating graph:', createPayload);
+        console.log("Creating graph:", createPayload);
         // await client.graphs.pull(createPayload);
       }
 
       toast({
         title: `${capitalizedType} Created`,
         description: `${capitalizedType} "${name}" has been successfully created.`,
-        variant: 'success',
+        variant: "success",
       });
-      setName('');
-      setDescription('');
+      setName("");
+      setDescription("");
       onClose();
       onCollectionCreated();
     } catch (error: any) {
       console.error(`Error creating ${containerType}:`, error);
       toast({
-        title: 'Error',
+        title: "Error",
         description:
           error?.message ||
           `An unexpected error occurred while creating the ${containerType}.`,
-        variant: 'destructive',
+        variant: "destructive",
       });
     } finally {
       setIsCreating(false);
@@ -92,8 +92,8 @@ const ContainerObjectCreationModal: React.FC<
 
   const handleClose = () => {
     if (!isCreating) {
-      setName('');
-      setDescription('');
+      setName("");
+      setDescription("");
       onClose();
     }
   };
@@ -130,7 +130,7 @@ const ContainerObjectCreationModal: React.FC<
             Cancel
           </Button>
           <Button color="filled" onClick={handleCreate} disabled={isCreating}>
-            {isCreating ? 'Creating...' : 'Create'}
+            {isCreating ? "Creating..." : "Create"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,8 +1,8 @@
-import { SlidersHorizontal } from 'lucide-react';
-import React from 'react';
+import { SlidersHorizontal } from "lucide-react";
+import React from "react";
 
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetContent,
@@ -10,9 +10,9 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import { Slider } from '@/components/ui/slider';
-import { GenerationConfig } from '@/types';
+} from "@/components/ui/sheet";
+import { Slider } from "@/components/ui/slider";
+import { GenerationConfig } from "@/types";
 
 const ConfigurationSheet: React.FC<GenerationConfig> = ({
   temperature,

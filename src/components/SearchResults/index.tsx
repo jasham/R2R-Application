@@ -1,16 +1,16 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState } from "react";
 
-import PdfPreviewDialog from '@/components/ChatDemo/utils/pdfPreviewDialog';
-import { Card, CardContent } from '@/components/ui/card';
+import PdfPreviewDialog from "@/components/ChatDemo/utils/pdfPreviewDialog";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { VectorSearchResult, KGSearchResult } from '@/types';
+} from "@/components/ui/carousel";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { VectorSearchResult, KGSearchResult } from "@/types";
 
 const VectorSearchResultItem: FC<{
   source: VectorSearchResult;
@@ -235,7 +235,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
         </TabsContent>
       </Tabs>
       <PdfPreviewDialog
-        id={pdfPreviewDocumentId || ''}
+        id={pdfPreviewDocumentId || ""}
         open={pdfPreviewOpen}
         onClose={handleClosePdfPreview}
         initialPage={initialPage}

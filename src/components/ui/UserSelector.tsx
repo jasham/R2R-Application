@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import {
   Dialog,
@@ -6,16 +6,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
-import { Button } from './Button';
+import { Button } from "./Button";
 
 interface UserSelectorProps {
   id?: string;
@@ -31,7 +31,7 @@ const UserSelector: React.FC<UserSelectorProps> = ({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleValueChange = (value: string) => {
-    if (value === 'addUser') {
+    if (value === "addUser") {
       setIsDialogOpen(true);
     } else {
       setSelectedUserId(value);
@@ -45,7 +45,7 @@ const UserSelector: React.FC<UserSelectorProps> = ({
   };
 
   const generatePlaceholderUserId = () => {
-    return 'user-' + Math.random().toString(36).substr(2, 9);
+    return "user-" + Math.random().toString(36).substr(2, 9);
   };
 
   return (
@@ -55,9 +55,9 @@ const UserSelector: React.FC<UserSelectorProps> = ({
           <SelectTrigger>
             <SelectValue
               className="w-full"
-              style={{ textAlign: 'left', overflow: 'auto' }}
+              style={{ textAlign: "left", overflow: "auto" }}
             >
-              {selectedUserId || 'Select a user'}
+              {selectedUserId || "Select a user"}
             </SelectValue>
           </SelectTrigger>
           <SelectContent>

@@ -1,40 +1,40 @@
-import { Mercator, Graticule } from '@visx/geo';
-import React, { useEffect, useRef, useState } from 'react';
-import * as topojson from 'topojson-client';
+import { Mercator, Graticule } from "@visx/geo";
+import React, { useEffect, useRef, useState } from "react";
+import * as topojson from "topojson-client";
 
-import OverlayWrapper from '@/components/OverlayWrapper';
+import OverlayWrapper from "@/components/OverlayWrapper";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from '@/components/ui/card';
-import { brandingConfig } from '@/config/brandingConfig';
+} from "@/components/ui/card";
+import { brandingConfig } from "@/config/brandingConfig";
 
-import topology from './world-topo.json';
+import topology from "./world-topo.json";
 
-export const background = '#1e1e1e';
+export const background = "#1e1e1e";
 
 interface FeatureShape {
-  type: 'Feature';
+  type: "Feature";
   id: string;
-  geometry: { coordinates: [number, number][][]; type: 'Polygon' };
+  geometry: { coordinates: [number, number][][]; type: "Polygon" };
   properties: { name: string };
 }
 
 // @ts-expect-error: TypeScript does not recognize the shape of the topojson feature
 const world = topojson.feature(topology, topology.objects.units) as {
-  type: 'FeatureCollection';
+  type: "FeatureCollection";
   features: FeatureShape[];
 };
 
 export const colors: string[] = [
-  '#0d47a1',
-  '#2196f3',
-  '#1565c0',
-  '#1976d2',
-  '#1e88e5',
+  "#0d47a1",
+  "#2196f3",
+  "#1565c0",
+  "#1976d2",
+  "#1e88e5",
 ]; // Blue color palette
 
 // Dummy data for number of users per country
@@ -107,7 +107,7 @@ export default function WorldMapCard() {
         <div
           ref={ref}
           className="w-full h-full"
-          style={{ aspectRatio: '16 / 9' }}
+          style={{ aspectRatio: "16 / 9" }}
         >
           {width > 0 && height > 0 && (
             <OverlayWrapper>
@@ -120,13 +120,13 @@ export default function WorldMapCard() {
                   {(mercator) => (
                     <g>
                       <Graticule
-                        graticule={(g) => mercator.path(g) || ''}
+                        graticule={(g) => mercator.path(g) || ""}
                         stroke="rgba(255,255,255, 0)"
                       />
                       {mercator.features.map(({ feature, path }, i) => (
                         <path
                           key={`map-feature-${i}`}
-                          d={path || ''}
+                          d={path || ""}
                           fill={getColor(feature.id)}
                           stroke={background}
                           strokeWidth={0.5}

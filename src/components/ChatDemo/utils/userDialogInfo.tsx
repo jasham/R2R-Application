@@ -6,9 +6,9 @@ import {
   Edit2,
   Save,
   X,
-} from 'lucide-react';
-import { User } from 'r2r-js';
-import React, { useState, useEffect } from 'react';
+} from "lucide-react";
+import { User } from "r2r-js";
+import React, { useState, useEffect } from "react";
 
 import {
   AlertDialog,
@@ -20,23 +20,23 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/Button';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import CopyableContent from '@/components/ui/CopyableContent';
+} from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/Button";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import CopyableContent from "@/components/ui/CopyableContent";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/components/ui/use-toast';
-import { useUserContext } from '@/context/UserContext';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { useUserContext } from "@/context/UserContext";
 
 interface UserInfoDialogProps {
   id: string;
@@ -46,15 +46,15 @@ interface UserInfoDialogProps {
 
 const formatValue = (value: any) => {
   if (value === undefined || value === null) {
-    return 'N/A';
+    return "N/A";
   }
-  if (typeof value === 'boolean') {
-    return value ? 'Yes' : 'No';
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
   }
   if (Array.isArray(value)) {
-    return value.length > 0 ? value.join(', ') : 'N/A';
+    return value.length > 0 ? value.join(", ") : "N/A";
   }
-  if (typeof value === 'object') {
+  if (typeof value === "object") {
     return JSON.stringify(value);
   }
   return value.toString();
@@ -136,8 +136,8 @@ export const UserInfoDialog: React.FC<UserInfoDialogProps> = ({
     bio: string;
     isSuperuser: boolean;
   }>({
-    name: '',
-    bio: '',
+    name: "",
+    bio: "",
     isSuperuser: false,
   });
 
@@ -151,18 +151,18 @@ export const UserInfoDialog: React.FC<UserInfoDialogProps> = ({
         setLoading(true);
         const client = await getClient();
         if (!client) {
-          throw new Error('Failed to get authenticated client');
+          throw new Error("Failed to get authenticated client");
         }
 
         const user = await client.users.retrieve({ id });
         setUserProfile(user.results);
         setEditedData({
-          name: user.results.name || '',
-          bio: user.results.bio || '',
+          name: user.results.name || "",
+          bio: user.results.bio || "",
           isSuperuser: user.results.isSuperuser || false,
         });
       } catch (error) {
-        console.error('Error fetching user:', error);
+        console.error("Error fetching user:", error);
       } finally {
         setLoading(false);
       }
@@ -173,17 +173,17 @@ export const UserInfoDialog: React.FC<UserInfoDialogProps> = ({
 
   const handleDeleteUser = async () => {
     try {
-      await deleteUser(id, '');
+      await deleteUser(id, "");
       toast({
-        title: 'User Deleted',
-        description: 'The user has been successfully deleted.',
+        title: "User Deleted",
+        description: "The user has been successfully deleted.",
       });
       onClose();
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to delete user. Please try again.',
-        variant: 'destructive',
+        title: "Error",
+        description: "Failed to delete user. Please try again.",
+        variant: "destructive",
       });
     }
   };
@@ -192,22 +192,22 @@ export const UserInfoDialog: React.FC<UserInfoDialogProps> = ({
     try {
       const updatedUser = await updateUser(
         id,
-        { email: userProfile?.email || '', role: 'user' },
+        { email: userProfile?.email || "", role: "user" },
         editedData.name,
         editedData.bio,
-        editedData.isSuperuser
+        editedData.isSuperuser,
       );
       setUserProfile(updatedUser);
       setIsEditing(false);
       toast({
-        title: 'Success',
-        description: 'User information updated successfully.',
+        title: "Success",
+        description: "User information updated successfully.",
       });
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to update user information.',
-        variant: 'destructive',
+        title: "Error",
+        description: "Failed to update user information.",
+        variant: "destructive",
       });
     }
   };
@@ -282,7 +282,7 @@ export const UserInfoDialog: React.FC<UserInfoDialogProps> = ({
                       <>
                         <div className="flex items-center space-x-2">
                           <h2 className="text-xl font-semibold">
-                            {userProfile?.name || 'Unnamed User'}
+                            {userProfile?.name || "Unnamed User"}
                           </h2>
                           {userProfile?.isSuperuser && (
                             <Badge variant="secondary">Admin</Badge>
@@ -308,10 +308,10 @@ export const UserInfoDialog: React.FC<UserInfoDialogProps> = ({
                     <InfoRow
                       label="Account Status"
                       values={[
-                        { label: 'Active', value: userProfile?.isActive },
-                        { label: 'Verified', value: userProfile?.isVerified },
+                        { label: "Active", value: userProfile?.isActive },
+                        { label: "Verified", value: userProfile?.isVerified },
                         {
-                          label: 'Super User',
+                          label: "Super User",
                           value: userProfile?.isSuperuser,
                         },
                       ]}
@@ -321,15 +321,15 @@ export const UserInfoDialog: React.FC<UserInfoDialogProps> = ({
                       label="Account Dates"
                       values={[
                         {
-                          label: 'Created',
+                          label: "Created",
                           value: new Date(
-                            userProfile?.createdAt || ''
+                            userProfile?.createdAt || "",
                           ).toLocaleDateString(),
                         },
                         {
-                          label: 'Updated',
+                          label: "Updated",
                           value: new Date(
-                            userProfile?.updatedAt || ''
+                            userProfile?.updatedAt || "",
                           ).toLocaleDateString(),
                         },
                       ]}

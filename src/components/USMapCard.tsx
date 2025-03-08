@@ -1,28 +1,28 @@
-import { AlbersUsa } from '@visx/geo';
-import { geoCentroid } from '@visx/vendor/d3-geo';
-import React, { useEffect, useRef, useState } from 'react';
-import * as topojson from 'topojson-client';
-import { Topology, GeometryObject } from 'topojson-specification';
+import { AlbersUsa } from "@visx/geo";
+import { geoCentroid } from "@visx/vendor/d3-geo";
+import React, { useEffect, useRef, useState } from "react";
+import * as topojson from "topojson-client";
+import { Topology, GeometryObject } from "topojson-specification";
 
-import OverlayWrapper from '@/components/OverlayWrapper';
+import OverlayWrapper from "@/components/OverlayWrapper";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from '@/components/ui/card';
-import { brandingConfig } from '@/config/brandingConfig';
+} from "@/components/ui/card";
+import { brandingConfig } from "@/config/brandingConfig";
 
-import stateAbbrs from './us-abbr.json';
-import topology from './usa-topo.json';
+import stateAbbrs from "./us-abbr.json";
+import topology from "./usa-topo.json";
 const usaTopology = topology as unknown as Topology<{ states: GeometryObject }>;
 type StateId = keyof typeof stateAbbrs;
 
-export const background = '#1e1e1e';
+export const background = "#1e1e1e";
 
 interface FeatureShape {
-  type: 'Feature';
+  type: "Feature";
   id: string;
   geometry: GeoJSON.MultiPolygon;
   properties: { name: string };
@@ -30,16 +30,16 @@ interface FeatureShape {
 
 const unitedStates = topojson.feature(
   usaTopology,
-  usaTopology.objects.states
+  usaTopology.objects.states,
 ) as GeoJSON.FeatureCollection<GeoJSON.MultiPolygon>;
 const { features } = unitedStates;
 
 export const colors: string[] = [
-  '#0d47a1',
-  '#2196f3',
-  '#1565c0',
-  '#1976d2',
-  '#1e88e5',
+  "#0d47a1",
+  "#2196f3",
+  "#1565c0",
+  "#1976d2",
+  "#1e88e5",
 ]; // Blue color palette
 
 // Dummy data for number of users per state
@@ -79,7 +79,7 @@ const coordOffsets: Record<string, number[]> = {
   TN: [0, 4],
 };
 
-const ignoredStates = ['VT', 'NH', 'MA', 'RI', 'CT', 'NJ', 'DE', 'MD'];
+const ignoredStates = ["VT", "NH", "MA", "RI", "CT", "NJ", "DE", "MD"];
 
 const useDimensions = () => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -139,7 +139,7 @@ export default function USMapCard() {
         <div
           ref={ref}
           className="w-full h-full"
-          style={{ aspectRatio: '16 / 9' }}
+          style={{ aspectRatio: "16 / 9" }}
         >
           {width > 0 && height > 0 && (
             <OverlayWrapper>
@@ -152,12 +152,12 @@ export default function USMapCard() {
                   {({ features }) =>
                     features.map(({ feature, path, projection }, i) => {
                       const coords: [number, number] | null = projection(
-                        geoCentroid(feature)
+                        geoCentroid(feature),
                       );
                       const abbr: string =
                         (feature.id as StateId) in stateAbbrs
                           ? stateAbbrs[feature.id as StateId]
-                          : '';
+                          : "";
 
                       if (coordOffsets[abbr] && coords) {
                         coords[0] += coordOffsets[abbr][0];
@@ -165,16 +165,16 @@ export default function USMapCard() {
                       }
 
                       const stylesObj = {
-                        fill: '#FFF',
-                        fontFamily: 'sans-serif',
-                        cursor: 'default',
+                        fill: "#FFF",
+                        fontFamily: "sans-serif",
+                        cursor: "default",
                       };
 
                       if (ignoredStates.includes(abbr)) {
                         return (
                           <path
                             key={`map-feature-${i}`}
-                            d={path || ''}
+                            d={path || ""}
                             fill={getColor(abbr)}
                             stroke={background}
                             strokeWidth={0.5}
@@ -186,7 +186,7 @@ export default function USMapCard() {
                         <React.Fragment key={`map-feature-${i}`}>
                           <path
                             key={`map-feature-${i}`}
-                            d={path || ''}
+                            d={path || ""}
                             fill={getColor(abbr)}
                             stroke={background}
                             strokeWidth={0.5}

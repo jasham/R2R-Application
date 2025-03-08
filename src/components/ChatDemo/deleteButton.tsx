@@ -1,6 +1,6 @@
-import { Trash2 } from 'lucide-react';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { Trash2 } from "lucide-react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 
 import {
   AlertDialog,
@@ -12,11 +12,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/input';
-import { useUserContext } from '@/context/UserContext';
-import { DeleteButtonProps } from '@/types';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/input";
+import { useUserContext } from "@/context/UserContext";
+import { DeleteButtonProps } from "@/types";
 
 interface ExtendedDeleteButtonProps extends DeleteButtonProps {
   collectionId?: string;
@@ -41,26 +41,26 @@ export const DeleteButton: React.FC<ExtendedDeleteButtonProps> = ({
 }) => {
   const { getClient } = useUserContext();
   const router = useRouter();
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleDelete = async () => {
     try {
       if (isUser) {
         if (!password || !confirmPassword) {
-          setPasswordError('Both password fields are required');
+          setPasswordError("Both password fields are required");
           return;
         }
         if (password !== confirmPassword) {
-          setPasswordError('Passwords do not match');
+          setPasswordError("Passwords do not match");
           return;
         }
       }
 
       const client = await getClient();
       if (!client) {
-        throw new Error('Failed to get authenticated client');
+        throw new Error("Failed to get authenticated client");
       }
 
       if (isCollection && collectionId) {
@@ -68,35 +68,35 @@ export const DeleteButton: React.FC<ExtendedDeleteButtonProps> = ({
           id: collectionId,
         });
         showToast({
-          variant: 'success',
-          title: 'Collection deleted',
-          description: 'The collection has been successfully deleted',
+          variant: "success",
+          title: "Collection deleted",
+          description: "The collection has been successfully deleted",
         });
         onSuccess();
-        router.push('/collections');
+        router.push("/collections");
       } else if (isGraph && graphId) {
         // await client.graphs.reset({
         //   collectionId: graphId,
         // });
         showToast({
-          variant: 'success',
-          title: 'Graph deleted',
-          description: 'The graph has been successfully deleted',
+          variant: "success",
+          title: "Graph deleted",
+          description: "The graph has been successfully deleted",
         });
         onSuccess();
-        router.push('/graphs');
+        router.push("/graphs");
       } else if (isUser && userId && password) {
         await client.users.delete({
           id: userId,
           password: password,
         });
         showToast({
-          variant: 'success',
-          title: 'Account deleted',
-          description: 'Your account has been successfully deleted',
+          variant: "success",
+          title: "Account deleted",
+          description: "Your account has been successfully deleted",
         });
         onSuccess();
-        router.push('/auth/login');
+        router.push("/auth/login");
       } else if (selectedDocumentIds.length > 0) {
         for (const documentId of selectedDocumentIds) {
           await client.documents.delete({
@@ -104,26 +104,26 @@ export const DeleteButton: React.FC<ExtendedDeleteButtonProps> = ({
           });
         }
         showToast({
-          variant: 'success',
-          title: 'Documents deleted',
-          description: 'The selected documents have been successfully deleted',
+          variant: "success",
+          title: "Documents deleted",
+          description: "The selected documents have been successfully deleted",
         });
         onSuccess();
         onDelete();
       }
     } catch (error: unknown) {
-      console.error('Error deleting:', error);
+      console.error("Error deleting:", error);
       if (error instanceof Error) {
         showToast({
-          variant: 'destructive',
-          title: `Failed to delete ${isCollection ? 'collection' : isUser ? 'account' : isGraph ? 'graph' : 'documents'}`,
+          variant: "destructive",
+          title: `Failed to delete ${isCollection ? "collection" : isUser ? "account" : isGraph ? "graph" : "documents"}`,
           description: error.message,
         });
       } else {
         showToast({
-          variant: 'destructive',
-          title: `Failed to delete ${isCollection ? 'collection' : isUser ? 'account' : isGraph ? 'graph' : 'documents'}`,
-          description: 'An unknown error occurred',
+          variant: "destructive",
+          title: `Failed to delete ${isCollection ? "collection" : isUser ? "account" : isGraph ? "graph" : "documents"}`,
+          description: "An unknown error occurred",
         });
       }
     }
@@ -138,20 +138,20 @@ export const DeleteButton: React.FC<ExtendedDeleteButtonProps> = ({
         : selectedDocumentIds.length === 0;
 
   const handleDialogClose = () => {
-    setPassword('');
-    setConfirmPassword('');
-    setPasswordError('');
+    setPassword("");
+    setConfirmPassword("");
+    setPasswordError("");
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          className={`pl-2 pr-2 py-2 px-4 ${isDisabled ? 'cursor-not-allowed' : ''}`}
+          className={`pl-2 pr-2 py-2 px-4 ${isDisabled ? "cursor-not-allowed" : ""}`}
           color="danger"
           shape="rounded"
           disabled={isDisabled}
-          style={{ zIndex: 20, minWidth: '100px' }}
+          style={{ zIndex: 20, minWidth: "100px" }}
         >
           <Trash2 className="mr-2 h-4 w-4 mt-1" />
           Delete
@@ -160,18 +160,18 @@ export const DeleteButton: React.FC<ExtendedDeleteButtonProps> = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure you want to delete{' '}
+            Are you sure you want to delete{" "}
             {isUser
-              ? 'your account'
+              ? "your account"
               : isCollection
-                ? 'the collection'
+                ? "the collection"
                 : isGraph
-                  ? 'the graph'
-                  : 'the selected documents'}
+                  ? "the graph"
+                  : "the selected documents"}
             ?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone.{' '}
+            This action cannot be undone.{" "}
             {isUser ? (
               <div className="mt-4 space-y-4">
                 <p className="text-red-500">
@@ -185,7 +185,7 @@ export const DeleteButton: React.FC<ExtendedDeleteButtonProps> = ({
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
-                      setPasswordError('');
+                      setPasswordError("");
                     }}
                     className="w-full"
                   />
@@ -195,7 +195,7 @@ export const DeleteButton: React.FC<ExtendedDeleteButtonProps> = ({
                     value={confirmPassword}
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);
-                      setPasswordError('');
+                      setPasswordError("");
                     }}
                     className="w-full"
                   />
@@ -207,10 +207,10 @@ export const DeleteButton: React.FC<ExtendedDeleteButtonProps> = ({
             ) : (
               `${
                 isCollection
-                  ? 'The collection'
+                  ? "The collection"
                   : isGraph
-                    ? 'The graph'
-                    : 'The selected documents'
+                    ? "The graph"
+                    : "The selected documents"
               } will be permanently deleted.`
             )}
           </AlertDialogDescription>

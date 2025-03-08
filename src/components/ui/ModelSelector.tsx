@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 import {
   Dialog,
@@ -6,35 +6,35 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { useUserContext } from '@/context/UserContext';
-import { ModelSelectorProps } from '@/types';
+} from "@/components/ui/select";
+import { useUserContext } from "@/context/UserContext";
+import { ModelSelectorProps } from "@/types";
 
-import { Button } from './Button';
+import { Button } from "./Button";
 
 const predefinedModels = [
-  { value: 'gpt-4o-mini', label: 'gpt-4o-mini' },
-  { value: 'gpt-4o', label: 'gpt-4o' },
-  { value: 'ollama/llama3.1', label: 'ollama/llama3.1' },
+  { value: "gpt-4o-mini", label: "gpt-4o-mini" },
+  { value: "gpt-4o", label: "gpt-4o" },
+  { value: "ollama/llama3.1", label: "ollama/llama3.1" },
 ];
 
 const ModelSelector: React.FC<ModelSelectorProps> = ({ id }) => {
   const { selectedModel, setSelectedModel } = useUserContext();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [customModelValue, setCustomModelValue] = useState<string | null>('');
+  const [customModelValue, setCustomModelValue] = useState<string | null>("");
   const [allModels, setAllModels] = useState(predefinedModels);
 
   useEffect(() => {}, [selectedModel, allModels]);
 
   const handleSelectChange = (value: string) => {
-    if (value === 'add_custom') {
+    if (value === "add_custom") {
       setIsDialogOpen(true);
     } else {
       setSelectedModel(value);
@@ -46,7 +46,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ id }) => {
   };
 
   const handleCustomModelSubmit = () => {
-    if (customModelValue !== null && customModelValue.trim() !== '') {
+    if (customModelValue !== null && customModelValue.trim() !== "") {
       const trimmedValue = customModelValue.trim();
       const newModel = { value: trimmedValue, label: trimmedValue };
       setAllModels((prevModels) => [...prevModels, newModel]);
@@ -54,7 +54,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ id }) => {
       setCustomModelValue(null);
       setIsDialogOpen(false);
     } else {
-      console.warn('Attempted to submit empty custom model name');
+      console.warn("Attempted to submit empty custom model name");
     }
   };
 
@@ -85,7 +85,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ id }) => {
           <div>
             <input
               type="text"
-              value={customModelValue ?? ''}
+              value={customModelValue ?? ""}
               onChange={handleCustomModelChange}
               className="mt-2 block w-full py-2 px-3 border border-gray-300 bg-white rounded-2xl shadow-sm focus:outline-none focus:ring-accent-dark focus:border-accent-dark sm:text-sm text-black"
               placeholder="Enter custom model name"

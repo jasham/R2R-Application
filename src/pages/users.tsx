@@ -1,16 +1,16 @@
-import { Loader, UserSearch } from 'lucide-react';
-import { User } from 'r2r-js';
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Loader, UserSearch } from "lucide-react";
+import { User } from "r2r-js";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 
-import Table, { Column } from '@/components/ChatDemo/Table';
-import UserInfoDialog from '@/components/ChatDemo/utils/userDialogInfo';
-import Layout from '@/components/Layout';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/input';
-import { useToast } from '@/components/ui/use-toast';
-import UserForm from '@/components/UserForm';
-import { useUserContext } from '@/context/UserContext';
+import Table, { Column } from "@/components/ChatDemo/Table";
+import UserInfoDialog from "@/components/ChatDemo/utils/userDialogInfo";
+import Layout from "@/components/Layout";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
+import UserForm from "@/components/UserForm";
+import { useUserContext } from "@/context/UserContext";
 
 const PAGE_SIZE = 100;
 const ITEMS_PER_PAGE = 10;
@@ -23,7 +23,7 @@ const Index: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUserID, setSelectedUserID] = useState<string>();
   const [isUserInfoDialogOpen, setIsUserInfoDialogOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isUserFormOpen, setIsUserFormOpen] = useState(false);
 
   const { toast } = useToast();
@@ -37,7 +37,7 @@ const Index: React.FC = () => {
     return users.filter(
       (user) =>
         user.email?.toLowerCase().includes(query) ||
-        user.id?.toLowerCase().includes(query)
+        user.id?.toLowerCase().includes(query),
     );
   }, [users, searchQuery]);
 
@@ -47,7 +47,7 @@ const Index: React.FC = () => {
       setLoading(true);
       const client = await getClient();
       if (!client) {
-        throw new Error('Failed to get authenticated client');
+        throw new Error("Failed to get authenticated client");
       }
 
       let offset = 0;
@@ -95,7 +95,7 @@ const Index: React.FC = () => {
 
       setUsers(allUsers);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error("Error fetching users:", error);
       setLoading(false);
     }
   }, [pipeline?.deploymentUrl, getClient]);
@@ -120,24 +120,24 @@ const Index: React.FC = () => {
 
   const columns: Column<User>[] = [
     {
-      key: 'id',
-      label: 'User ID',
+      key: "id",
+      label: "User ID",
       truncate: true,
       copyable: true,
     },
     {
-      key: 'name',
-      label: 'Name',
-      renderCell: (user) => user.name || 'Unnamed User', // Provides a fallback if name is empty
+      key: "name",
+      label: "Name",
+      renderCell: (user) => user.name || "Unnamed User", // Provides a fallback if name is empty
     },
     {
-      key: 'isSuperuser',
-      label: 'Role',
+      key: "isSuperuser",
+      label: "Role",
       renderCell: (user) =>
         user.isSuperuser ? <Badge variant="secondary">Superuser</Badge> : null,
     },
-    { key: 'email', label: 'Email', copyable: true },
-    { key: 'num_files', label: 'Number of Files' },
+    { key: "email", label: "Email", copyable: true },
+    { key: "num_files", label: "Number of Files" },
   ];
 
   return (
@@ -150,7 +150,7 @@ const Index: React.FC = () => {
             <>
               <div className="mb-6">
                 <div className="flex items-center justify-between">
-                  <h1 className="text-2xl font-bold text-white">Users</h1>
+                  <h1 className="text-2xl font-bold text-primary">Users</h1>
                   <Button onClick={() => setIsUserFormOpen(true)}>
                     Add New User
                   </Button>

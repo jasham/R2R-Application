@@ -5,20 +5,22 @@ import {
   ChevronRight,
   Minus,
   Plus,
-} from 'lucide-react';
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
+} from "lucide-react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
 
-import { Button } from '@/components/ui/Button';
+import { Button } from "@/components/ui/Button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { useUserContext } from '@/context/UserContext';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
+} from "@/components/ui/dialog";
+import { useUserContext } from "@/context/UserContext";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import "react-pdf/dist/esm/Page/TextLayer.css";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const MIN_PDF_WIDTH = 300;
 const MAX_PDF_WIDTH = 800;
@@ -69,7 +71,7 @@ const PdfPreviewDialog: React.FC<PdfPreviewDialogProps> = ({
     y: 0,
   });
   const [scrollStart, setScrollStart] = useState<{ left: number; top: number }>(
-    { left: 0, top: 0 }
+    { left: 0, top: 0 },
   );
 
   const zoomIn = () => {
@@ -85,7 +87,7 @@ const PdfPreviewDialog: React.FC<PdfPreviewDialogProps> = ({
   };
 
   useEffect(() => {
-    pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
+    pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.js";
   }, []);
 
   useEffect(() => {
@@ -94,7 +96,7 @@ const PdfPreviewDialog: React.FC<PdfPreviewDialogProps> = ({
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error('Failed to get authenticated client');
+          throw new Error("Failed to get authenticated client");
         }
 
         const blob = await client.documents.download({ id: id });
@@ -102,7 +104,7 @@ const PdfPreviewDialog: React.FC<PdfPreviewDialogProps> = ({
         setCurrentPage(initialPage);
         setZoom(1);
       } catch (error) {
-        console.error('Error fetching PDF:', error);
+        console.error("Error fetching PDF:", error);
         setPdfBlob(null);
       } finally {
         setLoading(false);
@@ -162,7 +164,7 @@ const PdfPreviewDialog: React.FC<PdfPreviewDialogProps> = ({
     const baseScale = Math.min(
       availableWidth / pdfWidth,
       availableHeight / pdfHeight,
-      1
+      1,
     );
 
     return baseScale * zoom;
@@ -180,7 +182,7 @@ const PdfPreviewDialog: React.FC<PdfPreviewDialogProps> = ({
         left: containerRef.current.scrollLeft,
         top: containerRef.current.scrollTop,
       });
-      containerRef.current.style.cursor = 'grabbing';
+      containerRef.current.style.cursor = "grabbing";
     }
   };
 
@@ -196,21 +198,21 @@ const PdfPreviewDialog: React.FC<PdfPreviewDialogProps> = ({
       containerRef.current.scrollLeft = scrollStart.left - deltaX;
       containerRef.current.scrollTop = scrollStart.top - deltaY;
     },
-    [isDragging, dragStart, scrollStart]
+    [isDragging, dragStart, scrollStart],
   );
 
   const handleMouseUp = useCallback(() => {
     if (containerRef.current) {
       setIsDragging(false);
       // Revert cursor to default
-      containerRef.current.style.cursor = 'grab';
+      containerRef.current.style.cursor = "grab";
     }
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     if (isDragging && containerRef.current) {
       setIsDragging(false);
-      containerRef.current.style.cursor = 'grab';
+      containerRef.current.style.cursor = "grab";
     }
   }, [isDragging]);
 
@@ -223,7 +225,7 @@ const PdfPreviewDialog: React.FC<PdfPreviewDialogProps> = ({
         left: containerRef.current.scrollLeft,
         top: containerRef.current.scrollTop,
       });
-      containerRef.current.style.cursor = 'grabbing';
+      containerRef.current.style.cursor = "grabbing";
     }
   };
 
@@ -240,35 +242,35 @@ const PdfPreviewDialog: React.FC<PdfPreviewDialogProps> = ({
       containerRef.current.scrollLeft = scrollStart.left - deltaX;
       containerRef.current.scrollTop = scrollStart.top - deltaY;
     },
-    [isDragging, dragStart, scrollStart]
+    [isDragging, dragStart, scrollStart],
   );
 
   const handleTouchEnd = useCallback(() => {
     if (containerRef.current) {
       setIsDragging(false);
-      containerRef.current.style.cursor = 'grab';
+      containerRef.current.style.cursor = "grab";
     }
   }, []);
 
   useEffect(() => {
     if (isDragging) {
       // Add event listeners
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-      window.addEventListener('touchmove', handleTouchMove, { passive: false });
-      window.addEventListener('touchend', handleTouchEnd);
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+      window.addEventListener("touchmove", handleTouchMove, { passive: false });
+      window.addEventListener("touchend", handleTouchEnd);
 
       // Prevent default behavior to avoid scrolling during touch drag
       const preventDefault = (e: TouchEvent) => e.preventDefault();
-      window.addEventListener('touchmove', preventDefault, { passive: false });
+      window.addEventListener("touchmove", preventDefault, { passive: false });
 
       return () => {
         // Clean up event listeners
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
-        window.removeEventListener('touchmove', handleTouchMove);
-        window.removeEventListener('touchend', handleTouchEnd);
-        window.removeEventListener('touchmove', preventDefault);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
+        window.removeEventListener("touchmove", handleTouchMove);
+        window.removeEventListener("touchend", handleTouchEnd);
+        window.removeEventListener("touchmove", preventDefault);
       };
     }
   }, [
@@ -321,8 +323,8 @@ const PdfPreviewDialog: React.FC<PdfPreviewDialogProps> = ({
                 maxHeight: `${MAX_PDF_HEIGHT}px`,
                 width: `${MAX_PDF_WIDTH}px`,
                 height: `${MAX_PDF_HEIGHT}px`,
-                cursor: isDragging ? 'grabbing' : 'grab',
-                userSelect: isDragging ? 'none' : 'auto',
+                cursor: isDragging ? "grabbing" : "grab",
+                userSelect: isDragging ? "none" : "auto",
               }}
               onMouseDown={handleMouseDown}
               onMouseLeave={handleMouseLeave}

@@ -1,12 +1,12 @@
 // Anonymized telemetry data is sent to PostHog to help us improve the product. You can disable this by setting the R2R_DASHBOARD_DISABLE_TELEMETRY environment variable to 'true'.
 
-import posthog from 'posthog-js';
+import posthog from "posthog-js";
 
-const posthogApiKey = 'phc_OPBbibOIErCGc4NDLQsOrMuYFTKDmRwXX6qxnTr6zpU';
-const posthogHost = 'https://us.i.posthog.com';
+const posthogApiKey = "phc_OPBbibOIErCGc4NDLQsOrMuYFTKDmRwXX6qxnTr6zpU";
+const posthogHost = "https://us.i.posthog.com";
 
 function initializePostHog() {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return;
   }
 
@@ -15,7 +15,7 @@ function initializePostHog() {
     autocapture: true,
   });
 
-  if (window.__RUNTIME_CONFIG__?.R2R_DASHBOARD_DISABLE_TELEMETRY === 'true') {
+  if (window.__RUNTIME_CONFIG__?.R2R_DASHBOARD_DISABLE_TELEMETRY === "true") {
     posthog.opt_out_capturing();
   }
 }

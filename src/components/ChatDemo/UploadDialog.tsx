@@ -1,15 +1,15 @@
-import { Upload, X } from 'lucide-react';
-import React, { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { Upload, X } from "lucide-react";
+import React, { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
 
-import { Button } from '@/components/ui/Button';
+import { Button } from "@/components/ui/Button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { UploadDialogProps } from '@/types';
+} from "@/components/ui/dialog";
+import { UploadDialogProps } from "@/types";
 
 export const UploadDialog: React.FC<UploadDialogProps> = ({
   isOpen,
@@ -24,7 +24,7 @@ export const UploadDialog: React.FC<UploadDialogProps> = ({
         const isDuplicate = prevFiles.some(
           (existingFile) =>
             existingFile.name === newFile.name &&
-            existingFile.size === newFile.size
+            existingFile.size === newFile.size,
         );
         return !isDuplicate;
       });
@@ -56,7 +56,7 @@ export const UploadDialog: React.FC<UploadDialogProps> = ({
         <div
           {...getRootProps()}
           className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer ${
-            isDragActive ? 'border-accent-dark bg-indigo-50' : 'border-gray-300'
+            isDragActive ? "border-accent-dark bg-indigo-50" : "border-gray-300"
           }`}
         >
           <input {...getInputProps()} />
@@ -96,7 +96,7 @@ export const UploadDialog: React.FC<UploadDialogProps> = ({
           onClick={handleUpload}
           disabled={files.length === 0}
           className={`mt-4 py-2 px-4 rounded-full transition-colors`}
-          color={files.length === 0 ? 'disabled' : 'filled'}
+          color={files.length === 0 ? "disabled" : "filled"}
         >
           Upload
         </Button>

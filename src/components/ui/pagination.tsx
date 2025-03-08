@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/input';
-import debounce from '@/lib/debounce';
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/input";
+import debounce from "@/lib/debounce";
 
 interface PaginationProps {
   currentPage: number;
@@ -29,7 +29,7 @@ const Pagination: React.FC<PaginationProps> = ({
         onPageChange(page);
       }
     }, 300),
-    [onPageChange, totalPages, isLoading]
+    [onPageChange, totalPages, isLoading],
   );
 
   const handlePageChange = (newPage: number) => {
@@ -52,7 +52,7 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleInputBlur();
     }
   };
@@ -62,7 +62,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <Button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage <= 1 || isLoading}
-        color={currentPage <= 1 || isLoading ? 'disabled' : 'filled'}
+        color={currentPage <= 1 || isLoading ? "disabled" : "filled"}
         className="px-4 py-2 mx-1 w-32"
         aria-label="Previous page"
       >
@@ -82,7 +82,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <Button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage >= totalPages || isLoading}
-        color={currentPage >= totalPages || isLoading ? 'disabled' : 'filled'}
+        color={currentPage >= totalPages || isLoading ? "disabled" : "filled"}
         className="px-4 py-2 mx-1 w-32"
         aria-label="Next page"
       >

@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import { AxisLeft, AxisBottom } from '@visx/axis';
-import { curveMonotoneX } from '@visx/curve';
-import { localPoint } from '@visx/event';
-import { Group } from '@visx/group';
-import { scaleTime, scaleLinear } from '@visx/scale';
-import { LinePath } from '@visx/shape';
+import { AxisLeft, AxisBottom } from "@visx/axis";
+import { curveMonotoneX } from "@visx/curve";
+import { localPoint } from "@visx/event";
+import { Group } from "@visx/group";
+import { scaleTime, scaleLinear } from "@visx/scale";
+import { LinePath } from "@visx/shape";
 import {
   withTooltip,
   Tooltip,
   defaultStyles as defaultTooltipStyles,
-} from '@visx/tooltip';
-import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip';
-import { bisector } from 'd3-array';
-import React, { useState, useEffect, useRef } from 'react';
+} from "@visx/tooltip";
+import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
+import { bisector } from "d3-array";
+import React, { useState, useEffect, useRef } from "react";
 
-import OverlayWrapper from '@/components/OverlayWrapper';
+import OverlayWrapper from "@/components/OverlayWrapper";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from '@/components/ui/card';
-import { useUserContext } from '@/context/UserContext';
+} from "@/components/ui/card";
+import { useUserContext } from "@/context/UserContext";
 
 // Example data (you can replace this with your actual data)
 const exampleData = Array.from({ length: 7 }, (_, i) => ({
@@ -87,7 +87,9 @@ const WAUChart = withTooltip<WAUChartProps, TooltipData>(
 
     // Handler for tooltip
     const handleTooltip = (
-      event: React.TouchEvent<SVGRectElement> | React.MouseEvent<SVGRectElement>
+      event:
+        | React.TouchEvent<SVGRectElement>
+        | React.MouseEvent<SVGRectElement>,
     ) => {
       const { x } = localPoint(event) || { x: 0 };
       const x0 = xScale.invert(x - margin.left);
@@ -110,7 +112,7 @@ const WAUChart = withTooltip<WAUChartProps, TooltipData>(
     };
 
     return width < 10 ? null : (
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: "relative" }}>
         <svg width={width} height={height}>
           <Group left={margin.left} top={margin.top}>
             <AxisBottom
@@ -119,9 +121,9 @@ const WAUChart = withTooltip<WAUChartProps, TooltipData>(
               stroke="white"
               tickStroke="white"
               tickLabelProps={() => ({
-                fill: 'white',
+                fill: "white",
                 fontSize: 11,
-                textAnchor: 'middle',
+                textAnchor: "middle",
               })}
             />
             <AxisLeft
@@ -129,10 +131,10 @@ const WAUChart = withTooltip<WAUChartProps, TooltipData>(
               stroke="white"
               tickStroke="white"
               tickLabelProps={() => ({
-                fill: 'white',
+                fill: "white",
                 fontSize: 11,
-                textAnchor: 'end',
-                dy: '0.33em',
+                textAnchor: "end",
+                dy: "0.33em",
               })}
             />
             <LinePath
@@ -160,8 +162,8 @@ const WAUChart = withTooltip<WAUChartProps, TooltipData>(
             left={tooltipLeft}
             style={{
               ...defaultTooltipStyles,
-              backgroundColor: '#283238',
-              color: 'white',
+              backgroundColor: "#283238",
+              color: "white",
             }}
           >
             <div>
@@ -169,14 +171,14 @@ const WAUChart = withTooltip<WAUChartProps, TooltipData>(
                 {(tooltipData as TooltipData).date.toLocaleDateString()}
               </strong>
             </div>
-            <div style={{ marginTop: '5px', fontSize: '12px' }}>
+            <div style={{ marginTop: "5px", fontSize: "12px" }}>
               {`Users: ${(tooltipData as TooltipData).count}`}
             </div>
           </Tooltip>
         )}
       </div>
     );
-  }
+  },
 );
 
 const WAUCard: React.FC = () => {
@@ -200,13 +202,13 @@ const WAUCard: React.FC = () => {
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error('Failed to get authenticated client');
+          throw new Error("Failed to get authenticated client");
         }
         const logs = {};
         // Process logs into suitable data format here
       } catch (error) {
-        console.error('Error fetching log data:', error);
-        setError('Failed to fetch log data. Please try again later.');
+        console.error("Error fetching log data:", error);
+        setError("Failed to fetch log data. Please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -247,15 +249,15 @@ const WAUCard: React.FC = () => {
       </CardHeader>
       <CardContent
         className="pt-0 flex-grow flex flex-col"
-        style={{ minHeight: '300px', maxHeight: '400px' }}
+        style={{ minHeight: "300px", maxHeight: "400px" }}
       >
         <div
           ref={chartRef}
           className="mt-4 flex-grow"
           style={{
-            minHeight: '250px',
-            maxHeight: '350px',
-            aspectRatio: '16 / 9',
+            minHeight: "250px",
+            maxHeight: "350px",
+            aspectRatio: "16 / 9",
           }}
         >
           {isLoading && <p>Loading...</p>}

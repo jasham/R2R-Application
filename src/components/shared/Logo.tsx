@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
-import { brandingConfig } from '@/config/brandingConfig';
+import { brandingConfig } from "@/config/brandingConfig";
 
 interface LogoProps {
   width?: number;
@@ -15,7 +15,7 @@ interface LogoProps {
 export function Logo({
   width = 25,
   height = 25,
-  className = '',
+  className = "",
   onClick,
   disableLink = false,
   ...rest
@@ -40,7 +40,7 @@ export function Logo({
   );
 
   const combinedClassName =
-    `${className} ${disableLink ? 'cursor-default' : 'cursor-pointer'}`.trim();
+    `${className} ${disableLink ? "cursor-default" : "cursor-pointer"}`.trim();
 
   if (disableLink) {
     return (

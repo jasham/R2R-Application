@@ -130,9 +130,10 @@
 
     /* ✅ Light Theme (Default) */
     --bg-primary: #ffffff; /* Navbar background */
-    --bg-secondary: #ffffff;
+    --bg-secondary: #f1efef;
     --text-primary: #000000; /* Black text */
     --text-secondary: #3d3935;
+    --text-grey: #b6b6b6;
     --border-color: #d6d5d5;
     --accent-color: #16A085;
     --link-color: #2563eb;
@@ -165,6 +166,7 @@
     --bg-secondary: #2c2a2a;
     --text-primary: #ffffff; /* White text */
     --text-secondary: #a5a3a3;
+    --text-grey: #cbcbcb;
     --border-color: #282626;
     --accent-color: #16A085;
     --link-color: #818cf8;
@@ -178,7 +180,7 @@
     /* ✅ Cards & Buttons */
     --card-bg: #2c2a2a;
     --card-text: #fafafa;
-    --button-bg: #7b4dc6;
+    --button-bg: #019f69;
     --button-text: #ffffff;
 
     --accent-lighter: #b3edd7;
@@ -193,6 +195,32 @@
     @apply bg-primary text-primary;
   }
 }
+
+@layer utilities {
+  .searching-animation {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--text-primary) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: searchingAnimation 4s forwards;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--text-primary);
+  }
+
+  @keyframes searchingAnimation {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+}
+
 
 * {
   padding: 0;
@@ -231,7 +259,7 @@ a {
   }
 }
 
-.searching-animation {
+/* .searching-animation {
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -242,14 +270,14 @@ a {
   animation: searchingAnimation 4s forwards;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
+} */
 
 .main-content-wrapper {
-  position: fixed;
   top: var(--header-height);
   left: var(--sidebar-width);
   right: 0;
   bottom: 0;
+  height:95vh;
   transition: left 0.2s ease-in-out;
   display: flex;
   justify-content: center;

@@ -1,19 +1,19 @@
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import React, { useState } from 'react';
+import { ChevronDown, ChevronUp } from "lucide-react";
+import React, { useState } from "react";
 
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Entity, Community, Triple } from '@/types';
+} from "@/components/ui/dialog";
+import { Entity, Community, Triple } from "@/types";
 
 interface KGDescriptionDialogProps {
   open: boolean;
   onClose: () => void;
   item: Entity | Community | Triple | null;
-  type: 'entity' | 'community' | 'triple';
+  type: "entity" | "community" | "triple";
 }
 
 const InfoRow: React.FC<{
@@ -25,19 +25,19 @@ const InfoRow: React.FC<{
     <span className="font-medium text-gray-200">{label}:</span>
     <span className="text-gray-300 flex items-center space-x-4">
       {value !== undefined
-        ? typeof value === 'object'
+        ? typeof value === "object"
           ? JSON.stringify(value)
-          : String(value) || 'N/A'
+          : String(value) || "N/A"
         : values
           ? values.map((item, index) => (
               <span key={index} className="flex items-center">
                 {item.label && (
                   <span className="mr-1 text-gray-400">{item.label}:</span>
                 )}
-                <span>{String(item.value) || 'N/A'}</span>
+                <span>{String(item.value) || "N/A"}</span>
               </span>
             ))
-          : 'N/A'}
+          : "N/A"}
     </span>
   </div>
 );
@@ -179,7 +179,7 @@ const KGDescriptionDialog: React.FC<KGDescriptionDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="text-white max-w-4xl">
+      <DialogContent className="text-primary max-w-4xl">
         <div className="mt-4 space-y-2 h-[calc(90vh-120px)] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-300 -mr-4">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold mb-2">
@@ -187,9 +187,9 @@ const KGDescriptionDialog: React.FC<KGDescriptionDialogProps> = ({
             </DialogTitle>
           </DialogHeader>
 
-          {type === 'entity' && renderEntityContent(item as Entity)}
-          {type === 'community' && renderCommunityContent(item as Community)}
-          {type === 'triple' && renderTripleContent(item as Triple)}
+          {type === "entity" && renderEntityContent(item as Entity)}
+          {type === "community" && renderCommunityContent(item as Community)}
+          {type === "triple" && renderTripleContent(item as Triple)}
         </div>
       </DialogContent>
     </Dialog>

@@ -1,11 +1,11 @@
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
-import { forwardRef, useEffect, useState, ReactNode } from 'react';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
+import { forwardRef, useEffect, useState, ReactNode } from "react";
 
-import { Logo } from '@/components/shared/Logo';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/Button';
+import { Logo } from "@/components/shared/Logo";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,11 +13,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { brandingConfig } from '@/config/brandingConfig';
-import { useUserContext } from '@/context/UserContext';
-import { NavbarProps, NavItemsProps } from '@/types';
-import ThemeToggle from './ThemeToggle';
+} from "@/components/ui/dropdown-menu";
+import { brandingConfig } from "@/config/brandingConfig";
+import { useUserContext } from "@/context/UserContext";
+import { NavbarProps, NavItemsProps } from "@/types";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavItemProps {
   href: string;
@@ -29,7 +29,7 @@ const NavItem: React.FC<NavItemProps> = ({ href, children, isActive }) => (
   <Link
     href={href}
     className={`px-2 py-1 text-sm font-medium ${
-      isActive ? 'text-accent' : 'text-secondary hover:text-primary'
+      isActive ? "text-accent" : "text-secondary hover:text-primary"
     }`}
   >
     {children}
@@ -42,59 +42,59 @@ const NavItems: React.FC<NavItemsProps> = ({
   pathname,
 }) => {
   const homeItem = {
-    path: '/',
-    label: 'Home',
+    path: "/",
+    label: "Home",
     show: brandingConfig.navbar.menuItems.home,
   };
 
   const commonItems = [
     {
-      path: '/documents',
-      label: 'Documents',
+      path: "/documents",
+      label: "Documents",
       show: brandingConfig.navbar.menuItems.documents,
     },
     {
-      path: '/collections',
-      label: 'Collections',
+      path: "/collections",
+      label: "Collections",
       show: brandingConfig.navbar.menuItems.collections,
     },
     {
-      path: '/chat',
-      label: 'Chat',
+      path: "/chat",
+      label: "Chat",
       show: brandingConfig.navbar.menuItems.chat,
     },
     {
-      path: '/search',
-      label: 'Search',
+      path: "/search",
+      label: "Search",
       show: brandingConfig.navbar.menuItems.search,
     },
   ];
 
   const adminItems = [
     {
-      path: '/users',
-      label: 'Users',
+      path: "/users",
+      label: "Users",
       show: brandingConfig.navbar.menuItems.users,
     },
     {
-      path: '/logs',
-      label: 'Logs',
+      path: "/logs",
+      label: "Logs",
       show: brandingConfig.navbar.menuItems.logs,
     },
     {
-      path: '/analytics',
-      label: 'Analytics',
+      path: "/analytics",
+      label: "Analytics",
       show: brandingConfig.navbar.menuItems.analytics,
     },
     {
-      path: '/settings',
-      label: 'Settings',
+      path: "/settings",
+      label: "Settings",
       show: brandingConfig.navbar.menuItems.settings,
     },
   ];
 
   const items =
-    role === 'admin'
+    role === "admin"
       ? [homeItem, ...commonItems, ...adminItems]
       : [...commonItems];
 
@@ -121,7 +121,7 @@ const NavItems: React.FC<NavItemsProps> = ({
   );
 };
 
-export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
+export const Navbar = forwardRef<React.ElementRef<"nav">, NavbarProps>(
   function Header({ className }, ref) {
     const pathname = usePathname();
     const {
@@ -136,18 +136,18 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
     const [isSignedIn, setIsSignedIn] = useState(false);
 
     useEffect(() => {
-      const savedAuth = localStorage.getItem('authState');
+      const savedAuth = localStorage.getItem("authState");
       if (savedAuth && !isAuthenticated) {
         const authData = JSON.parse(savedAuth);
       }
       setIsSignedIn(isAuthenticated);
     }, [isAuthenticated]);
 
-    const role = viewMode === 'user' ? 'user' : authState.userRole || 'user';
+    const role = viewMode === "user" ? "user" : authState.userRole || "user";
 
     const handleLogout = async () => {
       await logout();
-      router.push('/auth/login');
+      router.push("/auth/login");
     };
 
     return (
@@ -156,7 +156,7 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
           <div className="flex justify-between h-14 items-center">
             <div className="flex items-center space-x-4">
               <Link
-                href={isSuperUser() ? '/' : '/documents'}
+                href={isSuperUser() ? "/" : "/documents"}
                 className="flex-shrink-0 flex items-center"
               >
                 <Logo className="h-12 w-auto" />
@@ -176,13 +176,13 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
               )}
             </div>
             <div className="flex items-center space-x-4">
-              <ThemeToggle/>
+              <ThemeToggle />
               {brandingConfig.navbar.showDocsButton && (
                 <Button
                   color="primary"
                   shape="outline_wide"
                   onClick={() =>
-                    window.open('https://r2r-docs.sciphi.ai', '_blank')
+                    window.open("https://r2r-docs.sciphi.ai", "_blank")
                   }
                 >
                   Docs
@@ -200,7 +200,7 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
                   <DropdownMenuContent>
                     <DropdownMenuItem
                       className="cursor-pointer"
-                      onClick={() => router.push('/account')}
+                      onClick={() => router.push("/account")}
                     >
                       Account
                     </DropdownMenuItem>
@@ -219,7 +219,7 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
         </div>
       </nav>
     );
-  }
+  },
 );
 
-Navbar.displayName = 'Navbar';
+Navbar.displayName = "Navbar";

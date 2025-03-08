@@ -79,6 +79,7 @@ module.exports = {
       textColor: {
         primary: 'var(--text-primary)',
         secondary: 'var(--text-secondary)',
+        grey: 'var(--text-grey)',
         accent: 'var(--accent-color)',
         link: 'var(--link-color)',
         'link-hover': 'var(--link-hover)',

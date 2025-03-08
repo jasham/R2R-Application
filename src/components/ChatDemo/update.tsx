@@ -1,8 +1,8 @@
-'use client';
-import React, { useState, useRef, FormEvent, ChangeEvent } from 'react';
+"use client";
+import React, { useState, useRef, FormEvent, ChangeEvent } from "react";
 
-import { useUserContext } from '@/context/UserContext';
-import { UpdateButtonProps } from '@/types';
+import { useUserContext } from "@/context/UserContext";
+import { UpdateButtonProps } from "@/types";
 
 export const UpdateButton: React.FC<UpdateButtonProps> = ({
   id,
@@ -14,7 +14,7 @@ export const UpdateButton: React.FC<UpdateButtonProps> = ({
   const { getClient } = useUserContext();
 
   const handleDocumentUpdate = async (
-    event: FormEvent<HTMLFormElement> | ChangeEvent<HTMLInputElement>
+    event: FormEvent<HTMLFormElement> | ChangeEvent<HTMLInputElement>,
   ) => {
     event.preventDefault();
     if (
@@ -28,7 +28,7 @@ export const UpdateButton: React.FC<UpdateButtonProps> = ({
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error('Failed to get authenticated client');
+          throw new Error("Failed to get authenticated client");
         }
 
         const metadata = { title: file.name };
@@ -41,26 +41,26 @@ export const UpdateButton: React.FC<UpdateButtonProps> = ({
           metadata: [metadata],
         });
         showToast({
-          variant: 'success',
-          title: 'Upload Successful',
-          description: 'All files have been uploaded successfully.',
+          variant: "success",
+          title: "Upload Successful",
+          description: "All files have been uploaded successfully.",
         });
         onUpdateSuccess();
       } catch (error: unknown) {
-        console.error('Error updating file:', error);
-        let errorMessage = 'An unknown error occurred';
+        console.error("Error updating file:", error);
+        let errorMessage = "An unknown error occurred";
         if (error instanceof Error) {
           errorMessage = error.message;
         }
         showToast({
-          variant: 'destructive',
-          title: 'Upload Failed',
+          variant: "destructive",
+          title: "Upload Failed",
           description: errorMessage,
         });
       } finally {
         setIsUpdating(false);
         if (fileInputRef.current) {
-          fileInputRef.current.value = '';
+          fileInputRef.current.value = "";
         }
       }
     }
@@ -78,7 +78,7 @@ export const UpdateButton: React.FC<UpdateButtonProps> = ({
         <input
           type="file"
           ref={fileInputRef}
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           onChange={handleDocumentUpdate}
         />
         <button
@@ -87,11 +87,11 @@ export const UpdateButton: React.FC<UpdateButtonProps> = ({
           disabled={isUpdating}
           className={`${
             isUpdating
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'hover:bg-indigo-700 bg-accent-dark'
-          } text-white font-bold py-1 px-2 rounded`}
+              ? "bg-gray-400 cursor-not-allowed"
+              : "hover:bg-indigo-700 bg-accent-dark"
+          } text-primary font-bold py-1 px-2 rounded`}
         >
-          {isUpdating ? <span className="animate-spin">↻</span> : '↺'}
+          {isUpdating ? <span className="animate-spin">↻</span> : "↺"}
         </button>
       </form>
     </div>

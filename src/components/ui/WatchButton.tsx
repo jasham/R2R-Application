@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/Button';
+import { Button } from "@/components/ui/Button";
 
 type WatchButtonProps = {
   isLoading: boolean;
@@ -18,11 +18,11 @@ function WatchButton({
   return (
     <Button
       onClick={onClick}
-      className={`w-1/3 h-8 py-1 ${isDisabled ? 'cursor-not-allowed' : ''}`}
+      className={`w-1/3 h-8 py-1 ${isDisabled ? "cursor-not-allowed" : ""}`}
       color="primary"
       disabled={isDisabled}
     >
-      {isLoading ? 'Watching...' : 'Watch'}
+      {isLoading ? "Watching..." : "Watch"}
     </Button>
   );
 }

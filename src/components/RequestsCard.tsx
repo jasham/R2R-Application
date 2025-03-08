@@ -1,18 +1,18 @@
-'use client';
-import { localPoint } from '@visx/event';
-import { GradientTealBlue } from '@visx/gradient';
-import { Group } from '@visx/group';
-import { scaleBand, scaleLinear } from '@visx/scale';
-import { Bar } from '@visx/shape';
+"use client";
+import { localPoint } from "@visx/event";
+import { GradientTealBlue } from "@visx/gradient";
+import { Group } from "@visx/group";
+import { scaleBand, scaleLinear } from "@visx/scale";
+import { Bar } from "@visx/shape";
 import {
   withTooltip,
   Tooltip,
   defaultStyles as defaultTooltipStyles,
-} from '@visx/tooltip';
-import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip';
-import { Loader } from 'lucide-react';
-import { useRouter } from 'next/router';
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+} from "@visx/tooltip";
+import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
+import { Loader } from "lucide-react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 
 import {
   Card,
@@ -20,8 +20,8 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from '@/components/ui/card';
-import { useUserContext } from '@/context/UserContext';
+} from "@/components/ui/card";
+import { useUserContext } from "@/context/UserContext";
 
 interface LogEntry {
   run_id: string;
@@ -75,25 +75,25 @@ const formatTickLabel = (value: number): string => {
 const processLogData = (logs: LogData): BucketData[] => {
   const utcNow = new Date();
   const twentyFourHoursAgo = new Date(
-    utcNow.getTime() - HOURS_TO_SHOW * 60 * 60 * 1000
+    utcNow.getTime() - HOURS_TO_SHOW * 60 * 60 * 1000,
   );
 
   const buckets: BucketData[] = Array.from(
     { length: BUCKETS_COUNT },
     (_, i) => ({
       timestamp: new Date(
-        twentyFourHoursAgo.getTime() + i * BUCKET_SIZE_MINUTES * 60 * 1000
+        twentyFourHoursAgo.getTime() + i * BUCKET_SIZE_MINUTES * 60 * 1000,
       ),
       count: 0,
-    })
+    }),
   );
 
   logs.results.forEach((log) => {
-    const logTime = new Date(log.timestamp + 'Z');
+    const logTime = new Date(log.timestamp + "Z");
     if (logTime >= twentyFourHoursAgo && logTime <= utcNow) {
       const bucketIndex = Math.floor(
         (logTime.getTime() - twentyFourHoursAgo.getTime()) /
-          (BUCKET_SIZE_MINUTES * 60 * 1000)
+          (BUCKET_SIZE_MINUTES * 60 * 1000),
       );
       if (bucketIndex >= 0 && bucketIndex < buckets.length) {
         buckets[bucketIndex].count++;
@@ -126,7 +126,7 @@ const RequestsBarChart = withTooltip<BarChartProps, BucketData>(
           domain: data.map((_, i) => i.toString()),
           padding: 0.2,
         }),
-      [data, innerWidth]
+      [data, innerWidth],
     );
 
     const maxCount = Math.max(...data.map((d) => d.count), 1);
@@ -137,7 +137,7 @@ const RequestsBarChart = withTooltip<BarChartProps, BucketData>(
           domain: [0, maxCount],
           nice: true,
         }),
-      [innerHeight, maxCount]
+      [innerHeight, maxCount],
     );
 
     const yTicks = generateYAxisTicks(maxCount);
@@ -157,7 +157,7 @@ const RequestsBarChart = withTooltip<BarChartProps, BucketData>(
             {data.map((d, i) => {
               const barHeight = Math.max(
                 innerHeight - (yScale(d.count) ?? 0),
-                minBarHeight
+                minBarHeight,
               );
               const barX = xScale(i.toString());
               return (
@@ -183,7 +183,7 @@ const RequestsBarChart = withTooltip<BarChartProps, BucketData>(
             {data
               .filter(
                 (_, i) =>
-                  i % ((HOURS_TO_SHOW * 60) / BUCKET_SIZE_MINUTES / 4) === 0
+                  i % ((HOURS_TO_SHOW * 60) / BUCKET_SIZE_MINUTES / 4) === 0,
               )
               .map((d, i) => {
                 const tickX = xScale(
@@ -191,7 +191,7 @@ const RequestsBarChart = withTooltip<BarChartProps, BucketData>(
                     (i * HOURS_TO_SHOW * 60) /
                     BUCKET_SIZE_MINUTES /
                     4
-                  ).toString()
+                  ).toString(),
                 );
                 const hoursAgo = HOURS_TO_SHOW - i * 6;
                 return (
@@ -203,7 +203,7 @@ const RequestsBarChart = withTooltip<BarChartProps, BucketData>(
                     fill="white"
                     fontSize={10}
                   >
-                    {hoursAgo === 0 ? 'Now' : `${hoursAgo}h ago`}
+                    {hoursAgo === 0 ? "Now" : `${hoursAgo}h ago`}
                   </text>
                 );
               })}
@@ -228,8 +228,8 @@ const RequestsBarChart = withTooltip<BarChartProps, BucketData>(
             left={tooltipLeft}
             style={{
               ...defaultTooltipStyles,
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              color: 'white',
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              color: "white",
             }}
           >
             <div>
@@ -242,7 +242,7 @@ const RequestsBarChart = withTooltip<BarChartProps, BucketData>(
         )}
       </div>
     );
-  }
+  },
 );
 
 const RequestsCard: React.FC = () => {
@@ -261,15 +261,15 @@ const RequestsCard: React.FC = () => {
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error('Failed to get authenticated client');
+        throw new Error("Failed to get authenticated client");
       }
 
       const logs = {};
       // const processedData = processLogData(logs);
       // setLogData(processedData);
     } catch (error) {
-      console.error('Error fetching log data:', error);
-      setError('Failed to fetch log data. Please try again later.');
+      console.error("Error fetching log data:", error);
+      setError("Failed to fetch log data. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -313,15 +313,15 @@ const RequestsCard: React.FC = () => {
       </CardHeader>
       <CardContent
         className="flex-grow flex flex-col"
-        style={{ minHeight: '300px', maxHeight: '400px' }}
+        style={{ minHeight: "300px", maxHeight: "400px" }}
       >
         <div
           ref={chartRef}
           className="mt-4 flex-grow"
           style={{
-            minHeight: '250px',
-            maxHeight: '350px',
-            aspectRatio: '16 / 9',
+            minHeight: "250px",
+            maxHeight: "350px",
+            aspectRatio: "16 / 9",
           }}
         >
           {isLoading ? (

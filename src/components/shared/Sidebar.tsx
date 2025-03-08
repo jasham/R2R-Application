@@ -26,7 +26,7 @@ import {
   BookOpen,
   LogOut,
   CircleUserRound,
-  BarChart3
+  BarChart3,
 } from "lucide-react";
 import Link from "next/link";
 import { forwardRef, useEffect, useState, ReactNode } from "react";
@@ -223,24 +223,24 @@ export const LeftSidebar = forwardRef<
           )}
           {isSignedIn && (
             <>
-            <li>
-              <button
-                onClick={() => router.push('/account')}
-                className="flex items-center text-sm p-2 hover:bg-muted rounded-lg w-full"
-              >
-                <CircleUserRound className="w-5 h-5 mr-3" />
-                Account
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={handleLogout}
-                className="flex items-center text-sm p-2 hover:bg-muted rounded-lg w-full"
-              >
-                <LogOut className="w-5 h-5 mr-3" />
-                Logout
-              </button>
-            </li>
+              <li>
+                <button
+                  onClick={() => router.push("/account")}
+                  className="flex items-center text-sm p-2 hover:bg-muted rounded-lg w-full"
+                >
+                  <CircleUserRound className="w-5 h-5 mr-3" />
+                  Account
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center text-sm p-2 hover:bg-muted rounded-lg w-full"
+                >
+                  <LogOut className="w-5 h-5 mr-3" />
+                  Logout
+                </button>
+              </li>
             </>
           )}
         </ul>

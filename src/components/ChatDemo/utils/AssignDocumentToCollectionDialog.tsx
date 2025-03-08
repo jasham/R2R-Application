@@ -1,18 +1,18 @@
-import { Loader } from 'lucide-react';
-import { DocumentResponse } from 'r2r-js';
-import React, { useState, useEffect, useCallback } from 'react';
+import { Loader } from "lucide-react";
+import { DocumentResponse } from "r2r-js";
+import React, { useState, useEffect, useCallback } from "react";
 
-import DocumentsTable from '@/components/ChatDemo/DocumentsTable';
-import { Button } from '@/components/ui/Button';
+import DocumentsTable from "@/components/ChatDemo/DocumentsTable";
+import { Button } from "@/components/ui/Button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from '@/components/ui/dialog';
-import { useToast } from '@/components/ui/use-toast';
-import { useUserContext } from '@/context/UserContext';
+} from "@/components/ui/dialog";
+import { useToast } from "@/components/ui/use-toast";
+import { useUserContext } from "@/context/UserContext";
 
 interface AssignDocumentToCollectionDialogProps {
   open: boolean;
@@ -33,17 +33,17 @@ const AssignDocumentToCollectionDialog: React.FC<
   const [selectedDocumentIds, setSelectedDocumentIds] = useState<string[]>([]);
   const [assigning, setAssigning] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>(
-    {}
+    {},
   );
 
   const [filters, setFilters] = useState<Record<string, any>>({});
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleToggleColumn = useCallback(
     (columnKey: string, isVisible: boolean) => {
       setVisibleColumns((prev) => ({ ...prev, [columnKey]: isVisible }));
     },
-    []
+    [],
   );
 
   const fetchAllDocuments = useCallback(async () => {
@@ -51,7 +51,7 @@ const AssignDocumentToCollectionDialog: React.FC<
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error('Failed to get authenticated client');
+        throw new Error("Failed to get authenticated client");
       }
 
       let allDocuments: DocumentResponse[] = [];
@@ -71,16 +71,16 @@ const AssignDocumentToCollectionDialog: React.FC<
 
       // Filter out documents that are already in the collection
       const filteredDocs = allDocuments.filter(
-        (doc) => !doc.collectionIds.includes(collection_id)
+        (doc) => !doc.collectionIds.includes(collection_id),
       );
 
       setDocuments(filteredDocs);
     } catch (error) {
-      console.error('Error fetching documents:', error);
+      console.error("Error fetching documents:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to fetch documents. Please try again later.',
-        variant: 'destructive',
+        title: "Error",
+        description: "Failed to fetch documents. Please try again later.",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -121,9 +121,9 @@ const AssignDocumentToCollectionDialog: React.FC<
   const handleAssign = async () => {
     if (selectedDocumentIds.length === 0) {
       toast({
-        title: 'No Documents Selected',
-        description: 'Please select at least one document to assign.',
-        variant: 'destructive',
+        title: "No Documents Selected",
+        description: "Please select at least one document to assign.",
+        variant: "destructive",
       });
       return;
     }
@@ -132,32 +132,32 @@ const AssignDocumentToCollectionDialog: React.FC<
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error('Failed to get authenticated client');
+        throw new Error("Failed to get authenticated client");
       }
 
       const assignPromises = selectedDocumentIds.map((docId) =>
         client.collections.addDocument({
           id: collection_id,
           documentId: docId,
-        })
+        }),
       );
 
       await Promise.all(assignPromises);
 
       toast({
-        title: 'Success',
-        description: 'Selected documents have been assigned to the collection.',
-        variant: 'success',
+        title: "Success",
+        description: "Selected documents have been assigned to the collection.",
+        variant: "success",
       });
 
       onAssignSuccess();
       onClose();
     } catch (error) {
-      console.error('Error assigning documents:', error);
+      console.error("Error assigning documents:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to assign documents. Please try again later.',
-        variant: 'destructive',
+        title: "Error",
+        description: "Failed to assign documents. Please try again later.",
+        variant: "destructive",
       });
     } finally {
       setAssigning(false);
@@ -166,7 +166,7 @@ const AssignDocumentToCollectionDialog: React.FC<
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="text-white max-w-4xl">
+      <DialogContent className="text-primary max-w-4xl">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold mb-4">
             Assign Documents to Collection

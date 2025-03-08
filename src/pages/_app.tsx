@@ -1,14 +1,13 @@
-import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
-import { useTheme } from 'next-themes';
-import { useEffect, useCallback } from 'react';
+import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
+import { useEffect, useCallback } from "react";
 
-
-import { brandingConfig } from '@/config/brandingConfig';
-import { UserProvider, useUserContext } from '@/context/UserContext';
-import '@/styles/globals.css';
-import { initializePostHog } from '@/lib/posthog-client';
-import { ThemeProvider } from '@/context/ThemeContext';
+import { brandingConfig } from "@/config/brandingConfig";
+import { UserProvider, useUserContext } from "@/context/UserContext";
+import "@/styles/globals.css";
+import { initializePostHog } from "@/lib/posthog-client";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 function MyAppContent({ Component, pageProps }: AppProps) {
   const { setTheme } = useTheme();
@@ -21,13 +20,13 @@ function MyAppContent({ Component, pageProps }: AppProps) {
   }, []);
 
   const checkAccess = useCallback(async () => {
-    const publicRoutes = ['/auth/login', '/auth/signup'];
+    const publicRoutes = ["/auth/login", "/auth/signup"];
     const userRoutes = [
-      '/documents',
-      '/collections',
-      '/collection',
-      '/chat',
-      '/account',
+      "/documents",
+      "/collections",
+      "/collection",
+      "/chat",
+      "/account",
     ];
     const currentPath = router.pathname;
 
@@ -37,7 +36,7 @@ function MyAppContent({ Component, pageProps }: AppProps) {
 
     if (!isAuthenticated) {
       if (!publicRoutes.includes(currentPath)) {
-        router.replace('/auth/login');
+        router.replace("/auth/login");
       }
       return;
     }
@@ -47,7 +46,7 @@ function MyAppContent({ Component, pageProps }: AppProps) {
     }
 
     if (!isUserRoute(currentPath)) {
-      router.replace('/documents');
+      router.replace("/documents");
     }
   }, [isAuthenticated, isSuperUser, authState.userRole, router]);
 
@@ -62,13 +61,13 @@ function MyApp(props: AppProps) {
   // Move the runtime config check into useEffect
   useEffect(() => {
     // Load the env-config.js script dynamically
-    const script = document.createElement('script');
-    script.src = '/env-config.js';
+    const script = document.createElement("script");
+    script.src = "/env-config.js";
     script.onload = () => {
-      if (typeof window !== 'undefined' && window.__RUNTIME_CONFIG__) {
-        console.log('Runtime Config:', window.__RUNTIME_CONFIG__);
+      if (typeof window !== "undefined" && window.__RUNTIME_CONFIG__) {
+        console.log("Runtime Config:", window.__RUNTIME_CONFIG__);
       } else {
-        console.warn('Runtime Config not found!');
+        console.warn("Runtime Config not found!");
       }
     };
     document.body.appendChild(script);
