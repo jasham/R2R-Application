@@ -1,11 +1,11 @@
-"use client";
-import { FileUp } from "lucide-react";
-import React, { useState, useRef } from "react";
+'use client';
+import { FileUp } from 'lucide-react';
+import React, { useState, useRef } from 'react';
 
-import { Spinner } from "@/components/Spinner";
-import { Button } from "@/components/ui/Button";
-import { useUserContext } from "@/context/UserContext";
-import { UpdateButtonContainerProps } from "@/types";
+import { Spinner } from '@/components/Spinner';
+import { Button } from '@/components/ui/Button';
+import { useUserContext } from '@/context/UserContext';
+import { UpdateButtonContainerProps } from '@/types';
 
 const UpdateButtonContainer: React.FC<UpdateButtonContainerProps> = ({
   id,
@@ -17,7 +17,7 @@ const UpdateButtonContainer: React.FC<UpdateButtonContainerProps> = ({
   const { getClient } = useUserContext();
 
   const handleDocumentUpdate = async (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>
   ) => {
     event.preventDefault();
     if (
@@ -31,7 +31,7 @@ const UpdateButtonContainer: React.FC<UpdateButtonContainerProps> = ({
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error("Failed to get authenticated client");
+          throw new Error('Failed to get authenticated client');
         }
 
         const metadata = { title: file.name };
@@ -43,23 +43,23 @@ const UpdateButtonContainer: React.FC<UpdateButtonContainerProps> = ({
         });
 
         showToast({
-          variant: "success",
-          title: "Upload Successful",
-          description: "All files have been uploaded successfully.",
+          variant: 'success',
+          title: 'Upload Successful',
+          description: 'All files have been uploaded successfully.',
         });
         onUpdateSuccess();
       } catch (error: any) {
-        console.error("Error updating file:", error);
-        console.error("Error details:", error.response?.data);
+        console.error('Error updating file:', error);
+        console.error('Error details:', error.response?.data);
         showToast({
-          variant: "destructive",
-          title: "Upload Failed",
-          description: error.message || "An unknown error occurred",
+          variant: 'destructive',
+          title: 'Upload Failed',
+          description: error.message || 'An unknown error occurred',
         });
       } finally {
         setIsUpdating(false);
         if (fileInputRef.current) {
-          fileInputRef.current.value = "";
+          fileInputRef.current.value = '';
         }
       }
     }
@@ -76,7 +76,7 @@ const UpdateButtonContainer: React.FC<UpdateButtonContainerProps> = ({
       <Button
         onClick={handleUpdateButtonClick}
         disabled={isUpdating}
-        color={isUpdating ? "disabled" : "filled"}
+        color={isUpdating ? 'disabled' : 'filled'}
         shape="slim"
         tooltip="Update Document"
       >
@@ -90,7 +90,7 @@ const UpdateButtonContainer: React.FC<UpdateButtonContainerProps> = ({
         type="file"
         ref={fileInputRef}
         onChange={handleDocumentUpdate}
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
       />
     </div>
   );

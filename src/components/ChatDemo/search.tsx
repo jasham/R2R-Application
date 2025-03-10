@@ -1,13 +1,13 @@
-import { ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
-import React, { FC, useState, useCallback } from "react";
+import { ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import React, { FC, useState, useCallback } from 'react';
 
-import { Button } from "@/components/ui/Button";
-import { SearchProps } from "@/types";
+import { Button } from '@/components/ui/Button';
+import { SearchProps } from '@/types';
 
 function debounce<T extends (...args: any[]) => void>(
   func: T,
-  wait: number,
+  wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout | null = null;
   return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
@@ -24,11 +24,11 @@ export const Search: FC<SearchProps> = ({
   placeholder,
   disabled = false,
 }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const router = useRouter();
 
   if (!placeholder) {
-    placeholder = "Search over your documents…";
+    placeholder = 'Search over your documents…';
   }
 
   const navigateToSearch = useCallback(
@@ -37,7 +37,7 @@ export const Search: FC<SearchProps> = ({
         router.push(`/chat/?q=${encodeURIComponent(searchValue)}`);
       }
     }, 50),
-    [router, pipeline],
+    [router, pipeline]
   );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -45,7 +45,7 @@ export const Search: FC<SearchProps> = ({
     if (value.trim()) {
       navigateToSearch(value.trim());
       setQuery(value.trim());
-      setValue("");
+      setValue('');
     }
   };
 

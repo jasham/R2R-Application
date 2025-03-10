@@ -1,12 +1,13 @@
-import Head from "next/head";
-import React, { ReactNode } from "react";
+import Head from 'next/head';
+import React, { ReactNode } from 'react';
 
-import { Footer } from "@/components/shared/Footer";
-import { Navbar } from "@/components/shared/NavBar";
-import { Toaster } from "@/components/ui/toaster";
-import { brandingConfig } from "@/config/brandingConfig";
-import { useThemeContext } from "@/context/ThemeContext";
-import { LeftSidebar } from "../shared/Sidebar";
+import { Footer } from '@/components/shared/Footer';
+import { Navbar } from '@/components/shared/NavBar';
+import { Toaster } from '@/components/ui/toaster';
+import { brandingConfig } from '@/config/brandingConfig';
+import { useThemeContext } from '@/context/ThemeContext';
+
+import { LeftSidebar } from '../shared/Sidebar';
 
 type Props = {
   children: ReactNode;
@@ -23,7 +24,7 @@ const Layout: React.FC<Props> = ({
   return (
     <>
       <div
-        className={`flex ${theme === "dark" ? "flex-col" : "flex-row"} min-h-screen bg-primary`}
+        className={`flex ${theme === 'dark' ? 'flex-col' : 'flex-row'} min-h-screen bg-primary`}
       >
         <Head>
           <title>
@@ -32,10 +33,10 @@ const Layout: React.FC<Props> = ({
               : brandingConfig.deploymentName}
           </title>
         </Head>
-        {theme === "dark" ? (
+        {theme === 'dark' ? (
           <Navbar />
         ) : (
-          <LeftSidebar href="/" children={null} isActive={false} />
+          <LeftSidebar href="/" isActive={false} />
         )}
         <main className="flex-1 flex flex-col overflow-hidden">{children}</main>
         <Toaster />

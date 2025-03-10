@@ -1,21 +1,21 @@
-import { Eye, EyeOff } from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useState, useEffect, useCallback } from "react";
+import { Eye, EyeOff } from 'lucide-react';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import React, { useState, useEffect, useCallback } from 'react';
 
-import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { brandingConfig } from "@/config/brandingConfig";
-import { useUserContext } from "@/context/UserContext";
-import debounce from "@/lib/debounce";
-import { supabase } from "@/lib/supabase";
+import Layout from '@/components/Layout';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/input';
+import { brandingConfig } from '@/config/brandingConfig';
+import { useUserContext } from '@/context/UserContext';
+import debounce from '@/lib/debounce';
+import { supabase } from '@/lib/supabase';
 
 const DEFAULT_DEPLOYMENT_URL = brandingConfig.auth.loginUrl;
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState("admin@example.com");
-  const [password, setPassword] = useState("change_me_immediately");
+  const [email, setEmail] = useState('admin@example.com');
+  const [password, setPassword] = useState('change_me_immediately');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,16 +24,16 @@ const LoginPage: React.FC = () => {
   const { login, loginWithToken, authState } = useUserContext();
   const router = useRouter();
 
-  const [rawDeploymentUrl, setRawDeploymentUrl] = useState("");
-  const [sanitizedDeploymentUrl, setSanitizedDeploymentUrl] = useState("");
+  const [rawDeploymentUrl, setRawDeploymentUrl] = useState('');
+  const [sanitizedDeploymentUrl, setSanitizedDeploymentUrl] = useState('');
 
   // Retrieve deployment URL from runtime config or use default
   const getDeploymentUrl = () => {
     if (
-      typeof window !== "undefined" &&
+      typeof window !== 'undefined' &&
       window.__RUNTIME_CONFIG__?.NEXT_PUBLIC_R2R_DEPLOYMENT_URL &&
       !window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEPLOYMENT_URL.includes(
-        "__NEXT_PUBLIC_R2R_DEPLOYMENT_URL__",
+        '__NEXT_PUBLIC_R2R_DEPLOYMENT_URL__'
       )
     ) {
       return window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEPLOYMENT_URL;
@@ -43,7 +43,7 @@ const LoginPage: React.FC = () => {
 
   // Initialize deployment URL on component mount
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       const url = getDeploymentUrl();
       setRawDeploymentUrl(url);
       setSanitizedDeploymentUrl(url);
@@ -55,11 +55,11 @@ const LoginPage: React.FC = () => {
     try {
       const response = await fetch(`${sanitizedDeploymentUrl}/v3/health`);
       const data = await response.json();
-      const isHealthy = data.results?.message?.trim().toLowerCase() === "ok";
+      const isHealthy = data.results?.message?.trim().toLowerCase() === 'ok';
       setServerHealth(isHealthy);
       return isHealthy;
     } catch (error) {
-      console.error("Health check failed:", error);
+      console.error('Health check failed:', error);
       setServerHealth(false);
       return false;
     }
@@ -74,22 +74,22 @@ const LoginPage: React.FC = () => {
       const result = await login(email, password, sanitizedDeploymentUrl);
       setLoginSuccess(true);
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error('Login failed:', error);
 
       // Only check server health after a failed login attempt
       const isServerHealthy = await checkDeploymentHealth();
 
-      let errorMessage = "An unknown error occurred";
+      let errorMessage = 'An unknown error occurred';
       if (error instanceof Error) {
         errorMessage = error.message;
-      } else if (typeof error === "string") {
+      } else if (typeof error === 'string') {
         errorMessage = error;
       }
 
       // Provide appropriate error message based on server health
       const serverStatusMessage = isServerHealthy
-        ? "The server appears to be running correctly. Please check your credentials and try again."
-        : "Unable to communicate with the server. Please verify the server is running at the specified URL.";
+        ? 'The server appears to be running correctly. Please check your credentials and try again.'
+        : 'Unable to communicate with the server. Please verify the server is running at the specified URL.';
 
       alert(`Login failed. ${serverStatusMessage}\n\nError: ${errorMessage}`);
     } finally {
@@ -100,7 +100,7 @@ const LoginPage: React.FC = () => {
   // Handle successful login redirect
   useEffect(() => {
     if (loginSuccess && authState.isAuthenticated) {
-      router.push("/");
+      router.push('/');
     }
   }, [loginSuccess, authState.isAuthenticated, router]);
 
@@ -109,10 +109,10 @@ const LoginPage: React.FC = () => {
   };
 
   // OAuth sign-in handler
-  const handleOAuthSignIn = async (provider: "google" | "github") => {
+  const handleOAuthSignIn = async (provider: 'google' | 'github') => {
     if (!supabase) {
       setError(
-        "Supabase client is not configured. OAuth sign-in is unavailable.",
+        'Supabase client is not configured. OAuth sign-in is unavailable.'
       );
       return;
     }
@@ -133,37 +133,37 @@ const LoginPage: React.FC = () => {
         await loginWithToken(session.access_token, sanitizedDeploymentUrl);
         setLoginSuccess(true);
       } else {
-        throw new Error("No access token found after OAuth sign-in");
+        throw new Error('No access token found after OAuth sign-in');
       }
     } catch (error) {
-      console.error("OAuth sign in failed:", error);
-      setError("OAuth sign in failed. Please try again.");
+      console.error('OAuth sign in failed:', error);
+      setError('OAuth sign in failed. Please try again.');
     }
   };
 
   // URL sanitization function
   const sanitizeUrl = (url: string): string => {
     if (
-      typeof window !== "undefined" &&
+      typeof window !== 'undefined' &&
       window.__RUNTIME_CONFIG__?.NEXT_PUBLIC_R2R_DEPLOYMENT_URL
     ) {
       const configUrl =
         window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEPLOYMENT_URL;
-      if (!url || url === "http://" || url === "https://") {
+      if (!url || url === 'http://' || url === 'https://') {
         return configUrl;
       }
     }
 
-    if (!url || url === "http://" || url === "https://") {
+    if (!url || url === 'http://' || url === 'https://') {
       return DEFAULT_DEPLOYMENT_URL;
     }
 
     let sanitized = url.trim();
-    sanitized = sanitized.replace(/\/+$/, "");
+    sanitized = sanitized.replace(/\/+$/, '');
     if (!/^https?:\/\//i.test(sanitized)) {
-      sanitized = "http://" + sanitized;
+      sanitized = 'http://' + sanitized;
     }
-    sanitized = sanitized.replace(/(https?:\/\/)|(\/)+/g, "$1$2");
+    sanitized = sanitized.replace(/(https?:\/\/)|(\/)+/g, '$1$2');
     return sanitized;
   };
 
@@ -172,7 +172,7 @@ const LoginPage: React.FC = () => {
     debounce((url: string) => {
       setSanitizedDeploymentUrl(sanitizeUrl(url));
     }, 500),
-    [],
+    []
   );
 
   useEffect(() => {
@@ -218,7 +218,7 @@ const LoginPage: React.FC = () => {
                     Email
                   </label>
                   <span
-                    onClick={() => router.push("/auth/signup")}
+                    onClick={() => router.push('/auth/signup')}
                     className="text-sm font-semibold text-accent-base cursor-pointer hover:underline"
                   >
                     Sign up with Email
@@ -245,7 +245,7 @@ const LoginPage: React.FC = () => {
                   <Input
                     id="password"
                     name="password"
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -274,11 +274,11 @@ const LoginPage: React.FC = () => {
                 className="w-full my-2"
                 disabled={isLoading}
               >
-                {isLoading ? "Signing in..." : "Sign in with Email"}
+                {isLoading ? 'Signing in...' : 'Sign in with Email'}
               </Button>
 
               <Button
-                onClick={() => handleOAuthSignIn("google")}
+                onClick={() => handleOAuthSignIn('google')}
                 color="primary"
                 className="w-full my-2 relative"
                 disabled={true}
@@ -298,7 +298,7 @@ const LoginPage: React.FC = () => {
               </Button>
 
               <Button
-                onClick={() => handleOAuthSignIn("github")}
+                onClick={() => handleOAuthSignIn('github')}
                 color="primary"
                 className="w-full my-2 relative"
                 disabled={true}

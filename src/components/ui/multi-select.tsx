@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import { Button } from "@/components/ui/Button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { Button } from '@/components/ui/Button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from '@/components/ui/popover';
 
 interface Option {
   value: string;
@@ -39,8 +39,8 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
       <PopoverTrigger asChild>
         <Button shape="outline" id={id} className="w-full justify-start">
           {value.length === 0
-            ? "Select collections"
-            : `${value.length} collection${value.length !== 1 ? "s" : ""} selected`}
+            ? 'Select collections'
+            : `${value.length} collection${value.length !== 1 ? 's' : ''} selected`}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">

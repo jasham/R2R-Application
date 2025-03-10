@@ -1,20 +1,20 @@
-import { Link, Check, ClipboardCheck } from "lucide-react";
-import React, { useState } from "react";
+import { Link, Check, ClipboardCheck } from 'lucide-react';
+import React, { useState } from 'react';
 
 import {
   PipelineStatus,
   useConnectionStatus,
-} from "@/components/ChatDemo/PipelineStatus";
-import { formatUptime } from "@/components/ChatDemo/utils/formatUptime";
+} from '@/components/ChatDemo/PipelineStatus';
+import { formatUptime } from '@/components/ChatDemo/utils/formatUptime';
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from "@/components/ui/card";
-import { brandingConfig } from "@/config/brandingConfig";
-import { R2RServerCardProps } from "@/types";
+} from '@/components/ui/card';
+import { brandingConfig } from '@/config/brandingConfig';
+import { R2RServerCardProps } from '@/types';
 
 const R2RServerCard: React.FC<R2RServerCardProps> = ({
   pipeline,
@@ -23,7 +23,7 @@ const R2RServerCard: React.FC<R2RServerCardProps> = ({
   const [copied, setCopied] = useState(false);
   const { isConnected, serverStats, localUptime } = useConnectionStatus(
     pipeline?.deploymentUrl,
-    onStatusChange,
+    onStatusChange
   );
 
   const handleCopy = (text: string) => {
@@ -32,7 +32,7 @@ const R2RServerCard: React.FC<R2RServerCardProps> = ({
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       },
-      (err) => console.error("Failed to copy text: ", err),
+      (err) => console.error('Failed to copy text: ', err)
     );
   };
 
@@ -53,24 +53,24 @@ const R2RServerCard: React.FC<R2RServerCardProps> = ({
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div>
             <p className="font-medium">Uptime:</p>
-            <p>{isConnected ? formatUptime(localUptime) : "N/A"}</p>
+            <p>{isConnected ? formatUptime(localUptime) : 'N/A'}</p>
           </div>
           <div>
             <p className="font-medium">CPU Usage:</p>
-            <p>{serverStats ? `${serverStats.cpuUsage.toFixed(1)}%` : "N/A"}</p>
+            <p>{serverStats ? `${serverStats.cpuUsage.toFixed(1)}%` : 'N/A'}</p>
           </div>
           <div>
             <p className="font-medium">Start Time:</p>
             <p>
               {serverStats
                 ? new Date(serverStats.startTime).toLocaleString()
-                : "N/A"}
+                : 'N/A'}
             </p>
           </div>
           <div>
             <p className="font-medium">Memory Usage:</p>
             <p>
-              {serverStats ? `${serverStats.memoryUsage.toFixed(1)}%` : "N/A"}
+              {serverStats ? `${serverStats.memoryUsage.toFixed(1)}%` : 'N/A'}
             </p>
           </div>
         </div>
@@ -84,7 +84,7 @@ const R2RServerCard: React.FC<R2RServerCardProps> = ({
           ) : (
             <ClipboardCheck
               className="w-4 h-4 cursor-pointer"
-              onClick={() => handleCopy(pipeline?.deploymentUrl || "")}
+              onClick={() => handleCopy(pipeline?.deploymentUrl || '')}
             />
           )}
         </div>

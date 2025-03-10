@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { Button } from "@/components/ui/Button";
+import { Button } from '@/components/ui/Button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
-import { useUserContext } from "@/context/UserContext";
-import { EditPromptDialogProps } from "@/types";
+} from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
+import { useUserContext } from '@/context/UserContext';
+import { EditPromptDialogProps } from '@/types';
 
 const EditPromptDialog: React.FC<EditPromptDialogProps> = ({
   open,
@@ -31,7 +31,7 @@ const EditPromptDialog: React.FC<EditPromptDialogProps> = ({
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error("Failed to get authenticated client");
+        throw new Error('Failed to get authenticated client');
       }
 
       await client.prompts.update({
@@ -39,19 +39,19 @@ const EditPromptDialog: React.FC<EditPromptDialogProps> = ({
         template: editedTemplate,
       });
       toast({
-        title: "Prompt updated",
-        description: "The prompt has been successfully updated.",
-        variant: "success",
+        title: 'Prompt updated',
+        description: 'The prompt has been successfully updated.',
+        variant: 'success',
       });
       onSaveSuccess();
       onClose();
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update the prompt. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update the prompt. Please try again.',
+        variant: 'destructive',
       });
-      console.error("Error updating prompt:", error);
+      console.error('Error updating prompt:', error);
     }
   };
 

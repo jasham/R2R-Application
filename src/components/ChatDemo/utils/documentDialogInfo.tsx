@@ -1,14 +1,14 @@
-import { format, parseISO } from "date-fns";
-import { Edit, Loader, Trash, ChevronDown, ChevronUp } from "lucide-react";
+import { format, parseISO } from 'date-fns';
+import { Edit, Loader, Trash, ChevronDown, ChevronUp } from 'lucide-react';
 import {
   ChunkResponse,
   DocumentResponse,
   EntityResponse,
   RelationshipResponse,
-} from "r2r-js";
-import { useEffect, useState, useCallback } from "react";
+} from 'r2r-js';
+import { useEffect, useState, useCallback } from 'react';
 
-import PdfPreviewDialog from "@/components/ChatDemo/utils/pdfPreviewDialog";
+import PdfPreviewDialog from '@/components/ChatDemo/utils/pdfPreviewDialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,39 +18,39 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/Button";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/Button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import Pagination from "@/components/ui/pagination";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useUserContext } from "@/context/UserContext";
-import usePagination from "@/hooks/usePagination";
-import { DocumentInfoDialogProps } from "@/types";
+} from '@/components/ui/dialog';
+import Pagination from '@/components/ui/pagination';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useUserContext } from '@/context/UserContext';
+import usePagination from '@/hooks/usePagination';
+import { DocumentInfoDialogProps } from '@/types';
 
 const formatDate = (dateString: string | undefined) => {
   if (!dateString) {
-    return "N/A";
+    return 'N/A';
   }
   const date = parseISO(dateString);
-  return format(date, "PPpp");
+  return format(date, 'PPpp');
 };
 
 const formatValue = (value: any) => {
   if (value === undefined || value === null) {
-    return "N/A";
+    return 'N/A';
   }
-  if (typeof value === "boolean") {
-    return value ? "Yes" : "No";
+  if (typeof value === 'boolean') {
+    return value ? 'Yes' : 'No';
   }
   if (Array.isArray(value)) {
-    return value.length > 0 ? value.join(", ") : "N/A";
+    return value.length > 0 ? value.join(', ') : 'N/A';
   }
-  if (typeof value === "object") {
+  if (typeof value === 'object') {
     return JSON.stringify(value);
   }
   return value.toString();
@@ -69,7 +69,7 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
 
   const [pdfPreviewOpen, setPdfPreviewOpen] = useState(false);
   const [initialPage, setInitialPage] = useState<number>(1);
-  const [activeTab, setActiveTab] = useState("chunks");
+  const [activeTab, setActiveTab] = useState('chunks');
 
   const fetchDocumentResponse = useCallback(
     async (client: any, documentId: string) => {
@@ -78,7 +78,7 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
       });
       return overview.results[0] || null;
     },
-    [],
+    []
   );
 
   const fetchAllChunks = useCallback(
@@ -86,7 +86,7 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error("Failed to get authenticated client");
+          throw new Error('Failed to get authenticated client');
         }
 
         const response = await client.documents.listChunks({
@@ -100,11 +100,11 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
           totalEntries: response.totalEntries,
         };
       } catch (error) {
-        console.error("Error fetching document chunks:", error);
+        console.error('Error fetching document chunks:', error);
         return { results: [], totalEntries: 0 };
       }
     },
-    [getClient, id],
+    [getClient, id]
   );
 
   const fetchAllEntities = useCallback(
@@ -112,7 +112,7 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error("Failed to get authenticated client");
+          throw new Error('Failed to get authenticated client');
         }
 
         const response = await client.documents.listEntities({
@@ -126,11 +126,11 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
           totalEntries: response.totalEntries,
         };
       } catch (error) {
-        console.error("Error fetching document entities:", error);
+        console.error('Error fetching document entities:', error);
         return { results: [], totalEntries: 0 };
       }
     },
-    [getClient, id],
+    [getClient, id]
   );
 
   const fetchAllRelationships = useCallback(
@@ -138,7 +138,7 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error("Failed to get authenticated client");
+          throw new Error('Failed to get authenticated client');
         }
 
         const response = await client.documents.listRelationships({
@@ -152,11 +152,11 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
           totalEntries: response.totalEntries,
         };
       } catch (error) {
-        console.error("Error fetching document relationships:", error);
+        console.error('Error fetching document relationships:', error);
         return { results: [], totalEntries: 0 };
       }
     },
-    [getClient, id],
+    [getClient, id]
   );
 
   // Pagination hooks for chunks
@@ -231,13 +231,13 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error("Failed to get authenticated client");
+          throw new Error('Failed to get authenticated client');
         }
 
         const overview = await fetchDocumentResponse(client, id);
         setDocumentResponse(overview);
       } catch (error) {
-        console.error("Error fetching document overview:", error);
+        console.error('Error fetching document overview:', error);
         setDocumentResponse(null);
       } finally {
         setLoading(false);
@@ -290,11 +290,11 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
                       label="Dates"
                       values={[
                         {
-                          label: "Created",
+                          label: 'Created',
                           value: formatDate(documentOverview.createdAt),
                         },
                         {
-                          label: "Updated",
+                          label: 'Updated',
                           value: formatDate(documentOverview.updatedAt),
                         },
                       ]}
@@ -303,11 +303,11 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
                       label="Status"
                       values={[
                         {
-                          label: "Ingestion",
+                          label: 'Ingestion',
                           value: documentOverview.ingestionStatus,
                         },
                         {
-                          label: "KG Extraction",
+                          label: 'KG Extraction',
                           value: documentOverview.extractionStatus,
                         },
                       ]}
@@ -324,11 +324,11 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
                       label="Metadata"
                       values={[
                         {
-                          label: "Title",
+                          label: 'Title',
                           value: documentOverview.metadata?.title,
                         },
                         {
-                          label: "Version",
+                          label: 'Version',
                           value: documentOverview.metadata?.version,
                         },
                       ]}
@@ -337,8 +337,8 @@ const DocumentInfoDialog: React.FC<DocumentInfoDialogProps> = ({
                 )}
                 {documentOverview &&
                   documentOverview.documentType &&
-                  ["pdf", "application/pdf"].includes(
-                    documentOverview.documentType.toLowerCase(),
+                  ['pdf', 'application/pdf'].includes(
+                    documentOverview.documentType.toLowerCase()
                   ) && (
                     <div className="flex justify-end">
                       <Button
@@ -447,13 +447,13 @@ const InfoRow: React.FC<{
     <div
       className={`py-2 border-b border-gray-700/50 ${
         isLongContent
-          ? "flex flex-col space-y-2"
-          : "flex items-center justify-between"
+          ? 'flex flex-col space-y-2'
+          : 'flex items-center justify-between'
       }`}
     >
       <span className="font-medium text-gray-200">{label}:</span>
       <span
-        className={`text-gray-300 ${isLongContent ? "mt-1" : "flex items-center space-x-4"}`}
+        className={`text-gray-300 ${isLongContent ? 'mt-1' : 'flex items-center space-x-4'}`}
       >
         {value !== undefined
           ? formatValue(value)
@@ -466,7 +466,7 @@ const InfoRow: React.FC<{
                   <span>{formatValue(item.value)}</span>
                 </span>
               ))
-            : "N/A"}
+            : 'N/A'}
       </span>
     </div>
   );
@@ -526,7 +526,7 @@ const ExpandableDocumentChunks: React.FC<{
           onClick={toggleAllExpanded}
           className="text-accent-base hover:text-accent-dark transition-colors"
         >
-          {allExpanded ? "Collapse All" : "Expand All"}
+          {allExpanded ? 'Collapse All' : 'Expand All'}
         </button>
       </div>
       <div className="space-y-4">
@@ -596,7 +596,7 @@ const ExpandableChunk: React.FC<{
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error("Failed to get authenticated client");
+        throw new Error('Failed to get authenticated client');
       }
 
       await client.chunks.update({
@@ -607,7 +607,7 @@ const ExpandableChunk: React.FC<{
       setIsEditing(false);
       onDelete?.();
     } catch (error) {
-      console.error("Error updating chunk:", error);
+      console.error('Error updating chunk:', error);
     } finally {
       setUpdating(false);
     }
@@ -623,7 +623,7 @@ const ExpandableChunk: React.FC<{
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error("Failed to get authenticated client");
+        throw new Error('Failed to get authenticated client');
       }
 
       // Corrected to use chunk.id
@@ -633,7 +633,7 @@ const ExpandableChunk: React.FC<{
 
       onDelete?.();
     } catch (error) {
-      console.error("Error deleting chunk:", error);
+      console.error('Error deleting chunk:', error);
     } finally {
       setDeleting(false);
       setShowDeleteAlert(false);
@@ -805,7 +805,7 @@ const ExpandableDocumentEntities: React.FC<{
           onClick={toggleAllExpanded}
           className="text-accent-base hover:text-accent-dark transition-colors"
         >
-          {allExpanded ? "Collapse All" : "Expand All"}
+          {allExpanded ? 'Collapse All' : 'Expand All'}
         </button>
       </div>
       <div className="space-y-4">
@@ -895,7 +895,7 @@ const ExpandableEntity: React.FC<{
                     {Object.entries(entity.metadata || {}).map(
                       ([key, value]) => (
                         <InfoRow key={key} label={key} value={value} />
-                      ),
+                      )
                     )}
                   </div>
                 )}
@@ -930,7 +930,7 @@ const ExpandableDocumentRelationships: React.FC<{
           onClick={toggleAllExpanded}
           className="text-accent-base hover:text-accent-dark transition-colors"
         >
-          {allExpanded ? "Collapse All" : "Expand All"}
+          {allExpanded ? 'Collapse All' : 'Expand All'}
         </button>
       </div>
       <div className="space-y-4">
@@ -1024,7 +1024,7 @@ const ExpandableRelationship: React.FC<{
                     {Object.entries(relationship.metadata || {}).map(
                       ([key, value]) => (
                         <InfoRow key={key} label={key} value={value} />
-                      ),
+                      )
                     )}
                   </div>
                 )}

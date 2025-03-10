@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Button } from "@/components/ui/Button";
+import { Button } from '@/components/ui/Button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
-import { useUserContext } from "@/context/UserContext";
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
+import { useUserContext } from '@/context/UserContext';
 
 interface CollectionCreationModalProps {
   open: boolean;
@@ -27,16 +27,16 @@ const CollectionCreationModal: React.FC<CollectionCreationModalProps> = ({
   const { getClient } = useUserContext();
   const { toast } = useToast();
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [isCreating, setIsCreating] = useState(false);
 
   const handleCreate = async () => {
     if (!name.trim()) {
       toast({
-        title: "Validation Error",
-        description: "Collection name is required.",
-        variant: "destructive",
+        title: 'Validation Error',
+        description: 'Collection name is required.',
+        variant: 'destructive',
       });
       return;
     }
@@ -45,7 +45,7 @@ const CollectionCreationModal: React.FC<CollectionCreationModalProps> = ({
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error("Failed to get authenticated client");
+        throw new Error('Failed to get authenticated client');
       }
 
       await client.collections.create({
@@ -53,22 +53,22 @@ const CollectionCreationModal: React.FC<CollectionCreationModalProps> = ({
         description: description.trim() || undefined,
       });
       toast({
-        title: "Collection Created",
+        title: 'Collection Created',
         description: `Collection "${name}" has been successfully created.`,
-        variant: "success",
+        variant: 'success',
       });
-      setName("");
-      setDescription("");
+      setName('');
+      setDescription('');
       onClose();
       onCollectionCreated();
     } catch (error: any) {
-      console.error("Error creating collection:", error);
+      console.error('Error creating collection:', error);
       toast({
-        title: "Error",
+        title: 'Error',
         description:
           error?.message ||
-          "An unexpected error occurred while creating the collection.",
-        variant: "destructive",
+          'An unexpected error occurred while creating the collection.',
+        variant: 'destructive',
       });
     } finally {
       setIsCreating(false);
@@ -77,8 +77,8 @@ const CollectionCreationModal: React.FC<CollectionCreationModalProps> = ({
 
   const handleClose = () => {
     if (!isCreating) {
-      setName("");
-      setDescription("");
+      setName('');
+      setDescription('');
       onClose();
     }
   };
@@ -113,7 +113,7 @@ const CollectionCreationModal: React.FC<CollectionCreationModalProps> = ({
             Cancel
           </Button>
           <Button color="filled" onClick={handleCreate} disabled={isCreating}>
-            {isCreating ? "Creating..." : "Create"}
+            {isCreating ? 'Creating...' : 'Create'}
           </Button>
         </DialogFooter>
       </DialogContent>

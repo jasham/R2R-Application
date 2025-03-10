@@ -1,19 +1,5 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
-import { useUserContext } from "@/context/UserContext";
-import { brandingConfig } from "@/config/brandingConfig";
-import { Logo } from "@/components/shared/Logo";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import ThemeToggle from "./ThemeToggle";
 import {
   Home,
   FileText,
@@ -27,27 +13,42 @@ import {
   LogOut,
   CircleUserRound,
   BarChart3,
-} from "lucide-react";
-import Link from "next/link";
-import { forwardRef, useEffect, useState, ReactNode } from "react";
-import { NavItemsProps } from "@/types";
+} from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { forwardRef, useEffect, useState, ReactNode } from 'react';
+
+import { Logo } from '@/components/shared/Logo';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { brandingConfig } from '@/config/brandingConfig';
+import { useUserContext } from '@/context/UserContext';
+import { NavItemsProps } from '@/types';
+
+import ThemeToggle from './ThemeToggle';
 
 interface LeftSidebarProps {
   href: string;
-  children: ReactNode;
   isActive: boolean;
 }
 
-const NavItem: React.FC<LeftSidebarProps> = ({ href, children, isActive }) => (
-  <Link
-    href={href}
-    className={`px-2 py-1 text-sm font-medium ${
-      isActive ? "text-accent" : "text-secondary hover:text-white"
-    }`}
-  >
-    {children}
-  </Link>
-);
+// const NavItem: React.FC<LeftSidebarProps> = ({ href, children, isActive }) => (
+//   <Link
+//     href={href}
+//     className={`px-2 py-1 text-sm font-medium ${
+//       isActive ? 'text-accent' : 'text-secondary hover:text-white'
+//     }`}
+//   >
+//     {children}
+//   </Link>
+// );
 
 const NavItems: React.FC<NavItemsProps> = ({
   isAuthenticated,
@@ -56,34 +57,34 @@ const NavItems: React.FC<NavItemsProps> = ({
 }) => {
   const router = useRouter();
   const homeItem = {
-    path: "/",
-    label: "Home",
+    path: '/',
+    label: 'Home',
     show: brandingConfig.navbar.menuItems.home,
     icon: <Home className="w-5 h-5 mr-3" />,
   };
 
   const commonItems = [
     {
-      path: "/documents",
-      label: "Documents",
+      path: '/documents',
+      label: 'Documents',
       show: brandingConfig.navbar.menuItems.documents,
       icon: <FileText className="w-5 h-5 mr-3" />,
     },
     {
-      path: "/collections",
-      label: "Collections",
+      path: '/collections',
+      label: 'Collections',
       show: brandingConfig.navbar.menuItems.collections,
       icon: <Folder className="w-5 h-5 mr-3" />,
     },
     {
-      path: "/chat",
-      label: "Chat",
+      path: '/chat',
+      label: 'Chat',
       show: brandingConfig.navbar.menuItems.chat,
       icon: <MessageSquare className="w-5 h-5 mr-3" />,
     },
     {
-      path: "/search",
-      label: "Search",
+      path: '/search',
+      label: 'Search',
       show: brandingConfig.navbar.menuItems.search,
       icon: <Search className="w-5 h-5 mr-3" />,
     },
@@ -91,33 +92,33 @@ const NavItems: React.FC<NavItemsProps> = ({
 
   const adminItems = [
     {
-      path: "/users",
-      label: "Users",
+      path: '/users',
+      label: 'Users',
       show: brandingConfig.navbar.menuItems.users,
       icon: <Users className="w-5 h-5 mr-3" />,
     },
     {
-      path: "/logs",
-      label: "Logs",
+      path: '/logs',
+      label: 'Logs',
       show: brandingConfig.navbar.menuItems.logs,
       icon: <Activity className="w-5 h-5 mr-3" />,
     },
     {
-      path: "/analytics",
-      label: "Analytics",
+      path: '/analytics',
+      label: 'Analytics',
       show: brandingConfig.navbar.menuItems.analytics,
       icon: <BarChart3 className="w-5 h-5 mr-3" />,
     },
     {
-      path: "/settings",
-      label: "Settings",
+      path: '/settings',
+      label: 'Settings',
       show: brandingConfig.navbar.menuItems.settings,
       icon: <Settings className="w-5 h-5 mr-3" />,
     },
   ];
 
   const items =
-    role === "admin"
+    role === 'admin'
       ? [homeItem, ...commonItems, ...adminItems]
       : [...commonItems];
 
@@ -134,8 +135,8 @@ const NavItems: React.FC<NavItemsProps> = ({
               onClick={() => router.push(item.path)}
               className={`w-full flex items-center p-3 rounded-lg transition-colors ${
                 pathname === item.path
-                  ? "bg-accent text-accent-foreground"
-                  : "hover:bg-muted"
+                  ? 'bg-accent text-accent-foreground'
+                  : 'hover:bg-muted'
               }`}
             >
               {item.icon}
@@ -149,9 +150,9 @@ const NavItems: React.FC<NavItemsProps> = ({
 };
 
 export const LeftSidebar = forwardRef<
-  React.ElementRef<"nav">,
+  React.ElementRef<'nav'>,
   LeftSidebarProps
->(function LeftSidebar({ href, children, isActive }, ref) {
+>(function LeftSidebar(ref) {
   const router = useRouter();
   const pathname = usePathname();
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -165,18 +166,18 @@ export const LeftSidebar = forwardRef<
   } = useUserContext();
 
   useEffect(() => {
-    const savedAuth = localStorage.getItem("authState");
+    const savedAuth = localStorage.getItem('authState');
     if (savedAuth && !isAuthenticated) {
       const authData = JSON.parse(savedAuth);
     }
     setIsSignedIn(isAuthenticated);
   }, [isAuthenticated]);
 
-  const role = viewMode === "user" ? "user" : authState.userRole || "user";
+  const role = viewMode === 'user' ? 'user' : authState.userRole || 'user';
 
   const handleLogout = async () => {
     await logout();
-    router.push("/auth/login");
+    router.push('/auth/login');
   };
 
   return (
@@ -184,7 +185,7 @@ export const LeftSidebar = forwardRef<
       {/* Profile Section */}
       <div className="p-4 flex justify-between items-center">
         <Link
-          href={isSuperUser() ? "/" : "/documents"}
+          href={isSuperUser() ? '/' : '/documents'}
           className="flex-shrink-0 flex items-center"
         >
           <Logo className="h-12 w-auto" />
@@ -212,7 +213,7 @@ export const LeftSidebar = forwardRef<
             <li>
               <button
                 onClick={() =>
-                  window.open("https://r2r-docs.sciphi.ai", "_blank")
+                  window.open('https://r2r-docs.sciphi.ai', '_blank')
                 }
                 className="flex items-center text-sm p-2 hover:bg-muted rounded-lg w-full"
               >
@@ -225,7 +226,7 @@ export const LeftSidebar = forwardRef<
             <>
               <li>
                 <button
-                  onClick={() => router.push("/account")}
+                  onClick={() => router.push('/account')}
                   className="flex items-center text-sm p-2 hover:bg-muted rounded-lg w-full"
                 >
                   <CircleUserRound className="w-5 h-5 mr-3" />

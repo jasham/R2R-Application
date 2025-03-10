@@ -1,23 +1,23 @@
-"use client";
-import { useSearchParams } from "next/navigation";
-import { MessageResponse } from "r2r-js";
-import React, { useState, useEffect, useRef } from "react";
+'use client';
+import { useSearchParams } from 'next/navigation';
+import { MessageResponse } from 'r2r-js';
+import React, { useState, useEffect, useRef } from 'react';
 
-import { Result } from "@/components/ChatDemo/result";
-import { Search } from "@/components/ChatDemo/search";
-import useSwitchManager from "@/components/ChatDemo/SwitchManager";
-import Layout from "@/components/Layout";
-import Sidebar from "@/components/Sidebar";
+import { Result } from '@/components/ChatDemo/result';
+import { Search } from '@/components/ChatDemo/search';
+import useSwitchManager from '@/components/ChatDemo/SwitchManager';
+import Layout from '@/components/Layout';
+import Sidebar from '@/components/Sidebar';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
-import { useUserContext } from "@/context/UserContext";
-import { Message } from "@/types";
+} from '@/components/ui/select';
+import { useToast } from '@/components/ui/use-toast';
+import { useUserContext } from '@/context/UserContext';
+import { Message } from '@/types';
 
 interface Collection {
   id: string;
@@ -27,10 +27,10 @@ interface Collection {
 const Index: React.FC = () => {
   const searchParams = useSearchParams();
   const { toast } = useToast();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [hasAttemptedFetch, setHasAttemptedFetch] = useState(false);
   const [selectedCollectionIds, setSelectedCollectionIds] = useState<string[]>(
-    [],
+    []
   );
   const [selectedConversationId, setSelectedConversationId] = useState<
     string | null
@@ -38,8 +38,8 @@ const Index: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   const [searchLimit, setSearchLimit] = useState<number>(10);
-  const [searchFilters, setSearchFilters] = useState("{}");
-  const [indexMeasure, setIndexMeasure] = useState<string>("cosine_distance");
+  const [searchFilters, setSearchFilters] = useState('{}');
+  const [indexMeasure, setIndexMeasure] = useState<string>('cosine_distance');
   const [includeMetadatas, setIncludeMetadatas] = useState<boolean>(false);
   const [probes, setProbes] = useState<number>();
   const [efSearch, setEfSearch] = useState<number>();
@@ -54,12 +54,12 @@ const Index: React.FC = () => {
   const [localSearchLimits, setLocalSearchLimits] = useState<
     Record<string, number>
   >({});
-  const [mode, setMode] = useState<"rag" | "rag_agent">("rag_agent");
+  const [mode, setMode] = useState<'rag' | 'rag_agent'>('rag_agent');
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
   useEffect(() => {
     if (searchParams) {
-      setQuery(decodeURIComponent(searchParams.get("q") || ""));
+      setQuery(decodeURIComponent(searchParams.get('q') || ''));
     }
   }, [searchParams]);
 
@@ -93,27 +93,27 @@ const Index: React.FC = () => {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    setQuery("");
+    setQuery('');
   }, [mode]);
 
   useEffect(() => {
     initializeSwitch(
-      "vectorSearch",
+      'vectorSearch',
       true,
-      "Vector Search",
-      "Vector search is a search method that uses vectors to represent documents and queries. It is used to find similar documents to a given query.",
+      'Vector Search',
+      'Vector search is a search method that uses vectors to represent documents and queries. It is used to find similar documents to a given query.'
     );
     initializeSwitch(
-      "hybridSearch",
+      'hybridSearch',
       false,
-      "Hybrid Search",
-      "Hybrid search is a search method that combines multiple search methods to provide more accurate and relevant search results.",
+      'Hybrid Search',
+      'Hybrid search is a search method that combines multiple search methods to provide more accurate and relevant search results.'
     );
     initializeSwitch(
-      "knowledgeGraphSearch",
+      'knowledgeGraphSearch',
       true,
-      "Graph Search",
-      "Please construct a Knowledge Graph to use this feature.",
+      'Graph Search',
+      'Please construct a Knowledge Graph to use this feature.'
     );
   }, [initializeSwitch]);
 
@@ -137,13 +137,13 @@ const Index: React.FC = () => {
         try {
           const client = await getClient();
           if (!client) {
-            throw new Error("Failed to get authenticated client");
+            throw new Error('Failed to get authenticated client');
           }
           setIsLoading(true);
           const documents = await client.documents.list();
           setUploadedDocuments(documents.results.map((doc) => doc.id));
         } catch (error) {
-          console.error("Error fetching user documents:", error);
+          console.error('Error fetching user documents:', error);
         } finally {
           setIsLoading(false);
           setHasAttemptedFetch(true);
@@ -160,17 +160,17 @@ const Index: React.FC = () => {
         try {
           const client = await getClient();
           if (!client) {
-            throw new Error("Failed to get authenticated client");
+            throw new Error('Failed to get authenticated client');
           }
           const collectionsData = await client.collections.list();
           setCollections(
             collectionsData.results.map((collection: Collection) => ({
               id: collection.id,
               name: collection.name,
-            })),
+            }))
           );
         } catch (error) {
-          console.error("Error fetching collections:", error);
+          console.error('Error fetching collections:', error);
         }
       }
     };
@@ -179,23 +179,23 @@ const Index: React.FC = () => {
   }, [pipeline, getClient]);
 
   const safeJsonParse = (jsonString: string) => {
-    if (typeof jsonString !== "string") {
-      console.warn("Input is not a string:", jsonString);
+    if (typeof jsonString !== 'string') {
+      console.warn('Input is not a string:', jsonString);
       return {};
     }
     try {
       return JSON.parse(jsonString);
     } catch (error) {
-      console.warn("Invalid JSON input:", error);
+      console.warn('Invalid JSON input:', error);
       return {};
     }
   };
 
   const handleAbortRequest = () => {
-    setQuery("");
+    setQuery('');
   };
 
-  const handleModeChange = (newMode: "rag" | "rag_agent") => {
+  const handleModeChange = (newMode: 'rag' | 'rag_agent') => {
     setMode(newMode);
   };
 
@@ -204,7 +204,7 @@ const Index: React.FC = () => {
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error("Failed to get authenticated client");
+        throw new Error('Failed to get authenticated client');
       }
       const response = await client.conversations.retrieve({
         id: conversationId,
@@ -212,14 +212,14 @@ const Index: React.FC = () => {
       const fetchedMessages = response.results.map(
         (message: MessageResponse) => ({
           id: message.id,
-          role: message.metadata?.role || "user",
-          content: message.metadata?.content || "",
+          role: message.metadata?.role || 'user',
+          content: message.metadata?.content || '',
           timestamp: message.metadata?.timestamp || new Date().toISOString(),
-        }),
+        })
       );
       setMessages(fetchedMessages);
     } catch (error) {
-      console.error("Error fetching conversation:", error);
+      console.error('Error fetching conversation:', error);
     }
   };
 
@@ -289,10 +289,10 @@ const Index: React.FC = () => {
 
         {/* Main Content */}
         <div
-          className={`main-content-wrapper ${sidebarIsOpen ? "" : "sidebar-closed"}`}
+          className={`main-content-wrapper ${sidebarIsOpen ? '' : 'sidebar-closed'}`}
         >
           <div
-            className={`main-content ${sidebarIsOpen ? "" : "sidebar-closed"}`}
+            className={`main-content ${sidebarIsOpen ? '' : 'sidebar-closed'}`}
             ref={contentAreaRef}
           >
             {/* Mode Selector */}
@@ -315,7 +315,7 @@ const Index: React.FC = () => {
                   setQuery={setQuery}
                   model={selectedModel}
                   userId={userId}
-                  pipelineUrl={pipeline?.deploymentUrl || ""}
+                  pipelineUrl={pipeline?.deploymentUrl || ''}
                   searchLimit={searchLimit}
                   searchFilters={safeJsonParse(searchFilters)}
                   ragTemperature={temperature}
@@ -342,11 +342,11 @@ const Index: React.FC = () => {
                   pipeline={pipeline || undefined}
                   setQuery={setQuery}
                   placeholder={
-                    mode === "rag"
-                      ? "Ask a question..."
-                      : "Start a conversation..."
+                    mode === 'rag'
+                      ? 'Ask a question...'
+                      : 'Start a conversation...'
                   }
-                  disabled={uploadedDocuments?.length === 0 && mode === "rag"}
+                  disabled={uploadedDocuments?.length === 0 && mode === 'rag'}
                 />
               </div>
             </div>

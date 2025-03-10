@@ -9,19 +9,19 @@ import {
   Users,
   Settings,
   PanelsTopLeft,
-} from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+} from 'lucide-react';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 
-import R2RServerCard from "@/components/ChatDemo/ServerCard";
-import Layout from "@/components/Layout";
-import RequestsCard from "@/components/RequestsCard";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/Button";
-import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
-import { brandingConfig } from "@/config/brandingConfig";
-import { useUserContext } from "@/context/UserContext";
+import R2RServerCard from '@/components/ChatDemo/ServerCard';
+import Layout from '@/components/Layout';
+import RequestsCard from '@/components/RequestsCard';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/Button';
+import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card';
+import { brandingConfig } from '@/config/brandingConfig';
+import { useUserContext } from '@/context/UserContext';
 
 const HomePage = () => {
   const router = useRouter();
@@ -31,13 +31,13 @@ const HomePage = () => {
 
   useEffect(() => {
     if (isAuthenticated && !isSuperUser()) {
-      router.replace("/documents");
+      router.replace('/documents');
     }
   }, [isAuthenticated, router]);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/auth/login");
+      router.push('/auth/login');
     }
   }, [isAuthenticated, router]);
 
@@ -56,7 +56,7 @@ const HomePage = () => {
                 <AlertTitle className="text-lg ">
                   <div className="flex gap-2 text-xl">
                     <span className="text-gray-500 dark:text-gray-200 font-semibold">
-                      You're connected to your {brandingConfig.deploymentName}{" "}
+                      You're connected to your {brandingConfig.deploymentName}{' '}
                       deployment!
                     </span>
                   </div>
@@ -158,8 +158,8 @@ const HomePage = () => {
                         color="transparent"
                         onClick={() =>
                           window.open(
-                            "https://github.com/SciPhi-AI/R2R/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=",
-                            "_blank",
+                            'https://github.com/SciPhi-AI/R2R/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=',
+                            '_blank'
                           )
                         }
                       >
@@ -170,8 +170,8 @@ const HomePage = () => {
                         color="transparent"
                         onClick={() =>
                           window.open(
-                            "https://github.com/SciPhi-AI/R2R/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=",
-                            "_blank",
+                            'https://github.com/SciPhi-AI/R2R/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=',
+                            '_blank'
                           )
                         }
                       >
@@ -202,8 +202,8 @@ const HomePage = () => {
                             color="light"
                             onClick={() =>
                               window.open(
-                                "https://r2r-docs.sciphi.ai/documentation/python-sdk/introduction",
-                                "_blank",
+                                'https://r2r-docs.sciphi.ai/documentation/python-sdk/introduction',
+                                '_blank'
                               )
                             }
                           >
@@ -217,8 +217,8 @@ const HomePage = () => {
                             color="light"
                             onClick={() =>
                               window.open(
-                                "https://github.com/SciPhi-AI/R2R/tree/main/py",
-                                "_blank",
+                                'https://github.com/SciPhi-AI/R2R/tree/main/py',
+                                '_blank'
                               )
                             }
                           >
@@ -255,8 +255,8 @@ const HomePage = () => {
                             color="light"
                             onClick={() =>
                               window.open(
-                                "https://r2r-docs.sciphi.ai/documentation/js-sdk/introduction",
-                                "_blank",
+                                'https://r2r-docs.sciphi.ai/documentation/js-sdk/introduction',
+                                '_blank'
                               )
                             }
                           >
@@ -270,8 +270,8 @@ const HomePage = () => {
                             color="light"
                             onClick={() =>
                               window.open(
-                                "https://github.com/SciPhi-AI/R2R/tree/main/js/sdk",
-                                "_blank",
+                                'https://github.com/SciPhi-AI/R2R/tree/main/js/sdk',
+                                '_blank'
                               )
                             }
                           >
@@ -312,7 +312,7 @@ const HomePage = () => {
                               !window.__RUNTIME_CONFIG__
                                 ?.NEXT_PUBLIC_HATCHET_DASHBOARD_URL ||
                               window.__RUNTIME_CONFIG__.NEXT_PUBLIC_HATCHET_DASHBOARD_URL.includes(
-                                "__NEXT_PUBLIC_HATCHET_DASHBOARD_URL__",
+                                '__NEXT_PUBLIC_HATCHET_DASHBOARD_URL__'
                               )
                             }
                             onClick={() => {
@@ -322,17 +322,17 @@ const HomePage = () => {
                               if (
                                 url &&
                                 !url.includes(
-                                  "__NEXT_PUBLIC_HATCHET_DASHBOARD_URL__",
+                                  '__NEXT_PUBLIC_HATCHET_DASHBOARD_URL__'
                                 )
                               ) {
-                                window.open(url, "_blank");
+                                window.open(url, '_blank');
                               }
                             }}
                             tooltip={
                               !window.__RUNTIME_CONFIG__
                                 ?.NEXT_PUBLIC_HATCHET_DASHBOARD_URL ||
                               window.__RUNTIME_CONFIG__.NEXT_PUBLIC_HATCHET_DASHBOARD_URL.includes(
-                                "__NEXT_PUBLIC_HATCHET_DASHBOARD_URL__",
+                                '__NEXT_PUBLIC_HATCHET_DASHBOARD_URL__'
                               ) ? (
                                 <div>
                                   Hatchet Dashboard Deployment URL unavailable.
@@ -344,7 +344,7 @@ const HomePage = () => {
                                     className="text-blue-500 hover:text-blue-600 underline"
                                     onClick={(e) => e.stopPropagation()}
                                   >
-                                    Learn more about orchestration with{" "}
+                                    Learn more about orchestration with{' '}
                                     {brandingConfig.deploymentName}
                                     Full.
                                   </a>
@@ -362,8 +362,8 @@ const HomePage = () => {
                             color="light"
                             onClick={() =>
                               window.open(
-                                "https://github.com/hatchet-dev/hatchet",
-                                "_blank",
+                                'https://github.com/hatchet-dev/hatchet',
+                                '_blank'
                               )
                             }
                           >

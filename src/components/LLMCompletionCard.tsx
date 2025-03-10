@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { Group } from "@visx/group";
-import { PatternLines } from "@visx/pattern";
-import { scaleBand, scaleLinear } from "@visx/scale";
-import { ViolinPlot, BoxPlot } from "@visx/stats";
+import { Group } from '@visx/group';
+import { PatternLines } from '@visx/pattern';
+import { scaleBand, scaleLinear } from '@visx/scale';
+import { ViolinPlot, BoxPlot } from '@visx/stats';
 import {
   withTooltip,
   Tooltip,
   defaultStyles as defaultTooltipStyles,
-} from "@visx/tooltip";
-import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
-import React, { useState, useEffect, useRef } from "react";
+} from '@visx/tooltip';
+import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip';
+import React, { useState, useEffect, useRef } from 'react';
 
-import OverlayWrapper from "@/components/OverlayWrapper";
+import OverlayWrapper from '@/components/OverlayWrapper';
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from "@/components/ui/card";
-import { useUserContext } from "@/context/UserContext";
+} from '@/components/ui/card';
+import { useUserContext } from '@/context/UserContext';
 
 interface LogEntry {
   timestamp: string;
@@ -87,7 +87,7 @@ const LLMCompletionPlot = withTooltip<LLMCompletionPlotProps, TooltipData>(
     const boxWidth = Math.min(40, xScale.bandwidth());
 
     return width < 10 ? null : (
-      <div style={{ position: "relative" }}>
+      <div style={{ position: 'relative' }}>
         <svg width={width} height={height}>
           <PatternLines
             id="hViolinLines"
@@ -95,7 +95,7 @@ const LLMCompletionPlot = withTooltip<LLMCompletionPlotProps, TooltipData>(
             width={3}
             stroke="#2a2a2a"
             strokeWidth={1}
-            orientation={["horizontal"]}
+            orientation={['horizontal']}
           />
           <Group top={margin.top} left={margin.left}>
             {yScale.ticks(5).map((tick) => (
@@ -181,7 +181,7 @@ const LLMCompletionPlot = withTooltip<LLMCompletionPlotProps, TooltipData>(
                   }}
                   medianProps={{
                     style: {
-                      stroke: "white",
+                      stroke: 'white',
                     },
                     onMouseOver: () => {
                       showTooltip({
@@ -237,14 +237,14 @@ const LLMCompletionPlot = withTooltip<LLMCompletionPlotProps, TooltipData>(
             left={tooltipLeft}
             style={{
               ...defaultTooltipStyles,
-              backgroundColor: "#283238",
-              color: "white",
+              backgroundColor: '#283238',
+              color: 'white',
             }}
           >
             <div>
               <strong>{tooltipData.name}</strong>
             </div>
-            <div style={{ marginTop: "5px", fontSize: "12px" }}>
+            <div style={{ marginTop: '5px', fontSize: '12px' }}>
               {tooltipData.max && <div>max: {tooltipData.max.toFixed(2)}s</div>}
               {tooltipData.thirdQuartile && (
                 <div>
@@ -265,14 +265,14 @@ const LLMCompletionPlot = withTooltip<LLMCompletionPlotProps, TooltipData>(
         )}
       </div>
     );
-  },
+  }
 );
 
 const LLMCompletionCard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [completionData, setCompletionData] = useState<CompletionTimeData[]>(
-    [],
+    []
   );
   const { getClient } = useUserContext();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -313,7 +313,7 @@ const LLMCompletionCard: React.FC = () => {
       const thirdQuartile = times[Math.floor((3 * times.length) / 4)];
       const iqr = thirdQuartile - firstQuartile;
       const outliers = times.filter(
-        (t) => t < firstQuartile - 1.5 * iqr || t > thirdQuartile + 1.5 * iqr,
+        (t) => t < firstQuartile - 1.5 * iqr || t > thirdQuartile + 1.5 * iqr
       );
 
       return {
@@ -343,14 +343,14 @@ const LLMCompletionCard: React.FC = () => {
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error("Failed to get authenticated client");
+          throw new Error('Failed to get authenticated client');
         }
         const logs = {};
         // const processedData = processLogData(null);
         // setCompletionData(processedData);
       } catch (error) {
-        console.error("Error fetching log data:", error);
-        setError("Failed to fetch log data. Please try again later.");
+        console.error('Error fetching log data:', error);
+        setError('Failed to fetch log data. Please try again later.');
       } finally {
         setIsLoading(false);
       }
@@ -393,7 +393,7 @@ const LLMCompletionCard: React.FC = () => {
         <div
           ref={chartRef}
           className="mt-4 flex-grow"
-          style={{ minHeight: "300px" }}
+          style={{ minHeight: '300px' }}
         >
           {isLoading && <p>Loading...</p>}
           {error && <p className="text-red-500">{error}</p>}

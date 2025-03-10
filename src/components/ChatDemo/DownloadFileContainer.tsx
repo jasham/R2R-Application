@@ -1,10 +1,10 @@
-"use client";
-import { FileDown } from "lucide-react";
-import React, { useState } from "react";
+'use client';
+import { FileDown } from 'lucide-react';
+import React, { useState } from 'react';
 
-import { Spinner } from "@/components/Spinner";
-import { Button } from "@/components/ui/Button";
-import { useUserContext } from "@/context/UserContext";
+import { Spinner } from '@/components/Spinner';
+import { Button } from '@/components/ui/Button';
+import { useUserContext } from '@/context/UserContext';
 
 interface DownloadFileContainerProps {
   id: string;
@@ -12,7 +12,7 @@ interface DownloadFileContainerProps {
   showToast: (message: {
     title: string;
     description: string;
-    variant: "default" | "destructive" | "success";
+    variant: 'default' | 'destructive' | 'success';
   }) => void;
 }
 
@@ -30,15 +30,15 @@ const DownloadButtonContainer: React.FC<DownloadFileContainerProps> = ({
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error("Failed to get authenticated client");
+        throw new Error('Failed to get authenticated client');
       }
 
       const blob = await client.documents.download({ id: id });
 
       const url = window.URL.createObjectURL(blob);
 
-      const a = document.createElement("a");
-      a.style.display = "none";
+      const a = document.createElement('a');
+      a.style.display = 'none';
       a.href = url;
       a.download = fileName;
 
@@ -49,16 +49,16 @@ const DownloadButtonContainer: React.FC<DownloadFileContainerProps> = ({
       document.body.removeChild(a);
 
       showToast({
-        variant: "success",
-        title: "Download Successful",
-        description: "The file has been downloaded successfully.",
+        variant: 'success',
+        title: 'Download Successful',
+        description: 'The file has been downloaded successfully.',
       });
     } catch (error: any) {
-      console.error("Error downloading file:", error);
+      console.error('Error downloading file:', error);
       showToast({
-        variant: "destructive",
-        title: "Download Failed",
-        description: error.message || "An unknown error occurred",
+        variant: 'destructive',
+        title: 'Download Failed',
+        description: error.message || 'An unknown error occurred',
       });
     } finally {
       setIsDownloading(false);
@@ -70,7 +70,7 @@ const DownloadButtonContainer: React.FC<DownloadFileContainerProps> = ({
       <Button
         onClick={handleDocumentDownload}
         disabled={isDownloading}
-        color={isDownloading ? "disabled" : "text_gray"}
+        color={isDownloading ? 'disabled' : 'text_gray'}
         shape="slim"
         tooltip="Download Document"
       >

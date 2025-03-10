@@ -1,12 +1,12 @@
-import { ServerStats } from "r2r-js";
-import React, { useState, useEffect, useCallback } from "react";
+import { ServerStats } from 'r2r-js';
+import React, { useState, useEffect, useCallback } from 'react';
 
-import { useUserContext } from "@/context/UserContext";
-import { PipelineStatusProps } from "@/types";
+import { useUserContext } from '@/context/UserContext';
+import { PipelineStatusProps } from '@/types';
 
 export function useConnectionStatus(
   deploymentUrl?: string,
-  onStatusChange?: (isConnected: boolean) => void,
+  onStatusChange?: (isConnected: boolean) => void
 ) {
   const { getClient } = useUserContext();
   const [isConnected, setIsConnected] = useState(false);
@@ -36,7 +36,7 @@ export function useConnectionStatus(
       setServerStats(stats.results);
       setLocalUptime(stats.results.uptimeSeconds);
     } catch (error) {
-      console.error("Error checking status or fetching stats:", error);
+      console.error('Error checking status or fetching stats:', error);
       setIsConnected(false);
       onStatusChange?.(false);
     }
@@ -61,22 +61,22 @@ export function useConnectionStatus(
 }
 
 export function PipelineStatus({
-  className = "",
+  className = '',
   onStatusChange,
 }: PipelineStatusProps) {
   const { pipeline } = useUserContext();
   const { isConnected, localUptime } = useConnectionStatus(
     pipeline?.deploymentUrl,
-    onStatusChange,
+    onStatusChange
   );
 
   return (
     <div className={`flex items-center ${className}`}>
       <div
-        className={`w-2 h-2 rounded-full mr-2 ${isConnected ? "bg-green-500" : "bg-red-500"}`}
+        className={`w-2 h-2 rounded-full mr-2 ${isConnected ? 'bg-green-500' : 'bg-red-500'}`}
       />
       <span className="text-xs text-gray-400">
-        Status: {isConnected ? "Connected" : "No Connection"}
+        Status: {isConnected ? 'Connected' : 'No Connection'}
       </span>
     </div>
   );

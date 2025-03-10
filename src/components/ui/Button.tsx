@@ -1,13 +1,13 @@
-import clsx from "clsx";
-import Link from "next/link";
-import React from "react";
+import clsx from 'clsx';
+import Link from 'next/link';
+import React from 'react';
 
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
   TooltipProvider,
-} from "@/components/ui/tooltip";
+} from '@/components/ui/tooltip';
 
 const colorStyles = {
   primary:
@@ -33,13 +33,13 @@ const colorStyles = {
 };
 
 const shapeStyles = {
-  default: "rounded-md px-1 py-1",
-  rounded: "rounded-full px-1 py-1",
+  default: 'rounded-md px-1 py-1',
+  rounded: 'rounded-full px-1 py-1',
   outline:
-    "px-1 py-1 ring-1 ring-inset ring-zinc-900/10 dark:ring-white/10 rounded-md",
+    'px-1 py-1 ring-1 ring-inset ring-zinc-900/10 dark:ring-white/10 rounded-md',
   outline_wide:
-    "px-2 py-1 ring-1 ring-inset ring-zinc-900/10 dark:ring-white/10 rounded-md",
-  slim: "rounded-md px-0.5 py-0.5 h-9 flex items-center justify-center",
+    'px-2 py-1 ring-1 ring-inset ring-zinc-900/10 dark:ring-white/10 rounded-md',
+  slim: 'rounded-md px-0.5 py-0.5 h-9 flex items-center justify-center',
 };
 
 type ButtonBaseProps = {
@@ -48,21 +48,21 @@ type ButtonBaseProps = {
   className?: string;
   disabled?: boolean;
   children: React.ReactNode;
-  as?: "button" | "anchor";
+  as?: 'button' | 'anchor';
 };
 
 export type ButtonAsButton = ButtonBaseProps & {
-  as?: "button";
+  as?: 'button';
   href?: undefined;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 type ButtonAsAnchor = ButtonBaseProps & {
-  as: "anchor";
+  as: 'anchor';
   href: string;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 interface ButtonProps extends ButtonBaseProps {
-  as?: "button" | "anchor";
+  as?: 'button' | 'anchor';
   href?: string;
 }
 
@@ -84,9 +84,9 @@ const Button = React.forwardRef<
   ButtonWithTooltipProps & (ButtonAttributes | AnchorAttributes)
 >((props, ref) => {
   const {
-    as = "button",
-    color = "primary",
-    shape = "default",
+    as = 'button',
+    color = 'primary',
+    shape = 'default',
     className,
     children,
     href,
@@ -95,21 +95,21 @@ const Button = React.forwardRef<
     ...restProps
   } = props;
 
-  const buttonColor = disabled ? "disabled" : color;
+  const buttonColor = disabled ? 'disabled' : color;
 
   const buttonClassName = clsx(
-    "inline-flex gap-0.5 justify-center overflow-hidden font-medium transition",
+    'inline-flex gap-0.5 justify-center overflow-hidden font-medium transition',
     colorStyles[buttonColor],
     shapeStyles[shape],
-    className,
+    className
   );
 
   let ButtonElement: React.ReactElement;
 
-  if (as === "anchor") {
+  if (as === 'anchor') {
     if (!href) {
       throw new Error(
-        "The 'href' prop is required when using Button as 'anchor'.",
+        "The 'href' prop is required when using Button as 'anchor'."
       );
     }
 
@@ -151,6 +151,6 @@ const Button = React.forwardRef<
   return ButtonElement;
 });
 
-Button.displayName = "Button";
+Button.displayName = 'Button';
 
 export { Button };

@@ -1,16 +1,16 @@
-import { Loader, UserPlus } from "lucide-react";
-import React, { useState } from "react";
+import { Loader, UserPlus } from 'lucide-react';
+import React, { useState } from 'react';
 
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { useUserContext } from "@/context/UserContext";
+} from '@/components/ui/dialog';
+import { useUserContext } from '@/context/UserContext';
 
 interface UserFormProps {
   open: boolean;
@@ -24,11 +24,11 @@ const UserForm: React.FC<UserFormProps> = ({
   onUserCreated,
 }) => {
   const { createUser } = useUserContext();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
   const validateEmail = (email: string) => {
@@ -42,16 +42,16 @@ const UserForm: React.FC<UserFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
+    setError('');
     setSuccess(false);
 
     if (!validateEmail(email)) {
-      setError("Please enter a valid email address");
+      setError('Please enter a valid email address');
       return;
     }
 
     if (!validatePassword(password)) {
-      setError("Password must be at least 8 characters long");
+      setError('Password must be at least 8 characters long');
       return;
     }
 
@@ -59,10 +59,10 @@ const UserForm: React.FC<UserFormProps> = ({
     try {
       const newUser = await createUser({ email, password, role });
       setSuccess(true);
-      setEmail("");
-      setPassword("");
-      setRole("user");
-      console.log("User created successfully:", newUser);
+      setEmail('');
+      setPassword('');
+      setRole('user');
+      console.log('User created successfully:', newUser);
 
       // Call the onUserCreated callback if provided
       if (onUserCreated) {
@@ -74,8 +74,8 @@ const UserForm: React.FC<UserFormProps> = ({
         onClose();
       }, 1500);
     } catch (error: any) {
-      setError(error.message || "Error creating user. Please try again.");
-      console.error("Error creating user:", error);
+      setError(error.message || 'Error creating user. Please try again.');
+      console.error('Error creating user:', error);
     } finally {
       setIsLoading(false);
     }
@@ -83,10 +83,10 @@ const UserForm: React.FC<UserFormProps> = ({
 
   const handleDialogClose = () => {
     // Reset form state when dialog is closed
-    setEmail("");
-    setPassword("");
-    setRole("user");
-    setError("");
+    setEmail('');
+    setPassword('');
+    setRole('user');
+    setError('');
     setSuccess(false);
     onClose();
   };
@@ -178,7 +178,7 @@ const UserForm: React.FC<UserFormProps> = ({
                 Creating...
               </>
             ) : (
-              "Create User"
+              'Create User'
             )}
           </button>
         </form>

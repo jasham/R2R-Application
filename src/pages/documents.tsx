@@ -1,10 +1,10 @@
-import { DocumentResponse } from "r2r-js";
-import React, { useState, useCallback, useEffect, useMemo } from "react";
+import { DocumentResponse } from 'r2r-js';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 
-import DocumentsTable from "@/components/ChatDemo/DocumentsTable";
-import Layout from "@/components/Layout";
-import { useUserContext } from "@/context/UserContext";
-import { IngestionStatus } from "@/types";
+import DocumentsTable from '@/components/ChatDemo/DocumentsTable';
+import Layout from '@/components/Layout';
+import { useUserContext } from '@/context/UserContext';
+import { IngestionStatus } from '@/types';
 
 const PAGE_SIZE = 1000;
 const ITEMS_PER_PAGE = 10;
@@ -29,14 +29,14 @@ const Index: React.FC = () => {
       version: false,
       createdAt: true,
       updatedAt: false,
-    },
+    }
   );
 
   // New states for filters and search query
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<Record<string, any>>({
-    ingestionStatus: ["success", "failed", "pending", "enriched"],
-    extractionStatus: ["success", "failed", "pending"],
+    ingestionStatus: ['success', 'failed', 'pending', 'enriched'],
+    extractionStatus: ['success', 'failed', 'pending'],
   });
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -46,7 +46,7 @@ const Index: React.FC = () => {
       setLoading(true);
       const client = await getClient();
       if (!client) {
-        throw new Error("Failed to get authenticated client");
+        throw new Error('Failed to get authenticated client');
       }
 
       let offset = 0;
@@ -94,7 +94,7 @@ const Index: React.FC = () => {
 
       setDocuments(allDocs);
     } catch (error) {
-      console.error("Error fetching documents:", error);
+      console.error('Error fetching documents:', error);
       setLoading(false);
     }
   }, [pipeline?.deploymentUrl, getClient]);
@@ -115,7 +115,7 @@ const Index: React.FC = () => {
         (doc) =>
           doc.ingestionStatus !== IngestionStatus.SUCCESS &&
           doc.ingestionStatus !== IngestionStatus.ENRICHED &&
-          doc.ingestionStatus !== IngestionStatus.FAILED,
+          doc.ingestionStatus !== IngestionStatus.FAILED
       )
       .map((doc) => doc.id);
     setPendingDocuments(pending);
@@ -130,7 +130,7 @@ const Index: React.FC = () => {
       if (
         value &&
         value.length > 0 &&
-        (key === "ingestionStatus" || key === "extractionStatus")
+        (key === 'ingestionStatus' || key === 'extractionStatus')
       ) {
         filtered = filtered.filter((doc) => {
           const status = doc[key];
@@ -145,7 +145,7 @@ const Index: React.FC = () => {
       filtered = filtered.filter(
         (doc) =>
           doc.title?.toLowerCase().includes(query) ||
-          doc.id.toLowerCase().includes(query),
+          doc.id.toLowerCase().includes(query)
       );
     }
 
@@ -161,7 +161,7 @@ const Index: React.FC = () => {
         setSelectedDocumentIds([]);
       }
     },
-    [filteredDocuments],
+    [filteredDocuments]
   );
 
   const handleSelectItem = useCallback((itemId: string, selected: boolean) => {
@@ -188,7 +188,7 @@ const Index: React.FC = () => {
     (columnKey: string, isVisible: boolean) => {
       setVisibleColumns((prev) => ({ ...prev, [columnKey]: isVisible }));
     },
-    [],
+    []
   );
 
   const handlePageChange = (page: number) => {

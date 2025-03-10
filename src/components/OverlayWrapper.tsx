@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface OverlayWrapperProps {
   children: React.ReactNode;
@@ -7,7 +7,7 @@ interface OverlayWrapperProps {
 
 const OverlayWrapper: React.FC<OverlayWrapperProps> = ({
   children,
-  message = "More data needs to be collected before this insight is available 🚀",
+  message = 'More data needs to be collected before this insight is available 🚀',
 }) => {
   return (
     <div className="relative">

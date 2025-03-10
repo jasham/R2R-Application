@@ -1,26 +1,26 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 
-import SingleSwitch from "@/components/ChatDemo/SingleSwitch";
+import SingleSwitch from '@/components/ChatDemo/SingleSwitch';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import ModelSelector from "@/components/ui/ModelSelector";
-import { MultiSelect } from "@/components/ui/multi-select";
+} from '@/components/ui/accordion';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import ModelSelector from '@/components/ui/ModelSelector';
+import { MultiSelect } from '@/components/ui/multi-select';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useUserContext } from "@/context/UserContext";
-import { SidebarProps } from "@/types";
+} from '@/components/ui/select';
+import { useUserContext } from '@/context/UserContext';
+import { SidebarProps } from '@/types';
 
 interface Conversation {
   id: string;
@@ -81,7 +81,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       try {
         const client = await getClient();
         if (!client) {
-          throw new Error("Failed to get authenticated client");
+          throw new Error('Failed to get authenticated client');
         }
         const response = await client.conversations.list({
           offset: 0,
@@ -89,7 +89,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         });
         setConversations(response.results);
       } catch (error) {
-        console.error("Error fetching collections:", error);
+        console.error('Error fetching collections:', error);
       }
     };
 
@@ -101,7 +101,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <div
         className={`fixed left-0 top-16 z-50 h-[calc(100%-4rem)] w-80 bg-secondary transition-transform duration-300 ease-in-out overflow-hidden`}
         style={{
-          transform: isOpen ? "translateX(0)" : "translateX(-100%)",
+          transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
         }}
       >
         <div className="p-4 overflow-y-auto h-[calc(100%-var(--header-height))]">
@@ -395,7 +395,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       </div>
       <button
         className={`fixed left-0 top-0 z-50 h-full w-6 bg-zinc-1000 flex items-center justify-center transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-80" : "translate-x-0"
+          isOpen ? 'translate-x-80' : 'translate-x-0'
         }`}
         onClick={onToggle}
       >

@@ -1,26 +1,26 @@
-"use client";
-import { AnsiUp } from "ansi_up";
-import { Loader } from "lucide-react";
-import React, { useState, useEffect, useRef } from "react";
+'use client';
+import { AnsiUp } from 'ansi_up';
+import { Loader } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
 
-import Layout from "@/components/Layout";
-import { useUserContext } from "@/context/UserContext";
+import Layout from '@/components/Layout';
+import { useUserContext } from '@/context/UserContext';
 
 const ansi_up = new AnsiUp();
 
 function getLevelColor(line: string) {
   const upperLine = line.toUpperCase();
-  if (upperLine.includes("ERROR")) return "bg-red-500";
-  if (upperLine.includes("WARNING")) return "bg-yellow-500";
-  if (upperLine.includes("INFO")) return "bg-green-500";
-  return "bg-blue-500";
+  if (upperLine.includes('ERROR')) return 'bg-red-500';
+  if (upperLine.includes('WARNING')) return 'bg-yellow-500';
+  if (upperLine.includes('INFO')) return 'bg-green-500';
+  return 'bg-blue-500';
 }
 
 const Logs: React.FC = () => {
   const { pipeline } = useUserContext();
   const [isLoading, setIsLoading] = useState(true);
   const [logs, setLogs] = useState<string[]>([]);
-  const [filterText, setFilterText] = useState("");
+  const [filterText, setFilterText] = useState('');
   const [autoScroll, setAutoScroll] = useState(true);
   const wsRef = useRef<WebSocket | null>(null);
   const logsContainerRef = useRef<HTMLDivElement | null>(null);
@@ -29,7 +29,7 @@ const Logs: React.FC = () => {
     if (!pipeline?.deploymentUrl) return;
 
     const wsUrl =
-      pipeline.deploymentUrl.replace(/^http/, "ws") + "/v3/logs/stream";
+      pipeline.deploymentUrl.replace(/^http/, 'ws') + '/v3/logs/stream';
     wsRef.current = new WebSocket(wsUrl);
 
     wsRef.current.onopen = () => {
@@ -38,13 +38,13 @@ const Logs: React.FC = () => {
 
     wsRef.current.onmessage = (event) => {
       const newLines = event.data
-        .split("\n")
-        .filter((line: string) => line.trim() !== "");
+        .split('\n')
+        .filter((line: string) => line.trim() !== '');
       setLogs((prevLogs) => [...prevLogs, ...newLines]);
     };
 
     wsRef.current.onclose = () => {
-      console.warn("WebSocket connection closed. Reconnecting in 1s...");
+      console.warn('WebSocket connection closed. Reconnecting in 1s...');
       setTimeout(() => {
         if (pipeline.deploymentUrl) {
           setIsLoading(true);
@@ -53,7 +53,7 @@ const Logs: React.FC = () => {
     };
 
     wsRef.current.onerror = (err) => {
-      console.error("WebSocket error:", err);
+      console.error('WebSocket error:', err);
     };
 
     return () => {
@@ -71,7 +71,7 @@ const Logs: React.FC = () => {
 
   const filteredLogs = filterText
     ? logs.filter((line) =>
-        line.toLowerCase().includes(filterText.toLowerCase()),
+        line.toLowerCase().includes(filterText.toLowerCase())
       )
     : logs;
 
@@ -96,7 +96,7 @@ const Logs: React.FC = () => {
                 onClick={() => setAutoScroll((prev) => !prev)}
                 className="ml-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm"
               >
-                {autoScroll ? "Pause Scrolling" : "Resume Scrolling"}
+                {autoScroll ? 'Pause Scrolling' : 'Resume Scrolling'}
               </button>
             </div>
 

@@ -1,12 +1,12 @@
-import { ChevronDown, ChevronRight } from "lucide-react";
-import React, { useState } from "react";
+import { ChevronDown, ChevronRight } from 'lucide-react';
+import React, { useState } from 'react';
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import Pagination from "@/components/ui/pagination";
+} from '@/components/ui/collapsible';
+import Pagination from '@/components/ui/pagination';
 import {
   Table,
   TableBody,
@@ -14,7 +14,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
 const LOGS_PER_PAGE = 10;
 const COLLAPSIBLE_THRESHOLD = 100;
@@ -36,14 +36,14 @@ interface LogTableProps {
 const LogTable: React.FC<LogTableProps> = ({ logs }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [expandedCells, setExpandedCells] = useState<Record<string, boolean>>(
-    {},
+    {}
   );
 
   const totalPages = Math.ceil(logs.length / LOGS_PER_PAGE);
 
   const paginatedLogs = logs.slice(
     (currentPage - 1) * LOGS_PER_PAGE,
-    currentPage * LOGS_PER_PAGE,
+    currentPage * LOGS_PER_PAGE
   );
 
   const handlePageChange = (pageNumber: number) => {
@@ -55,7 +55,7 @@ const LogTable: React.FC<LogTableProps> = ({ logs }) => {
   };
 
   const prettifyJSON = (value: any): string => {
-    if (typeof value !== "object") {
+    if (typeof value !== 'object') {
       return String(value);
     }
     return JSON.stringify(value, null, 2);
@@ -65,9 +65,9 @@ const LogTable: React.FC<LogTableProps> = ({ logs }) => {
     const isEmptyArray = Array.isArray(log.value) && log.value.length === 0;
     const isCollapsible =
       !isEmptyArray &&
-      ((typeof log.value === "string" &&
+      ((typeof log.value === 'string' &&
         log.value.length > COLLAPSIBLE_THRESHOLD) ||
-        (typeof log.value === "object" && log.value !== null));
+        (typeof log.value === 'object' && log.value !== null));
     const prettyValue = prettifyJSON(log.value);
 
     if (isEmptyArray) {
@@ -121,14 +121,14 @@ const LogTable: React.FC<LogTableProps> = ({ logs }) => {
               <TableCell>
                 {log.run_id
                   ? `${log.run_id.substring(0, 8)}...${log.run_id.slice(-8)}`
-                  : "N/A"}
+                  : 'N/A'}
               </TableCell>
               <TableCell>{log.run_type}</TableCell>
               <TableCell>{log.timestamp}</TableCell>
               <TableCell>
                 {log.userId
                   ? `${log.userId.substring(0, 8)}...${log.userId.slice(-8)}`
-                  : "N/A"}
+                  : 'N/A'}
               </TableCell>
               {log.entries && log.entries.length > 0 && (
                 <TableCell>

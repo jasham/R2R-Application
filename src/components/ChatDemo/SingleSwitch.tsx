@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-import { Switch } from "@/components/ui/switch";
+import { Switch } from '@/components/ui/switch';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { SingleSwitchProps } from "@/types";
+} from '@/components/ui/tooltip';
+import { SingleSwitchProps } from '@/types';
 
 const SingleSwitch: React.FC<SingleSwitchProps> = ({
   id,

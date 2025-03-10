@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useThemeContext } from "@/context/ThemeContext";
-import { useTheme } from "next-themes";
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+import { useThemeContext } from '@/context/ThemeContext';
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useThemeContext();
-  const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
+  const [isDarkMode, setIsDarkMode] = useState(theme === 'dark');
 
   useEffect(() => {
-    setIsDarkMode(theme === "dark");
+    setIsDarkMode(theme === 'dark');
   }, [theme]);
 
   return (
@@ -70,7 +71,7 @@ const StyledWrapper = styled.div`
 
   .slider:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 20px;
     width: 20px;
     border-radius: 10px;

@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
 import {
   motion,
   useMotionTemplate,
   MotionValue,
   useMotionValue,
-} from "framer-motion";
-import { useRouter } from "next/router";
-import React, { useId } from "react";
+} from 'framer-motion';
+import { useRouter } from 'next/router';
+import React, { useId } from 'react';
 
-import { Collection, Graph } from "@/types";
+import { Collection, Graph } from '@/types';
 
 interface ResourcePatternProps {
   mouseX: MotionValue<number>;
@@ -74,7 +74,7 @@ export function ContainerObjectCard({
 
   const handleClick = () => {
     const currentPath = router.pathname;
-    const route = currentPath.includes("/graphs") ? "graphs" : "collections";
+    const route = currentPath.includes('/graphs') ? 'graphs' : 'collections';
     router.push(`/${route}/${containerObject.id}`);
   };
 
@@ -114,7 +114,7 @@ export function ContainerObjectCard({
             ? containerObject.description.length > 32
               ? `${containerObject.description.substring(0, 32)}...`
               : containerObject.description
-            : ""}
+            : ''}
         </p>
         {children}
       </div>
@@ -122,7 +122,7 @@ export function ContainerObjectCard({
   );
 }
 
-interface GridPatternProps extends React.ComponentPropsWithoutRef<"svg"> {
+interface GridPatternProps extends React.ComponentPropsWithoutRef<'svg'> {
   width: number;
   height: number;
   x: string | number;

@@ -1,19 +1,19 @@
-import { Loader } from "lucide-react";
-import { User } from "r2r-js";
-import React, { useState, useEffect, useCallback } from "react";
+import { Loader } from 'lucide-react';
+import { User } from 'r2r-js';
+import React, { useState, useEffect, useCallback } from 'react';
 
-import Table, { Column } from "@/components/ChatDemo/Table";
-import { Button } from "@/components/ui/Button";
+import Table, { Column } from '@/components/ChatDemo/Table';
+import { Button } from '@/components/ui/Button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { useUserContext } from "@/context/UserContext";
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
+import { useUserContext } from '@/context/UserContext';
 
 interface AssignUserToCollectionDialogProps {
   open: boolean;
@@ -33,14 +33,14 @@ const AssignUserToCollectionDialog: React.FC<
   const [loading, setLoading] = useState(true);
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
   const [assigning, setAssigning] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchAllUsers = useCallback(async () => {
     setLoading(true);
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error("Failed to get authenticated client");
+        throw new Error('Failed to get authenticated client');
       }
 
       const data = await client.users.list();
@@ -51,17 +51,17 @@ const AssignUserToCollectionDialog: React.FC<
 
       // Filter usersWithId directly
       const filteredUsers = usersWithId.filter(
-        (filteredUser) => !filteredUser.collectionIds.includes(collection_id),
+        (filteredUser) => !filteredUser.collectionIds.includes(collection_id)
       );
 
       setAllUsers(usersWithId);
       setFilteredUsers(filteredUsers);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error('Error fetching users:', error);
       toast({
-        title: "Error",
-        description: "Failed to fetch users. Please try again later.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to fetch users. Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -72,16 +72,16 @@ const AssignUserToCollectionDialog: React.FC<
     if (open) {
       fetchAllUsers();
       setSelectedUserIds([]);
-      setSearchQuery("");
+      setSearchQuery('');
     }
   }, [open, fetchAllUsers]);
 
   useEffect(() => {
     const usersNotInCollection = allUsers.filter(
-      (user) => !user.collectionIds.includes(collection_id),
+      (user) => !user.collectionIds.includes(collection_id)
     );
 
-    if (searchQuery.trim() === "") {
+    if (searchQuery.trim() === '') {
       setFilteredUsers(usersNotInCollection);
     } else {
       const query = searchQuery.toLowerCase();
@@ -89,7 +89,7 @@ const AssignUserToCollectionDialog: React.FC<
         (user) =>
           user.id.toLowerCase().includes(query) ||
           (user.name && user.name.toLowerCase().includes(query)) ||
-          (user.email && user.email.toLowerCase().includes(query)),
+          (user.email && user.email.toLowerCase().includes(query))
       );
       setFilteredUsers(filtered);
     }
@@ -116,9 +116,9 @@ const AssignUserToCollectionDialog: React.FC<
   const handleAssign = async () => {
     if (selectedUserIds.length === 0) {
       toast({
-        title: "No Users Selected",
-        description: "Please select at least one user to assign.",
-        variant: "destructive",
+        title: 'No Users Selected',
+        description: 'Please select at least one user to assign.',
+        variant: 'destructive',
       });
       return;
     }
@@ -127,32 +127,32 @@ const AssignUserToCollectionDialog: React.FC<
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error("Failed to get authenticated client");
+        throw new Error('Failed to get authenticated client');
       }
 
       const assignPromises = selectedUserIds.map((id) =>
         client.collections.addUser({
           id: collection_id,
           userId: id,
-        }),
+        })
       );
 
       await Promise.all(assignPromises);
 
       toast({
-        title: "Success",
-        description: "Selected users have been assigned to the collection.",
-        variant: "success",
+        title: 'Success',
+        description: 'Selected users have been assigned to the collection.',
+        variant: 'success',
       });
 
       onAssignSuccess();
       onClose();
     } catch (error) {
-      console.error("Error assigning users:", error);
+      console.error('Error assigning users:', error);
       toast({
-        title: "Error",
-        description: "Failed to assign users. Please try again later.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to assign users. Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setAssigning(false);
@@ -160,9 +160,9 @@ const AssignUserToCollectionDialog: React.FC<
   };
 
   const columns: Column<User>[] = [
-    { key: "id", label: "User ID", truncate: true, copyable: true },
-    { key: "email", label: "Email" },
-    { key: "name", label: "Name" },
+    { key: 'id', label: 'User ID', truncate: true, copyable: true },
+    { key: 'email', label: 'Email' },
+    { key: 'name', label: 'Name' },
   ];
 
   return (
@@ -191,7 +191,7 @@ const AssignUserToCollectionDialog: React.FC<
             onSelectAll={handleSelectAll}
             onSelectItem={handleSelectItem}
             selectedItems={selectedUserIds}
-            initialSort={{ key: "userId", order: "asc" }}
+            initialSort={{ key: 'userId', order: 'asc' }}
             initialFilters={{}}
             tableHeight="400px"
             currentPage={1}

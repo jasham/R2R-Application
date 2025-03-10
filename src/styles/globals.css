@@ -108,7 +108,6 @@
   }
 } */
 
-
 /* @layer base {
   * {
     @apply border-border;
@@ -135,19 +134,19 @@
     --text-secondary: #3d3935;
     --text-grey: #b6b6b6;
     --border-color: #d6d5d5;
-    --accent-color: #16A085;
+    --accent-color: #16a085;
     --link-color: #2563eb;
     --link-hover: #2b6cb0;
 
     /* ✅ Sidebar */
-    --sidebar-background: #E4C601;
+    --sidebar-background: #e4c601;
     --sidebar-foreground: #000000;
-    --sidebar-accent: #16A085;
+    --sidebar-accent: #16a085;
 
     /* ✅ Cards & Buttons */
     --card-bg: #ffffff;
     --card-text: #3d3935;
-    --button-bg: #16A085;
+    --button-bg: #16a085;
     --button-text: #ffffff;
 
     --accent-lighter: #b3edd7;
@@ -168,7 +167,7 @@
     --text-secondary: #a5a3a3;
     --text-grey: #cbcbcb;
     --border-color: #282626;
-    --accent-color: #16A085;
+    --accent-color: #16a085;
     --link-color: #818cf8;
     --link-hover: #5fe1b2;
 
@@ -220,7 +219,6 @@
     }
   }
 }
-
 
 * {
   padding: 0;
@@ -277,7 +275,7 @@ a {
   left: var(--sidebar-width);
   right: 0;
   bottom: 0;
-  height:95vh;
+  height: 95vh;
   transition: left 0.2s ease-in-out;
   display: flex;
   justify-content: center;

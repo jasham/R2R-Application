@@ -13,8 +13,8 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/v3/:path*",
-        destination: "https://api.cloud.sciphi.ai/v3/:path*",
+        source: '/v3/:path*',
+        destination: 'https://api.cloud.sciphi.ai/v3/:path*',
       },
     ];
   },

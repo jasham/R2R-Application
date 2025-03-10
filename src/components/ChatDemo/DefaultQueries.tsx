@@ -1,56 +1,56 @@
-import { Lightbulb, FlaskConical, Flame, Earth } from "lucide-react";
-import { FC } from "react";
+import { Lightbulb, FlaskConical, Flame, Earth } from 'lucide-react';
+import { FC } from 'react';
 
-import { Logo } from "@/components/shared/Logo";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { DefaultQueriesProps } from "@/types";
+import { Logo } from '@/components/shared/Logo';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { DefaultQueriesProps } from '@/types';
 
 export const DefaultQueries: FC<DefaultQueriesProps> = ({ setQuery, mode }) => {
   const defaultRagQueries = [
     {
-      query: "What is the main topic of the uploaded documents?",
+      query: 'What is the main topic of the uploaded documents?',
       icon: <Lightbulb className="h-6 w-6 text-yellow-400" />,
     },
     {
-      query: "Summarize key points for me.",
+      query: 'Summarize key points for me.',
       icon: <FlaskConical className="h-6 w-6 text-purple-400" />,
     },
     {
-      query: "What issues do you see with the documents?",
+      query: 'What issues do you see with the documents?',
       icon: <Flame className="h-6 w-6 text-red-400" />,
     },
     {
-      query: "How are these documents interrelated?",
+      query: 'How are these documents interrelated?',
       icon: <Earth className="h-6 w-6 text-green-400" />,
     },
   ];
 
   const defaultAgentQueries = [
     {
-      query: "Hey! How are you today?",
+      query: 'Hey! How are you today?',
       icon: <Lightbulb className="h-6 w-6 text-yellow-400" />,
     },
     {
-      query: "Can you help me understand my documents better?",
+      query: 'Can you help me understand my documents better?',
       icon: <FlaskConical className="h-6 w-6 text-purple-400" />,
     },
     {
-      query: "How might agentic RAG help me in the long run?",
+      query: 'How might agentic RAG help me in the long run?',
       icon: <Flame className="h-6 w-6 text-red-400" />,
     },
     {
-      query: "What is the coolest thing you can do?",
+      query: 'What is the coolest thing you can do?',
       icon: <Earth className="h-6 w-6 text-green-400" />,
     },
   ];
 
-  const getQueriesBasedOnMode = (mode: "rag" | "rag_agent") => {
-    if (mode === "rag") {
+  const getQueriesBasedOnMode = (mode: 'rag' | 'rag_agent') => {
+    if (mode === 'rag') {
       return defaultRagQueries;
-    } else if (mode === "rag_agent") {
+    } else if (mode === 'rag_agent') {
       return defaultAgentQueries;
     } else {
-      throw new Error("Invalid mode");
+      throw new Error('Invalid mode');
     }
   };
 

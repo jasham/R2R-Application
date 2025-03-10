@@ -1,28 +1,28 @@
-import { Eye, EyeOff } from "lucide-react";
-import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import { Eye, EyeOff } from 'lucide-react';
+import { useRouter } from 'next/router';
+import React, { useState, useEffect } from 'react';
 
-import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { useUserContext } from "@/context/UserContext";
+import Layout from '@/components/Layout';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/input';
+import { useUserContext } from '@/context/UserContext';
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmedPassword, setConfirmedPassword] = useState("");
-  const [deploymentUrl, setDeploymentUrl] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmedPassword, setConfirmedPassword] = useState('');
+  const [deploymentUrl, setDeploymentUrl] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const { login, register } = useUserContext();
   const router = useRouter();
 
   const handleLoginClick = () => {
-    router.push("/");
+    router.push('/');
   };
 
   useEffect(() => {
-    const url = process.env.R2R_DEPLOYMENT_URL || "http://localhost:7272";
+    const url = process.env.R2R_DEPLOYMENT_URL || 'http://localhost:7272';
     setDeploymentUrl(url);
   }, []);
 
@@ -35,11 +35,11 @@ const LoginPage: React.FC = () => {
     try {
       await register(email, password, deploymentUrl);
       await login(email, password, deploymentUrl);
-      router.push("/");
+      router.push('/');
     } catch (error) {
-      console.error("Registration or login failed:", error);
+      console.error('Registration or login failed:', error);
       alert(
-        "Registration or login failed. Ensure that your server is running at the specified URL or check your credentials and try again.",
+        'Registration or login failed. Ensure that your server is running at the specified URL or check your credentials and try again.'
       );
     }
   };
@@ -97,12 +97,12 @@ const LoginPage: React.FC = () => {
               <Input
                 id="password"
                 name="password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onBlur={handlePasswordBlur}
-                className={`pr-10 ${passwordsMatch ? "" : "border-red-400"}`}
+                className={`pr-10 ${passwordsMatch ? '' : 'border-red-400'}`}
                 autoComplete="current-password"
               />
 
@@ -130,12 +130,12 @@ const LoginPage: React.FC = () => {
               <Input
                 id="confirm-password"
                 name="confirm-password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Confirm Password"
                 value={confirmedPassword}
                 onChange={(e) => setConfirmedPassword(e.target.value)}
                 onBlur={handlePasswordBlur}
-                className={`pr-10 ${passwordsMatch ? "" : "border-red-400"}`}
+                className={`pr-10 ${passwordsMatch ? '' : 'border-red-400'}`}
               />
               <button
                 type="button"
@@ -159,7 +159,7 @@ const LoginPage: React.FC = () => {
 
         <div className="text-gray-700 dark:text-gray-400 text-sm font-bold mb-2">
           <p>
-            Already have an account?{" "}
+            Already have an account?{' '}
             <span
               onClick={handleLoginClick}
               className="text-accent-base cursor-pointer hover:underline"

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from '@/components/ui/use-toast';
 
 interface CopyableContentProps {
   content: string;
@@ -16,8 +16,8 @@ const CopyableContent: React.FC<CopyableContentProps> = ({
   const handleCopy = () => {
     navigator.clipboard
       .writeText(content)
-      .then(() => toast({ title: "Copied!" }))
-      .catch((err) => console.error("Could not copy text: ", err));
+      .then(() => toast({ title: 'Copied!' }))
+      .catch((err) => console.error('Could not copy text: ', err));
   };
 
   return (

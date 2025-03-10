@@ -1,30 +1,30 @@
-import { FC } from "react";
-import React, { useState, useEffect } from "react";
-import Markdown from "react-markdown";
+import { FC } from 'react';
+import React, { useState, useEffect } from 'react';
+import Markdown from 'react-markdown';
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ChatDemo/popover";
-import { Skeleton } from "@/components/ChatDemo/skeleton";
-import { SearchResults } from "@/components/SearchResults";
-import { Logo } from "@/components/shared/Logo";
+} from '@/components/ChatDemo/popover';
+import { Skeleton } from '@/components/ChatDemo/skeleton';
+import { SearchResults } from '@/components/SearchResults';
+import { Logo } from '@/components/shared/Logo';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Message } from "@/types";
-import { VectorSearchResult, KGSearchResult } from "@/types";
+} from '@/components/ui/accordion';
+import { Message } from '@/types';
+import { VectorSearchResult, KGSearchResult } from '@/types';
 
 function formatMarkdownNewLines(markdown: string) {
   return markdown
-    .replace(/\[(\d+)]/g, "[$1]($1)")
+    .replace(/\[(\d+)]/g, '[$1]($1)')
     .split(`"queries":`)[0]
     .replace(/\\u[\dA-F]{4}/gi, (match: string) => {
-      return String.fromCharCode(parseInt(match.replace(/\\u/g, ""), 16));
+      return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
     });
 }
 
@@ -40,12 +40,12 @@ interface Source extends VectorSearchResult {
 }
 
 const parseVectorSearchSources = (sources: string | object): Source[] => {
-  if (typeof sources === "string") {
+  if (typeof sources === 'string') {
     try {
       const cleanedSources = sources;
       return JSON.parse(cleanedSources);
     } catch (error) {
-      console.error("Failed to parse sources:", error);
+      console.error('Failed to parse sources:', error);
       return [];
     }
   }
@@ -77,7 +77,7 @@ export const Answer: FC<{
   const [parsedVectorSources, setParsedVectorSources] = useState<Source[]>([]);
   const [parsedEntities, setParsedEntities] = useState<KGSearchResult[]>([]);
   const [parsedCommunities, setParsedCommunities] = useState<KGSearchResult[]>(
-    [],
+    []
   );
   const [sourcesCount, setSourcesCount] = useState<number | null>(null);
 
@@ -91,13 +91,13 @@ export const Answer: FC<{
       }
 
       if (message.sources.kg) {
-        console.log("message.sources.kg", message.sources.kg);
+        console.log('message.sources.kg', message.sources.kg);
         const kgLocalResult: KGSearchResult[] = JSON.parse(message.sources.kg);
         const entitiesArray = kgLocalResult.filter(
-          (item: any) => item.result_type === "entity",
+          (item: any) => item.result_type === 'entity'
         );
         const communitiesArray = kgLocalResult.filter(
-          (item: any) => item.result_type === "community",
+          (item: any) => item.result_type === 'community'
         );
         setParsedEntities(entitiesArray);
         setParsedCommunities(communitiesArray);
@@ -111,11 +111,11 @@ export const Answer: FC<{
   }, [message.sources]);
 
   const AnimatedEllipsis: FC = () => {
-    const [dots, setDots] = useState("");
+    const [dots, setDots] = useState('');
 
     useEffect(() => {
       const interval = setInterval(() => {
-        setDots((prevDots) => (prevDots.length >= 3 ? "" : prevDots + "."));
+        setDots((prevDots) => (prevDots.length >= 3 ? '' : prevDots + '.'));
       }, 200);
 
       return () => clearInterval(interval);
@@ -129,7 +129,7 @@ export const Answer: FC<{
   };
 
   const renderContent = () => {
-    const paragraphs = message.content.split("\n\n");
+    const paragraphs = message.content.split('\n\n');
     return paragraphs.map((paragraph, index) => (
       <Markdown
         key={index}
@@ -198,7 +198,7 @@ export const Answer: FC<{
                     <span
                       title={title}
                       className="inline-block cursor-pointer transform scale-[60%] no-underline font-medium w-6 text-center h-6 rounded-full origin-top-left"
-                      style={{ background: "var(--popover)" }}
+                      style={{ background: 'var(--popover)' }}
                     >
                       {href}
                     </span>
@@ -213,34 +213,34 @@ export const Answer: FC<{
                       </div>
                     )}
                     <div className="text-zinc-200 text-ellipsis overflow-hidden whitespace-nowrap font-medium">
-                      {title ? `Title: ${title}` : ""}
+                      {title ? `Title: ${title}` : ''}
                     </div>
                     <div className="flex gap-4">
                       <div className="flex-1 max-h-[200px] overflow-y-auto pr-2">
                         {isKGElement && (metadata as any).summary && (
                           <div className="text-zinc-300 break-words mb-2">
-                            <strong>Summary:</strong>{" "}
+                            <strong>Summary:</strong>{' '}
                             {(metadata as any).summary}
                           </div>
                         )}
                         {!isKGElement && (
                           <div className="text-zinc-300 break-words mb-2">
-                            {metadata?.snippet ?? ""}
+                            {metadata?.snippet ?? ''}
                           </div>
                         )}
                         <div className="text-zinc-300 break-words">
-                          {description ?? ""}
+                          {description ?? ''}
                         </div>
                         {isKGElement && (metadata as any).impact_rating && (
                           <div className="text-zinc-300 break-words mt-2">
-                            <strong>Impact Rating:</strong>{" "}
+                            <strong>Impact Rating:</strong>{' '}
                             {(metadata as any).impact_rating}
                           </div>
                         )}
                         {isKGElement &&
                           (metadata as any).rating_explanation && (
                             <div className="text-zinc-300 break-words mt-2">
-                              <strong>Rating Explanation:</strong>{" "}
+                              <strong>Rating Explanation:</strong>{' '}
                               {(metadata as any).rating_explanation}
                             </div>
                           )}
@@ -263,7 +263,7 @@ export const Answer: FC<{
         type="single"
         collapsible
         className="w-full"
-        onValueChange={(value) => setIsOpen(value === "answer")}
+        onValueChange={(value) => setIsOpen(value === 'answer')}
       >
         <AccordionItem value="answer">
           <AccordionTrigger className="py-2 text-lg font-bold hover:no-underline text-primary">

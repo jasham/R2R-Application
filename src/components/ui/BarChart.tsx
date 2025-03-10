@@ -7,14 +7,14 @@ import {
   Tooltip,
   Legend,
   ChartOptions,
-} from "chart.js";
-import React from "react";
-import { Bar } from "react-chartjs-2";
-import resolveConfig from "tailwindcss/resolveConfig";
+} from 'chart.js';
+import React from 'react';
+import { Bar } from 'react-chartjs-2';
+import resolveConfig from 'tailwindcss/resolveConfig';
 
-import { BarChartProps } from "@/types";
+import { BarChartProps } from '@/types';
 
-import tailwindConfig from "../../../tailwind.config";
+import tailwindConfig from '../../../tailwind.config';
 
 const fullConfig = resolveConfig(tailwindConfig);
 
@@ -40,15 +40,15 @@ type FilterDisplayNames = {
 };
 
 const filterDisplayNames: FilterDisplayNames = {
-  search_latency: "Search Latency",
-  search_metrics: "Search Metrics",
-  rag_generation_latency: "RAG Latency",
-  error: "Errors",
+  search_latency: 'Search Latency',
+  search_metrics: 'Search Metrics',
+  rag_generation_latency: 'RAG Latency',
+  error: 'Errors',
 };
 
 const createHistogramData = (data: number[], label: string) => {
   if (!Array.isArray(data)) {
-    console.error("Data passed to createHistogramData is not an array:", data);
+    console.error('Data passed to createHistogramData is not an array:', data);
     return {
       labels: [],
       datasets: [],
@@ -94,14 +94,14 @@ const BarChart: React.FC<BarChartProps> = ({ data, selectedFilter }) => {
   const values = filteredLogs.map((entry) => parseFloat(entry.value));
   const chartData = createHistogramData(
     values,
-    filterDisplayNames[selectedFilter] || selectedFilter,
+    filterDisplayNames[selectedFilter] || selectedFilter
   );
 
-  const chartOptions: ChartOptions<"bar"> = {
+  const chartOptions: ChartOptions<'bar'> = {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: 'top',
         labels: {
           color: textColor,
         },
@@ -114,7 +114,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, selectedFilter }) => {
       tooltip: {
         callbacks: {
           label: (context) => {
-            const label = context.dataset.label || "";
+            const label = context.dataset.label || '';
             const value = context.parsed.y;
             const range = context.label;
             return `${label}: ${value} (Range: ${range})`;
@@ -141,7 +141,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, selectedFilter }) => {
       y: {
         title: {
           display: true,
-          text: "Count",
+          text: 'Count',
           color: textColor,
         },
         ticks: {

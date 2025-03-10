@@ -1,19 +1,19 @@
-import { ArrowRight } from "lucide-react";
-import { GraphSearchResult } from "r2r-js";
-import React, { useState, useEffect, useRef } from "react";
+import { ArrowRight } from 'lucide-react';
+import { GraphSearchResult } from 'r2r-js';
+import React, { useState, useEffect, useRef } from 'react';
 
-import useSwitchManager from "@/components/ChatDemo/SwitchManager";
-import Layout from "@/components/Layout";
-import Sidebar from "@/components/Sidebar";
+import useSwitchManager from '@/components/ChatDemo/SwitchManager';
+import Layout from '@/components/Layout';
+import Sidebar from '@/components/Sidebar';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/Button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useUserContext } from "@/context/UserContext";
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/Button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useUserContext } from '@/context/UserContext';
 
 interface Collection {
   id: string;
@@ -24,7 +24,7 @@ const SearchPage: React.FC = () => {
   const contentAreaRef = useRef<HTMLDivElement>(null);
   const { pipeline, getClient } = useUserContext();
   const [loading, setLoading] = useState<boolean>(false);
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState<string>('');
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const toggleSidebar = () => setSidebarIsOpen(!sidebarIsOpen);
 
@@ -35,13 +35,13 @@ const SearchPage: React.FC = () => {
     any[]
   >([]);
   const [communitySearchResults, setCommunitySearchResults] = useState<any[]>(
-    [],
+    []
   );
 
   // Collections
   const [collections, setCollections] = useState<Collection[]>([]);
   const [selectedCollectionIds, setSelectedCollectionIds] = useState<string[]>(
-    [],
+    []
   );
 
   // Switch manager
@@ -49,8 +49,8 @@ const SearchPage: React.FC = () => {
 
   // Search settings
   const [searchLimit, setSearchLimit] = useState<number>(10);
-  const [searchFilters, setSearchFilters] = useState("{}");
-  const [indexMeasure, setIndexMeasure] = useState<string>("cosine_distance");
+  const [searchFilters, setSearchFilters] = useState('{}');
+  const [indexMeasure, setIndexMeasure] = useState<string>('cosine_distance');
   const [includeMetadatas, setIncludeMetadatas] = useState<boolean>(false);
   const [probes, setProbes] = useState<number>();
   const [efSearch, setEfSearch] = useState<number>();
@@ -67,22 +67,22 @@ const SearchPage: React.FC = () => {
 
   useEffect(() => {
     initializeSwitch(
-      "vectorSearch",
+      'vectorSearch',
       true,
-      "Vector Search",
-      "Vector search is a search method that uses vectors to represent documents and queries.",
+      'Vector Search',
+      'Vector search is a search method that uses vectors to represent documents and queries.'
     );
     initializeSwitch(
-      "hybridSearch",
+      'hybridSearch',
       false,
-      "Hybrid Search",
-      "Hybrid search combines multiple search methods to provide more accurate and relevant search results.",
+      'Hybrid Search',
+      'Hybrid search combines multiple search methods to provide more accurate and relevant search results.'
     );
     initializeSwitch(
-      "knowledgeGraphSearch",
+      'knowledgeGraphSearch',
       true,
-      "Graph Search",
-      "Please construct a Knowledge Graph to use this feature.",
+      'Graph Search',
+      'Please construct a Knowledge Graph to use this feature.'
     );
   }, [initializeSwitch]);
 
@@ -96,17 +96,17 @@ const SearchPage: React.FC = () => {
         try {
           const client = await getClient();
           if (!client) {
-            throw new Error("Failed to get authenticated client");
+            throw new Error('Failed to get authenticated client');
           }
           const collectionsData = await client.collections.list();
           setCollections(
             collectionsData.results.map((collection: Collection) => ({
               id: collection.id,
               name: collection.name,
-            })),
+            }))
           );
         } catch (error) {
-          console.error("Error fetching collections:", error);
+          console.error('Error fetching collections:', error);
         }
       }
     };
@@ -124,7 +124,7 @@ const SearchPage: React.FC = () => {
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error("Failed to get authenticated client");
+        throw new Error('Failed to get authenticated client');
       }
 
       const searchResponse = await client.retrieval.search({
@@ -137,23 +137,23 @@ const SearchPage: React.FC = () => {
 
       setEntitySearchResults(
         graphResults.filter(
-          (result: GraphSearchResult) => result.resultType === "entity",
-        ) as any[],
+          (result: GraphSearchResult) => result.resultType === 'entity'
+        ) as any[]
       );
 
       setRelationshipSearchResults(
         graphResults.filter(
-          (result: GraphSearchResult) => result.resultType === "relationship",
-        ) as any[],
+          (result: GraphSearchResult) => result.resultType === 'relationship'
+        ) as any[]
       );
 
       setCommunitySearchResults(
         graphResults.filter(
-          (result: GraphSearchResult) => result.resultType === "community",
-        ) as any[],
+          (result: GraphSearchResult) => result.resultType === 'community'
+        ) as any[]
       );
     } catch (error) {
-      console.error("Error performing search:", error);
+      console.error('Error performing search:', error);
     } finally {
       setLoading(false);
     }
@@ -205,10 +205,10 @@ const SearchPage: React.FC = () => {
         />
 
         <div
-          className={`main-content-wrapper ${sidebarIsOpen ? "" : "sidebar-closed"}`}
+          className={`main-content-wrapper ${sidebarIsOpen ? '' : 'sidebar-closed'}`}
         >
           <div
-            className={`main-content ${sidebarIsOpen ? "" : "sidebar-closed"}`}
+            className={`main-content ${sidebarIsOpen ? '' : 'sidebar-closed'}`}
             ref={contentAreaRef}
           >
             <div className="sticky top-0 z-10 bg-zinc-900 shadow-md">
@@ -228,14 +228,14 @@ const SearchPage: React.FC = () => {
                     className="px-4 py-2 h-10 rounded-r-full"
                     disabled={loading}
                   >
-                    {loading ? "Searching..." : <ArrowRight size={20} />}
+                    {loading ? 'Searching...' : <ArrowRight size={20} />}
                   </Button>
                 </div>
               </form>
             </div>
 
             <div
-              className={`main-content ${sidebarIsOpen ? "" : "sidebar-closed"} p-4`}
+              className={`main-content ${sidebarIsOpen ? '' : 'sidebar-closed'} p-4`}
               ref={contentAreaRef}
             >
               <div className="mt-8">
@@ -306,7 +306,7 @@ const SearchPage: React.FC = () => {
                               <AccordionContent>
                                 <pre
                                   className="text-xs bg-zinc-900 p-4 rounded"
-                                  style={{ whiteSpace: "pre-wrap" }}
+                                  style={{ whiteSpace: 'pre-wrap' }}
                                 >
                                   {JSON.stringify(result, null, 2)}
                                 </pre>
@@ -327,7 +327,7 @@ const SearchPage: React.FC = () => {
                           className="mb-4 p-4 bg-zinc-800 rounded"
                         >
                           <h3 className="text-lg font-semibold mb-2">
-                            {result.content.subject} {result.content.predicate}{" "}
+                            {result.content.subject} {result.content.predicate}{' '}
                             {result.content.object}
                           </h3>
                           <Accordion
@@ -340,7 +340,7 @@ const SearchPage: React.FC = () => {
                               <AccordionContent>
                                 <pre
                                   className="text-xs bg-zinc-900 p-4 rounded"
-                                  style={{ whiteSpace: "pre-wrap" }}
+                                  style={{ whiteSpace: 'pre-wrap' }}
                                 >
                                   {JSON.stringify(result, null, 2)}
                                 </pre>
@@ -376,7 +376,7 @@ const SearchPage: React.FC = () => {
                               <AccordionContent>
                                 <pre
                                   className="text-xs bg-zinc-900 p-4 rounded"
-                                  style={{ whiteSpace: "pre-wrap" }}
+                                  style={{ whiteSpace: 'pre-wrap' }}
                                 >
                                   {JSON.stringify(result, null, 2)}
                                 </pre>

@@ -1,14 +1,14 @@
-import { Loader, Plus, UserRound } from "lucide-react";
-import { CollectionResponse } from "r2r-js";
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { Loader, Plus, UserRound } from 'lucide-react';
+import { CollectionResponse } from 'r2r-js';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
-import CollectionCreationModal from "@/components/ChatDemo/utils/collectionCreationModal";
-import { ContainerObjectCard } from "@/components/ContainerObjectCard";
-import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import Pagination from "@/components/ui/pagination";
-import { useUserContext } from "@/context/UserContext";
+import CollectionCreationModal from '@/components/ChatDemo/utils/collectionCreationModal';
+import { ContainerObjectCard } from '@/components/ContainerObjectCard';
+import Layout from '@/components/Layout';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/input';
+import Pagination from '@/components/ui/pagination';
+import { useUserContext } from '@/context/UserContext';
 
 const PAGE_SIZE = 100;
 const ITEMS_PER_PAGE = 8;
@@ -31,7 +31,7 @@ const Index: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPersonalPage, setCurrentPersonalPage] = useState(1);
   const [currentSharedPage, setCurrentSharedPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchInitialData = useCallback(async () => {
     setLoading(true);
@@ -39,10 +39,10 @@ const Index: React.FC = () => {
     try {
       const client = await getClient();
       if (!client) {
-        throw new Error("No authenticated client");
+        throw new Error('No authenticated client');
       }
 
-      const userId = authState.userId || "";
+      const userId = authState.userId || '';
 
       // Fetch first batch of personal and accessible collections in parallel
       const [personalBatch, accessibleBatch] = await Promise.all([
@@ -62,7 +62,7 @@ const Index: React.FC = () => {
       // Determine which accessible are actually shared (not personal)
       const personalIds = new Set(personalBatch.results.map((col) => col.id));
       const initialShared = accessibleBatch.results.filter(
-        (col) => !personalIds.has(col.id),
+        (col) => !personalIds.has(col.id)
       );
 
       // Set initial states so user sees first page right away
@@ -107,14 +107,14 @@ const Index: React.FC = () => {
         // After all background fetching is done, recalculate shared
         const updatedPersonalIds = new Set(allPersonal.map((col) => col.id));
         const updatedShared = allAccessible.filter(
-          (col) => !updatedPersonalIds.has(col.id),
+          (col) => !updatedPersonalIds.has(col.id)
         );
 
         setPersonalCollections(allPersonal);
         setSharedCollections(updatedShared);
       })();
     } catch (error) {
-      console.error("Error fetching collections:", error);
+      console.error('Error fetching collections:', error);
       setPersonalCollections([]);
       setSharedCollections([]);
       setLoading(false);
@@ -134,7 +134,7 @@ const Index: React.FC = () => {
       (collection) =>
         collection.name?.toLowerCase().includes(query) ||
         collection.id.toLowerCase().includes(query) ||
-        collection.description?.toLowerCase().includes(query),
+        collection.description?.toLowerCase().includes(query)
     );
   }, [personalCollections, searchQuery]);
 
@@ -147,7 +147,7 @@ const Index: React.FC = () => {
       (collection) =>
         collection.name?.toLowerCase().includes(query) ||
         collection.id.toLowerCase().includes(query) ||
-        collection.description?.toLowerCase().includes(query),
+        collection.description?.toLowerCase().includes(query)
     );
   }, [sharedCollections, searchQuery]);
 
@@ -177,7 +177,7 @@ const Index: React.FC = () => {
     const startIndex = (currentPersonalPage - 1) * ITEMS_PER_PAGE;
     return filteredPersonalCollections.slice(
       startIndex,
-      startIndex + ITEMS_PER_PAGE,
+      startIndex + ITEMS_PER_PAGE
     );
   };
 
@@ -185,7 +185,7 @@ const Index: React.FC = () => {
     const startIndex = (currentSharedPage - 1) * ITEMS_PER_PAGE;
     return filteredSharedCollections.slice(
       startIndex,
-      startIndex + ITEMS_PER_PAGE,
+      startIndex + ITEMS_PER_PAGE
     );
   };
 
@@ -256,7 +256,7 @@ const Index: React.FC = () => {
                         className="w-full h-[120px] flex justify-center"
                       >
                         <div className="w-64 h-full flex items-center justify-center text-gray-400">
-                          {index === 0 && "No matching collections found"}
+                          {index === 0 && 'No matching collections found'}
                         </div>
                       </div>
                     ))}
@@ -299,7 +299,7 @@ const Index: React.FC = () => {
                         className="w-full h-[120px] flex justify-center"
                       >
                         <div className="w-64 h-full flex items-center justify-center text-gray-400">
-                          {index === 0 && "No matching collections found"}
+                          {index === 0 && 'No matching collections found'}
                         </div>
                       </div>
                     ))}
@@ -350,7 +350,9 @@ const Index: React.FC = () => {
             <>
               <div className="mb-6">
                 <div className="flex items-center justify-between">
-                  <h1 className="text-2xl font-bold text-primary">Collections</h1>
+                  <h1 className="text-2xl font-bold text-primary">
+                    Collections
+                  </h1>
                 </div>
 
                 <div className="flex items-center mt-6 gap-2">
@@ -369,7 +371,7 @@ const Index: React.FC = () => {
                     onClick={handleAddCollection}
                     color="filled"
                     shape="rounded"
-                    style={{ zIndex: 20, minWidth: "100px" }}
+                    style={{ zIndex: 20, minWidth: '100px' }}
                   >
                     <Plus className="w-5 h-5" />
                     <span>New</span>
